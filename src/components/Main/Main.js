@@ -7,13 +7,8 @@ function Main(props) {
   const currentUser = React.useContext(CurrentUserContext);
 
   return (
-    loggedIn ?
     <>
-    <Header id="1" {...props} />
-    <Component {...props} /> 
-    </>
-    : <Navigate to='/sign-up' replace />
-    <Header id="1" title="Войти" loggedIn={loggedIn} onAuthorization={onAuthorization} />
+    <Header id="1" account={account} loggedIn={loggedIn} onAuthorization={onAuthorization} />
     <main>
      
     </main>
