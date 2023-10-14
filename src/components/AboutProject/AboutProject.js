@@ -5,7 +5,7 @@ function AboutProject() {
 
   return (
     <section className='about-project' aria-label="Две колонки">
-      <h2 className='about-project__title'>О проекте</h2>
+      <h2 className='section__title'>О проекте</h2>
       <article className='two-columns'>
         <h3 className='two-columns__brief'>Дипломный проект включал 5 этапов</h3>
         <p className='two-columns__paragraph'>Составление плана, работу над бэкендом, вёрстку, добавление функциональности и финальные доработки.</p>
