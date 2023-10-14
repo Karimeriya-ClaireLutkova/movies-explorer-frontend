@@ -1,5 +1,7 @@
 import React from 'react';
 import Header from '../Header/Header';
+import Promo from '../Promo/Promo';
+
 import { CurrentUserContext } from '../contexts/CurrentUserContext.js';
 
 function Main(props) {
@@ -10,6 +12,7 @@ function Main(props) {
     <>
     <Header id="1" account={account} loggedIn={loggedIn} onAuthorization={onAuthorization} />
     <main>
+      <Promo></Promo>
      
     </main>
     </>
