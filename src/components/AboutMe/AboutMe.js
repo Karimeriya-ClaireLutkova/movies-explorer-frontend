@@ -5,7 +5,7 @@ import Portfolio from '../Portfolio/Portfolio';
 function AboutMe() {
 
   return (
-    <section className='about-me' aria-label="Две части">
+    <section className='about-me' aria-label='Две части'>
       <h2 className='section__title'>Студент</h2>
       <article className='about-me__info'>
         <h3 className='section__subtitle'>Виталий</h3>

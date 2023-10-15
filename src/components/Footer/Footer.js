@@ -3,18 +3,21 @@ import React from 'react';
 function Footer() {
 
   return (
-    <footer class="footer">
-      <p class="footer__copyright">&#169; 2023</p>
-      <nav>
-        <ul class="footer__links">
-          <li>
-            <a class='footer__link' href='https://yandex.ru/maps' target='_blank' rel='noreferrer'>Карты</a>
-          </li>
-          <li>
-            <a class='footer__link' href='https://yandex.ru/pogoda' target='_blank' rel='noreferrer'>Погода</a>
-          </li>
-        </ul>
-      </nav>    
+    <footer className='footer'>
+      <h2 className='section__title'>Учебный проект Яндекс.Практикум х BeatFilm.</h2>
+      <div className='footer__container'>
+        <p className='footer__copyright'>&#169; 2023</p>
+        <nav>
+          <ul className='footer__links'>
+            <li>
+              <a className='footer__link' href='https://practicum.yandex.ru' target='_blank' rel='noreferrer'>Яндекс.Практикум</a>
+            </li>
+            <li>
+              <a className='footer__link' href='https://github.com' target='_blank' rel='noreferrer'>Github</a>
+            </li>
+          </ul>
+        </nav>
+      </div>        
     </footer> 
   )
 }
