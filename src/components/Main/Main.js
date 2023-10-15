@@ -7,7 +7,7 @@ import AboutMe from '../AboutMe/AboutMe';
 import { CurrentUserContext } from '../contexts/CurrentUserContext.js';
 
 function Main(props) {
-  const {account, loggedIn, title, onAuthorization} = props;
+  const {account, loggedIn, onAuthorization} = props;
   const currentUser = React.useContext(CurrentUserContext);
 
   return (
@@ -17,12 +17,9 @@ function Main(props) {
       <Promo />
       <AboutProject />
       <Techs />
-      <AboutMe />
-
-     
+      <AboutMe />     
     </main>
-    </>
-    
+    </>    
   )
 }
 

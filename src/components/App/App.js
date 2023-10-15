@@ -6,13 +6,18 @@ import { CurrentUserContext } from '../contexts/CurrentUserContext.js';
 function App() {
   const [currentUser, setCurrentUser] = React.useState({});
   const [loggedIn, setLoggedIn] = React.useState(false);
+  const [account, setAccount] = React.useState('');
   const navigate = useNavigate();
+
+  function handleProfileNav() {
+    navigate('/profile', {replace: true});
+  }
 
   return (
    <CurrentUserContext.Provider value={currentUser}>
       <Routes>
         <Route path="/" element={
-          <Main loggedIn={loggedIn} />
+          <Main loggedIn={loggedIn} account={account} onAuthorization={handleProfileNav}/>
         }>   
         </Route>
         <Route path="sign-up" element={
