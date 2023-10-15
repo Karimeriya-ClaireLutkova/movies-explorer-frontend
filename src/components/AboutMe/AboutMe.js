@@ -1,29 +1,22 @@
 import React from 'react';
-
+import avatarStudent from '../../images/avatar_student.jpg';
 
 function AboutMe() {
 
   return (
-    <section className='about-me' aria-label="Два блока">
+    <section className='about-me' aria-label="Две части">
       <h2 className='section__title'>Студент</h2>
-      <article className=''>
+      <article className='about-me__info'>
         <h3 className='section__subtitle'>Виталий</h3>
-        <p className='section__paragraph'>.</p>
+        <p className='about-me__info-subline'>Фронтенд-разработчик, 30 лет</p>
+        <p className='section__paragraph'>Я родился и живу в Саратове, закончил факультет экономики СГУ.
+         У меня есть жена и дочь. Я люблю слушать музыку, а ещё увлекаюсь бегом. Недавно начал кодить. 
+         С 2015 года работал в компании «СКБ Контур». После того, как прошёл курс по веб-разработке, 
+         начал заниматься фриланс-заказами и ушёл с постоянной работы.</p>
+        <a className='about-me__link' href='https://github.com/Karimeriya-ClaireLutkova' target='_blank'>Github</a>
+        <img className='about-me__image' src={avatarStudent} alt='Фотография студента'/>
       </article>
-      <article className='two-columns'>
-        <h3 className='two-columns__brief'>На выполнение диплома ушло 5 недель</h3>
-        <p className='two-columns__paragraph'>У каждого этапа был мягкий и жёсткий дедлайн, которые нужно было соблюдать, чтобы успешно защититься.</p>
-      </article>
-      <article className='two-columns'>
-        <div className='two-columns__scheme'>
-          <h3 className='two-columns__brief'>1 неделя</h3>
-          <p className='two-columns__paragraph'>Back-end</p>
-        </div>
-        <div className='two-columns__scheme'>
-          <h3 className='two-columns__brief'>4 недели</h3>
-          <p className='two-columns__paragraph'>Front-end</p>
-        </div>
-      </article>
+      
     </section>    
   )
 }
