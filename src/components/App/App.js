@@ -1,6 +1,7 @@
 import React from 'react';
 import {Routes, Route, useNavigate, Navigate} from 'react-router-dom';
 import Main from '../Main/Main';
+import Footer from '../Footer/Footer';
 import { CurrentUserContext } from '../contexts/CurrentUserContext.js';
 
 function App() {
@@ -19,6 +20,35 @@ function App() {
         <Route path="/" element={
           <Main loggedIn={loggedIn} account={account} onAuthorization={handleProfileNav}/>
         }>   
+        </Route>
+        <Route path="movies" element={
+          <Movies isOpen={isLoginPopupOpen}
+                 loggedIn={loggedIn}
+                 userData={userData.email}
+                 onSubmit={handleLoginSubmit}
+                 onClose={closeAllPopups}
+                 onAuthorization={handleLogoutNav}/>
+        }>
+        </Route>
+        <Route path="saved-movies" element={
+          <SavedMovies isOpen={isLoginPopupOpen}
+                 loggedIn={loggedIn}
+                 userData={userData.email}
+                 onSubmit={handleLoginSubmit}
+                 onClose={closeAllPopups}
+                 onAuthorization={handleLogoutNav}
+          />
+        }>
+        </Route>
+        <Route path="profile" element={
+          <Profile isOpen={isLoginPopupOpen}
+                 loggedIn={loggedIn}
+                 userData={userData.email}
+                 onSubmit={handleLoginSubmit}
+                 onClose={closeAllPopups}
+                 onAuthorization={handleLogoutNav}
+          />
+        }>
         </Route>
         <Route path="sign-up" element={
           <Register isOpen={isRegisterPopupOpen}
