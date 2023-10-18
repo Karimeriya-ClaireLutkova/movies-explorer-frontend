@@ -7,7 +7,7 @@ function NotFoundPage() {
     <section className='missing-page'>
       <img className='missing-page__img' alt='Ошибка с кодом 404' src={imgNotFoundPage}/>
       <h2 className='missing-page__title'>Страница не найдена</h2>
-      <button type='button' className='missing-page__button' onClick={}>Назад</button>
+      <button type='button' className='missing-page__button' onClick>Назад</button>
     </section>    
   )
 }

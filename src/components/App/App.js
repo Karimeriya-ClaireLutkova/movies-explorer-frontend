@@ -2,6 +2,7 @@ import React from 'react';
 import {Routes, Route, useNavigate, Navigate} from 'react-router-dom';
 import Main from '../Main/Main';
 import Footer from '../Footer/Footer';
+import NotFoundPage from '../NotFoundPage/NotFoundPage';
 import { CurrentUserContext } from '../contexts/CurrentUserContext.js';
 
 function App() {
@@ -69,7 +70,11 @@ function App() {
           />
         }>
         </Route>
-        <Route path="*" element={<Navigate to="/" />}></Route>
+        <Route path="*" element={
+          <NotFoundPage 
+          />
+        }>
+        </Route>
       </Routes>
       <Footer />
     </CurrentUserContext.Provider> 
