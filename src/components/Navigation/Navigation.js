@@ -11,9 +11,9 @@ function Navigation(props) {
       <NavLink to='/' className='navigate-autorized__link'>Главная</NavLink>
       <NavLink to='/movies' className='navigate-autorized__link'>Фильмы</NavLink>
       <NavLink to='/saved-movies' className='navigate-autorized__link'>Сохранённые фильмы</NavLink>
-      <button type="button" className='navigate-autorized__button' onClick={onAuthorization}>
-          <span className="">{account}</span>
-          <img className="navigate-autorized__logo" alt="Иконка аккаунта" src={imgAccount}/>
+      <button type='button' className='navigate-autorized__button' onClick={onAuthorization}>
+          <span className=''>{account}</span>
+          <img className='navigate-autorized__logo' alt='Иконка аккаунта' src={imgAccount}/>
       </button>    
     </nav>
     :
