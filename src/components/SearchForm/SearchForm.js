@@ -1,21 +1,22 @@
 import React from 'react';
 import loupeIcon from '../../images/loupe_icon.svg';
+import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
 
 function SearchForm() {
 
   return (
-    <section className='filter-checkbox'>
-      <form className='filter-checkbox__form' name  onSubmit>
-        <img className='filter-checkbox__img' alt='Изображение лупы' src={loupeIcon}/>
-        <div className='filter-checkbox__form-search'>
-          <div className='filter-checkbox__field'>
-            <input id='movies-data-input' type='text' className='filter-checkbox__input filter-checkbox__input_type_entry' name='film' value placeholder='Фильм' onChange required  />
-            <span className='movies-data-input-error filter-checkbox__input-error'></span>
+    <section className='search-form'>
+      <form className='search-form__form' name  onSubmit>
+        <img className='search-form__img' alt='Изображение лупы' src={loupeIcon}/>
+        <div className='search-form__form-search'>
+          <div className='search-form__field'>
+            <input id='movies-data-input' type='text' className='search-form__input search-form__input_type_entry' name='film' value placeholder='Фильм' onChange required  />
+            <span className='movies-data-input-error search-form__input-error'></span>
           </div>
         </div>
-        <button type='submit' className=''>Найти</button>
+        <button type='submit' className='search-form__button'>Найти</button>
       </form>
-      
+      <FilterCheckbox />
 
     </section>    
   )
