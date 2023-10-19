@@ -17,7 +17,6 @@ function SearchForm() {
         <button type='submit' className='search-form__button'>Найти</button>
       </form>
       <FilterCheckbox />
-
     </section>    
   )
 }

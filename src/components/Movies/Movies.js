@@ -4,9 +4,11 @@ import Preloader from '../Preloader/Preloader';
 
 function Movies() {
 
+
   return (
     <section className='movies'>
       <SearchForm />
+      <Preloader />
       
       
     </section>    
