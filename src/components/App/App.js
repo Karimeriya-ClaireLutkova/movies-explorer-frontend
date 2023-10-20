@@ -9,6 +9,7 @@ function App() {
   const [currentUser, setCurrentUser] = React.useState({});
   const [loggedIn, setLoggedIn] = React.useState(false);
   const [account, setAccount] = React.useState('');
+  const [moviesSaved, setMoviesSaved] = React.useState([]);
   const navigate = useNavigate();
 
   function handleProfileNav() {
