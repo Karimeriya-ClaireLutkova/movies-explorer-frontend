@@ -1,9 +1,10 @@
 import React from 'react';
-import {Routes, Route, useNavigate, Navigate} from 'react-router-dom';
+import { Routes, Route, useNavigate, Navigate } from 'react-router-dom';
 import Main from '../Main/Main';
 import Footer from '../Footer/Footer';
 import NotFoundPage from '../NotFoundPage/NotFoundPage';
 import { CurrentUserContext } from '../contexts/CurrentUserContext.js';
+import { initialMoviesCards } from '../../utils/constants';
 
 function App() {
   const [currentUser, setCurrentUser] = React.useState({});
@@ -24,7 +25,8 @@ function App() {
         }>   
         </Route>
         <Route path="movies" element={
-          <Movies isOpen={isLoginPopupOpen}
+          <Movies movies={initialMoviesCards}
+                 isOpen={isLoginPopupOpen}
                  loggedIn={loggedIn}
                  userData={userData.email}
                  onSubmit={handleLoginSubmit}
