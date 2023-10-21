@@ -3,8 +3,7 @@ import {Link} from 'react-router-dom';
 import PopupWithForm from '../PopupWithForm/PopupWithForm';
 import Header from '../Header/Header';
 
-export default function Register(props) {
-  const {isOpen, onSubmit} = props;
+export default function Register({isOpen, onSubmit}) {
   const [name, setName] = React.useState('');
   const [userEmail, setUserEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
@@ -31,7 +30,7 @@ export default function Register(props) {
 
   return (
     <>
-      <Header id="2" />
+      <Header id="5" />
       <PopupWithForm id="2" name="registration-user" title="Добро пожаловать!"
                      isOpen={isOpen}
                      onSubmit={handleSubmit}
