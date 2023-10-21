@@ -5,6 +5,7 @@ import Footer from '../Footer/Footer';
 import NotFoundPage from '../NotFoundPage/NotFoundPage';
 import Movies from '../Movies/Movies';
 import SavedMovies from '../SavedMovies';
+import Register from '../Register/Register';
 import { CurrentUserContext } from '../contexts/CurrentUserContext.js';
 import { initialMoviesCards, SCREEN_MIN, SCREEN_MEDIUM, SCREEN_BIG, SCREEN_MAX } from '../../utils/constants';
 
@@ -82,12 +83,7 @@ function App() {
         }>
         </Route>
         <Route path="sign-up" element={
-          <Register isOpen={isRegisterPopupOpen}
-                    loggedIn={loggedIn}
-                    onSubmit={handleRegisterSubmit}
-                    onClose={closeAllPopups}
-                    onAuthorization={handleLoginNav}
-          />
+          <Register isOpen={isRegisterPopupOpen} onSubmit={handleRegisterSubmit} />
         }>   
         </Route>
         <Route path="sign-in" element={
