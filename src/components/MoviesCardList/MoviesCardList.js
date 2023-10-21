@@ -1,12 +1,12 @@
 import React from 'react';
 import MoviesCard from '../MoviesCard/MoviesCard';
 
-function MoviesCardList({ movies }) {
+function MoviesCardList({ movies, userData }) {
 
   return (
     <section className="elements" aria-label="Список фильмов">
         {movies.map((movie, i) => (
-          <MoviesCard key={movie.movieId} image={movie.image} name={movie.nameRU} owner={movie.owner} onCardClick={props.isCardClick} />
+          <MoviesCard key={movie.movieId} userData={userData} image={movie.image} name={movie.nameRU} owner={movie.owner} onCardClick={props.isCardClick} />
         ))}
     </section>    
   )

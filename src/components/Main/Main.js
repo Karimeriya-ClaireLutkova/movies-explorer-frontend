@@ -4,11 +4,9 @@ import Promo from '../Promo/Promo';
 import AboutProject from '../AboutProject/AboutProject';
 import Techs from '../Techs/Techs';
 import AboutMe from '../AboutMe/AboutMe';
-import { CurrentUserContext } from '../contexts/CurrentUserContext.js';
 
 function Main(props) {
   const {account, loggedIn, onAuthorization} = props;
-  const currentUser = React.useContext(CurrentUserContext);
 
   return (
     <>

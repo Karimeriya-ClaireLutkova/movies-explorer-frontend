@@ -2,11 +2,10 @@ import React from 'react';
 import { useLocation } from 'react-router-dom';
 import { CurrentUserContext } from '../contexts/CurrentUserContext.js';
 
-function MoviesCard({ image, name, owner, onCardClick, duration }) {
+function MoviesCard({ userData, image, name, owner, onCardClick, duration }) {
   const { pathname } = useLocation();
-  const currentUser = React.useContext(CurrentUserContext);
-  const isLiked  = card.likes.some(i => i._id === currentUser._id);
-  const isOwn = owner._id === currentUser._id;
+  const isLiked  = card.likes.some(i => i._id === userData._id);
+  const isOwn = owner._id === userData._id;
   const cardLikeButtonClassName = (`element__button element__button_like ${isLiked && "element__button_like_active"}`);
 
   return (

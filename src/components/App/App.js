@@ -10,6 +10,7 @@ import { initialMoviesCards, SCREEN_MIN, SCREEN_MEDIUM, SCREEN_BIG, SCREEN_MAX }
 
 function App() {
   const [usersBase, setUsersBase] = React.useState([]);
+  const [userData, setUserData] = React.useState({_id: '', name: '', email: ''});
   const [counterUser, setcounterUser] = React.useState(0);
   const [loggedIn, setLoggedIn] = React.useState(false);
   const [account, setAccount] = React.useState('');
@@ -94,6 +95,7 @@ function App() {
         <Route path="movies" element={
           <Movies movies={initialMoviesCards}
                  useResize={useResize}
+                 userData={userData}
                  loggedIn={loggedIn}
                  onAuthorization={handleLogoutNav}/>
         }>
@@ -135,7 +137,7 @@ function App() {
         }>
         </Route>
       </Routes>
-      <Footer />
+      { (pathname === '/' || pathname === '/movies' || pathname === '/saved-movies') && <Footer /> }
     </> 
   );
 }

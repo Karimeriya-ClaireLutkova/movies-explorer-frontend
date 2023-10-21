@@ -3,7 +3,7 @@ import SearchForm from '../SearchForm/SearchForm';
 import Preloader from '../Preloader/Preloader';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 
-function Movies({ movies, useResize }) {
+function Movies({ movies, useResize, userData }) {
   const length = movies.length;
   const { counterMovies } = useResize();
   const [initialDisplay, setInitialDisplay] = React.useState(0);
@@ -36,7 +36,7 @@ function Movies({ movies, useResize }) {
       {loading ? (
         <Preloader />
       ) : (
-        <MoviesCardList movies={moviesList} />
+        <MoviesCardList movies={moviesList} userData={userData} />
       )}
       <div className="movies__container">
         <button className={className} type="button" onClick={handleChangeDescription}>Ещё</button>
