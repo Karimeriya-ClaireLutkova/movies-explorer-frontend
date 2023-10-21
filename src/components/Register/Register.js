@@ -5,8 +5,13 @@ import Header from '../Header/Header';
 
 export default function Register(props) {
   const {isOpen, onSubmit} = props;
+  const [name, setName] = React.useState('');
   const [userEmail, setUserEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
+
+  function handleChangeName(evt) {
+    setName(evt.target.value);
+  }
 
   function handleChangeEmail(evt) {
     setUserEmail(evt.target.value);
@@ -18,9 +23,10 @@ export default function Register(props) {
 
   function handleSubmit(evt) {
     evt.preventDefault();
-    onSubmit(userEmail, password);
+    onSubmit(name, userEmail, password);
     setUserEmail('');
     setPassword('');
+    setName('');
   }
 
   return (
@@ -32,8 +38,8 @@ export default function Register(props) {
                      buttonText={"Зарегистрироваться"}>
         <div className="popup__field">
           <p className="popup__input-text">Имя</p>
-          <input id="user-email-input" type="email" className="popup__input popup__input_type_entry" name="email" placeholder="Email" value={userEmail} onChange={handleChangeEmail} required  />
-          <span className="user-email-input-error popup__input-error"></span>
+          <input id="user-name-input" type="text" className="popup__input popup__input_type_entry" name="name" placeholder="Виталий" value={name} onChange={handleChangeName} required  />
+          <span className="user-name-input-error popup__input-error"></span>
         </div>
         <div className="popup__field">
           <p className="popup__input-text">E-mail</p>

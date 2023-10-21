@@ -6,16 +6,18 @@ import NotFoundPage from '../NotFoundPage/NotFoundPage';
 import Movies from '../Movies/Movies';
 import SavedMovies from '../SavedMovies';
 import Register from '../Register/Register';
-import { CurrentUserContext } from '../contexts/CurrentUserContext.js';
 import { initialMoviesCards, SCREEN_MIN, SCREEN_MEDIUM, SCREEN_BIG, SCREEN_MAX } from '../../utils/constants';
 
 function App() {
-  const [currentUser, setCurrentUser] = React.useState({});
+  const [usersBase, setUsersBase] = React.useState([]);
+  const [counterUser, setcounterUser] = React.useState(0);
   const [loggedIn, setLoggedIn] = React.useState(false);
   const [account, setAccount] = React.useState('');
   const [moviesSaved, setMoviesSaved] = React.useState([]);
   const [counterMovies, setCounterMovies] = React.useState(0);
   const navigate = useNavigate();
+  const [isRegisterPopupOpen, setRegisterPopupOpen] = React.useState(true);
+  const [isLoginPopupOpen, setLoginPopupOpen] = React.useState(true);
 
   function useResize () {
     const [width, setWidth] = React.useState(window.innerWidth);
@@ -45,14 +47,46 @@ function App() {
       counterMovies      
     }
   }
-  
+  function handleCloseRegistration() {
+    setRegisterPopupOpen(false)
+    setLoginPopupOpen(true);
+    navigate("/sign-in", {replace: true});
+  }
+
+  function handleRegisterSubmit(name, userEmail, password) {
+    setcounterUser(counterUser + 1)
+    setUsersBase({ _id: counterUser, name: name, email: userEmail, password: password })
+    handleCloseRegistration();
+  }
 
   function handleProfileNav() {
     navigate('/profile', {replace: true});
   }
 
+  function closeAllPopups() {
+    setEditProfilePopupOpen(false);
+    setRegisterPopupOpen(false);
+    setLoginPopupOpen(false);
+  }
+
+  function handleLoginNav() {
+    navigate('/sign-in', {replace: true});
+  }
+
+  function handleLogoutNav() {
+    navigate('/sign-up', {replace: true});
+  }
+
+  function signOut() {
+    localStorage.removeItem('jwt');
+    navigate('/sign-in');
+    setLoggedIn(false);
+    setUserData({_id: '', email: ''});
+    setLoginPopupOpen(true);
+  }
+
   return (
-   <CurrentUserContext.Provider value={currentUser}>
+   <>
       <Routes>
         <Route path="/" element={
           <Main loggedIn={loggedIn} account={account} onAuthorization={handleProfileNav}/>
@@ -103,7 +137,7 @@ function App() {
         </Route>
       </Routes>
       <Footer />
-    </CurrentUserContext.Provider> 
+    </> 
   );
 }
 
