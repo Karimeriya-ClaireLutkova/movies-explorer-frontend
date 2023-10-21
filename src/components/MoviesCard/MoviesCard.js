@@ -1,6 +1,5 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
-import { CurrentUserContext } from '../contexts/CurrentUserContext.js';
 
 function MoviesCard({ userData, image, name, owner, onCardClick, duration }) {
   const { pathname } = useLocation();
