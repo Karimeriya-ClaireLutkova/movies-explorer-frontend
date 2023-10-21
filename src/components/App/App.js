@@ -112,8 +112,9 @@ function App() {
           <Movies movies={initialMoviesCards}
                  useResize={useResize}
                  userData={userData}
-                 loggedIn={loggedIn}
-                 onAuthorization={handleLogoutNav}/>
+                 onMovieLike={handleMovieLike} 
+                 onMovieDelete={handleMovieDelete}
+          />
         }>
         </Route>
         <Route path="saved-movies" element={
