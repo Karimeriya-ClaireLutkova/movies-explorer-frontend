@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom';
 import PopupWithForm from '../PopupWithForm/PopupWithForm';
 import Header from '../Header/Header';
 
-export default function Register({isOpen, onSubmit}) {
+export default function Register({isOpen, onSubmit, onClose}) {
   const [name, setName] = React.useState('');
   const [userEmail, setUserEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
@@ -26,6 +26,7 @@ export default function Register({isOpen, onSubmit}) {
     setUserEmail('');
     setPassword('');
     setName('');
+    onClose()
   }
 
   return (

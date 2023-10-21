@@ -5,6 +5,7 @@ import Footer from '../Footer/Footer';
 import NotFoundPage from '../NotFoundPage/NotFoundPage';
 import Movies from '../Movies/Movies';
 import SavedMovies from '../SavedMovies';
+import Profile from '../Profile/Profile';
 import Register from '../Register/Register';
 import Login from '../Login/Login';
 import { initialMoviesCards, SCREEN_MIN, SCREEN_MEDIUM, SCREEN_BIG, SCREEN_MAX, JWT } from '../../utils/constants';
@@ -105,21 +106,24 @@ function App() {
     navigate('/profile', {replace: true});
   }
 
+  function handleUpdateUser(item) {
+    setUserData(item);
+    closeAllPopups();
+  }
+  
   function closeAllPopups() {
     setEditProfilePopupOpen(false);
     setRegisterPopupOpen(false);
     setLoginPopupOpen(false);
   }
 
-  function handleLogoutNav() {
-    navigate('/sign-up', {replace: true});
-  }
-
   function signOut() {
     localStorage.removeItem('jwt');
-    navigate('/sign-in');
     setLoggedIn(false);
-    setLoginPopupOpen(true);
+    closeAllPopups();
+    setAccount('');
+    setUserData({_id: '', name: '', email: ''});
+    navigate('/');   
   }
 
   return (
@@ -151,17 +155,22 @@ function App() {
         }>
         </Route>
         <Route path="profile" element={
-          <Profile isOpen={isLoginPopupOpen}
+          <Profile isOpen={isEditProfilePopupOpen}
                  loggedIn={loggedIn}
-                 userData={userData.email}
+                 userData={userData}
                  onSubmit={handleLoginSubmit}
-                 onClose={closeAllPopups}
-                 onAuthorization={handleLogoutNav}
+                 onSignOut={signOut}
+                 account={account}
+                 onAuthorization={handleProfileNav}
+                 onUpdateUser={handleUpdateUser}
           />
         }>
         </Route>
         <Route path="sign-up" element={
-          <Register isOpen={isRegisterPopupOpen} onSubmit={handleRegisterSubmit} />
+          <Register isOpen={isRegisterPopupOpen}
+                    onSubmit={handleRegisterSubmit}
+                    onClose={closeAllPopups}
+          />
         }>   
         </Route>
         <Route path="sign-in" element={
