@@ -14,10 +14,10 @@ function App() {
   const [loggedIn, setLoggedIn] = React.useState(false);
   const [account, setAccount] = React.useState('');
   const [moviesSaved, setMoviesSaved] = React.useState([]);
-  const [counterMovies, setCounterMovies] = React.useState(0);
   const navigate = useNavigate();
   const [isRegisterPopupOpen, setRegisterPopupOpen] = React.useState(true);
   const [isLoginPopupOpen, setLoginPopupOpen] = React.useState(true);
+  const [isEditProfilePopupOpen, setEditProfilePopupOpen] = React.useState(false);
 
   function useResize () {
     const [width, setWidth] = React.useState(window.innerWidth);
@@ -81,7 +81,6 @@ function App() {
     localStorage.removeItem('jwt');
     navigate('/sign-in');
     setLoggedIn(false);
-    setUserData({_id: '', email: ''});
     setLoginPopupOpen(true);
   }
 
