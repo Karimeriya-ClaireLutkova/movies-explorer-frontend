@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from 'react-router-dom';
 import Header from './Header';
 import PopupWithForm from './PopupWithForm';
 
@@ -30,12 +31,18 @@ export default function Login ({onSubmit, isOpen, onClose}) {
                      onSubmit={handleSubmit}
                      buttonText={"Войти"}>
         <div className="popup__field">
-          <input id="user-email-input" type="email" className="popup__input popup__input_type_entry" name="email" value={userEmail} placeholder="Email" onChange={handleChangeEmail} required  />
+          <p className="popup__input-text">E-mail</p>
+          <input id="user-email-input" type="email" className="popup__input popup__input_type_entry" name="email" value={userEmail} placeholder="pochta@yandex.ru|" onChange={handleChangeEmail} required  />
           <span className="user-email-input-error popup__input-error"></span>
         </div>
         <div className="popup__field">
-          <input id="user-password-input" type="password" className="popup__input popup__input_type_entry" name="password" value={password} placeholder="Пароль" onChange={handleChangePassword} required />
+          <p className="popup__input-text">Пароль</p>
+          <input id="user-password-input" type="password" className="popup__input popup__input_type_entry" name="password" value={password} placeholder="" onChange={handleChangePassword} required />
           <span className="user-password-input-error popup__input-error"></span>
+        </div>
+        <div className="popup__signup">
+          <p className="popup__signup_title">Ещё не зарегистрированы?</p>
+          <Link to="/sign-up" className="popup__signup_link">Регистрация</Link>
         </div>
       </PopupWithForm>
    </>
