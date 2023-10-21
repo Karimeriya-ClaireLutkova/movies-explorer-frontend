@@ -1,8 +1,7 @@
 import React from 'react';
 import MoviesCard from '../MoviesCard/MoviesCard';
 
-function MoviesCardList(movies) {
-
+function MoviesCardList({ movies, i }) {
 
   return (
     <section className="elements" aria-label="Список фильмов">

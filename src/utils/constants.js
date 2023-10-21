@@ -15,6 +15,11 @@ import skateKitchen from '../images/Скейт_кухня.jpg';
 import warOfArts from '../images/Война_искусств.jpg';
 import Zone from '../images/Зона.jpg';
 
+export const SCREEN_MIN = 767;
+export const SCREEN_MEDIUM = 1023;
+export const SCREEN_BIG = 1279;
+export const SCREEN_MAX = 1280;
+
 
 export const initialMoviesCards = [
   {
