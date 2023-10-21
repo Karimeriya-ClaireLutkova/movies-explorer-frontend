@@ -10,6 +10,7 @@ import Login from '../Login/Login';
 import { initialMoviesCards, SCREEN_MIN, SCREEN_MEDIUM, SCREEN_BIG, SCREEN_MAX, JWT } from '../../utils/constants';
 
 function App() {
+  const [initialMovies, setInitialMovies] = React.useState([initialMoviesCards]);
   const [usersBase, setUsersBase] = React.useState([]);
   const [userData, setUserData] = React.useState({_id: '', name: '', email: ''});
   const [counterUser, setcounterUser] = React.useState(0);
@@ -50,6 +51,7 @@ function App() {
       counterMovies      
     }
   }
+
   function handleCloseRegistration() {
     setRegisterPopupOpen(false)
     setLoginPopupOpen(true);
@@ -79,43 +81,21 @@ function App() {
       setAccount('Аккаунт')
     }
   }
-  
-  function handleСheckAuthorization(usersBase, userEmail, password) {
-    const authorization = usersBase.some(i => (i.email === userEmail && i.password === password));
-    if (authorization) {
-      const user = usersBase.find(i => (i.email === userEmail && i.password === password));
-      setUserData({ _id: user._id, name: user.name, email: user.email });
-    }
-    setLoggedIn(authorization);
-  }
-  
+
   function handleMovieLike(movie, userData) {
-
-    if (movie.owner._id === undefined || movie.owner._id === null) {
-      movie.owner._id = userData._id;
-      setMoviesSaved(movie);
+    const movieInitial = initialMovies.find(i => i.movieId === movie.movieId);
+    if (movieInitial.owner._id === undefined || movieInitial.owner._id === null) {
+      setInitialMovies(() => initialMovies.map(item => item.movieId === movieInitial.movieId ? {...item, owner: {_id: userData._id}} : item));
+      setMoviesSaved([movie, ...moviesSaved]);
     } else {
-
+      setInitialMovies(() => initialMovies.map(item => item.movieId === movieInitial.movieId ? {...item, owner: {_id: ''}} : item));
+      const movieNewList = moviesSaved.filter((item) => item.movieId !== movie.movieId);
+      setMoviesSaved(movieNewList);
     }
-   
-
-    api.changeLike(card._id, isLiked)
-      .then((newCard) => {
-        setCards((state) => state.map((c) => c._id === card._id ? newCard : c));
-      })
-      .catch((err) => {
-        console.error(err)
-      });
   }
 
   function handleMovieDelete(movie) {
-    api.deleteCard(card._id)
-      .then(() => {
-        setCards((state) => state.filter((c) => c._id !== card._id));
-      })
-      .catch((err) => {
-        console.error(err)
-      });
+  
   }
 
   function handleProfileNav() {
@@ -147,7 +127,7 @@ function App() {
         }>   
         </Route>
         <Route path="movies" element={
-          <Movies movies={initialMoviesCards}
+          <Movies movies={ininitialMovies}
                  useResize={useResize}
                  userData={userData}
                  onMovieLike={handleMovieLike} 
@@ -156,7 +136,7 @@ function App() {
         }>
         </Route>
         <Route path="saved-movies" element={
-          <SavedMovies movies={initialMoviesCards}
+          <SavedMovies movies={moviesSaved}
                        loggedIn={loggedIn}
           />
         }>
