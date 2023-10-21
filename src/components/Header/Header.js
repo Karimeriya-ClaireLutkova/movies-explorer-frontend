@@ -8,7 +8,7 @@ function Header(props) {
   const { pathname } = useLocation();
   return (
     <header className="header">
-      <Link className="header__link" to="/" relative="path">
+      <Link className="header__link" to="/">
         <img className="header__logo" alt="Логотип Movies Explorer" src={logoHeader}/>
       </Link>
       { (pathname === '/' || pathname === '/movies' || pathname === '/saved-movies') && <Navigation account={account} loggedIn={loggedIn} onAuthorization={onAuthorization}></Navigation>
