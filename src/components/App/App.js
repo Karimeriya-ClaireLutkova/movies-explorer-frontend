@@ -1,5 +1,5 @@
 import React from 'react';
-import { Routes, Route, useNavigate } from 'react-router-dom';
+import { useLocation, Routes, Route, useNavigate } from 'react-router-dom';
 import Main from '../Main/Main';
 import Footer from '../Footer/Footer';
 import NotFoundPage from '../NotFoundPage/NotFoundPage';
@@ -17,6 +17,7 @@ function App() {
   const [account, setAccount] = React.useState('');
   const [moviesSaved, setMoviesSaved] = React.useState([]);
   const navigate = useNavigate();
+  const { pathname } = useLocation();
   const [isRegisterPopupOpen, setRegisterPopupOpen] = React.useState(true);
   const [isLoginPopupOpen, setLoginPopupOpen] = React.useState(true);
   const [isEditProfilePopupOpen, setEditProfilePopupOpen] = React.useState(false);
