@@ -3,8 +3,7 @@ import Navigation from '../Navigation/Navigation';
 import { Link, useLocation } from 'react-router-dom';
 
 
-function Header(props) {
-  const {account, loggedIn, onAuthorization} = props;
+function Header({account, loggedIn, onAuthorization}) {
   const { pathname } = useLocation();
   return (
     <header className="header">

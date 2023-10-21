@@ -1,9 +1,10 @@
 import React from 'react';
+import Header from '../Header/Header';
 import SearchForm from '../SearchForm/SearchForm';
 import Preloader from '../Preloader/Preloader';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 
-function Movies({ movies, useResize, userData, onMovieLike, onMovieDelete}) {
+function Movies({ movies, useResize, userData, onMovieLike, account, loggedIn, onAuthorization}) {
   const length = movies.length;
   const { counterMovies } = useResize();
   const [initialDisplay, setInitialDisplay] = React.useState(0);
@@ -31,18 +32,22 @@ function Movies({ movies, useResize, userData, onMovieLike, onMovieDelete}) {
   }, [initialDisplay, counterMoviesNew, counterMovies, movies, length]);
 
   return (
-    <section className="movies">
-      <SearchForm />
-      {loading ? (
-        <Preloader />
-      ) : (
-        <MoviesCardList movies={moviesList} userData={userData} onMovieLike={onMovieLike} onMovieDelete={onMovieDelete} />
-      )}
-      <div className="movies__container">
-        <button className={className} type="button" onClick={handleChangeDescription}>Ещё</button>
-      </div>
-      
-    </section>    
+    <>
+      <Header id="2" account={account} loggedIn={loggedIn} onAuthorization={onAuthorization} />
+      <main>
+        <section className="movies">
+          <SearchForm />
+          {loading ? (
+            <Preloader />
+          ) : (
+            <MoviesCardList id="1" movies={moviesList} userData={userData} onMovieLike={onMovieLike} />
+          )}
+          <div className="movies__container">
+            <button className={className} type="button" onClick={handleChangeDescription}>Ещё</button>
+          </div>      
+        </section>
+      </main> 
+    </>    
   )
 }
 

@@ -2,8 +2,7 @@ import React from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import imgAccount from '../../images/img_account.svg';
 
-function Navigation(props) {
-  const {account, loggedIn, onAuthorization} = props;
+function Navigation({account, loggedIn, onAuthorization}) {
 
   return (
     {loggedIn} ?
