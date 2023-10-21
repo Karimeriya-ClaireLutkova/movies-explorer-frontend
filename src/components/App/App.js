@@ -1,8 +1,10 @@
 import React from 'react';
-import { Routes, Route, useNavigate, Navigate } from 'react-router-dom';
+import { Routes, Route, useNavigate } from 'react-router-dom';
 import Main from '../Main/Main';
 import Footer from '../Footer/Footer';
 import NotFoundPage from '../NotFoundPage/NotFoundPage';
+import Movies from '../Movies/Movies';
+import SavedMovies from '../SavedMovies';
 import { CurrentUserContext } from '../contexts/CurrentUserContext.js';
 import { initialMoviesCards, SCREEN_MIN, SCREEN_MEDIUM, SCREEN_BIG, SCREEN_MAX } from '../../utils/constants';
 
@@ -58,21 +60,14 @@ function App() {
         <Route path="movies" element={
           <Movies movies={initialMoviesCards}
                  useResize={useResize}
-                 isOpen={isLoginPopupOpen}
                  loggedIn={loggedIn}
-                 userData={userData.email}
-                 onSubmit={handleLoginSubmit}
-                 onClose={closeAllPopups}
                  onAuthorization={handleLogoutNav}/>
         }>
         </Route>
         <Route path="saved-movies" element={
-          <SavedMovies isOpen={isLoginPopupOpen}
-                 loggedIn={loggedIn}
-                 userData={userData.email}
-                 onSubmit={handleLoginSubmit}
-                 onClose={closeAllPopups}
-                 onAuthorization={handleLogoutNav}
+          <SavedMovies movies={initialMoviesCards}
+                       loggedIn={loggedIn}
+                       onAuthorization={handleLogoutNav}
           />
         }>
         </Route>
