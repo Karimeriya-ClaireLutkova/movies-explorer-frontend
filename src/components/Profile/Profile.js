@@ -5,7 +5,7 @@ import Header from '../Header/Header';
 export default function Profile({isOpen, onSignOut, onUpdateUser, account, loggedIn, onAuthorization, userData}) {
   const [name, setName] = React.useState('');
   const [email, setEmail] = React.useState('');
-  const [currentUserData, setCurrentUserData] = React.useState(userData);
+  const currentUserData = userData;
   const greeting = `Привет, ${currentUserData.name}!`;
 
   React.useEffect(() => {

@@ -105,6 +105,10 @@ function App() {
   function handleProfileNav() {
     navigate('/profile', {replace: true});
   }
+   
+  function handleGoBackPageNav() {
+    navigate(-1, {replace: true});
+  }
 
   function handleUpdateUser(item) {
     setUserData(item);
@@ -182,8 +186,7 @@ function App() {
         }>
         </Route>
         <Route path="*" element={
-          <NotFoundPage 
-          />
+          <NotFoundPage onBack={handleGoBackPageNav} />
         }>
         </Route>
       </Routes>
