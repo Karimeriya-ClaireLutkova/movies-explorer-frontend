@@ -11,7 +11,7 @@ function MoviesCard({ userData, movie, onMovieLike, onMovieDelete }) {
   }
 
   function handleDeleteClick() {
-    onMovieDelete(movie, userData);
+    onMovieDelete(movie);
   }
 
   return (
@@ -21,9 +21,9 @@ function MoviesCard({ userData, movie, onMovieLike, onMovieDelete }) {
         <h3 className="element__title">{movie.nameRU}</h3>
         <div className="element__container-like">
           { pathname === '/movies' ? (
-              <button type="button" className={cardLikeButtonClassName} aria-label="Добавить в сохраненные фильмы" onClick={handleLikeClick} />
+              <button type="button" className={cardLikeButtonClassName} aria-label="Добавить фильм в сохраненные" onClick={handleLikeClick} />
             ) : (
-              <button type="button" className="element__button element__button_delete element__button_delete_active" aria-label="Удалить карточку места" onClick={handleDeleteClick} />              
+              <button type="button" className="element__button element__button_delete element__button_delete_active" aria-label="Удалить фильм из сохраненных" onClick={handleDeleteClick} />              
             )
           }
         </div>

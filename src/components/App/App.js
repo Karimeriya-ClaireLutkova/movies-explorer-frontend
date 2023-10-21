@@ -95,7 +95,10 @@ function App() {
   }
 
   function handleMovieDelete(movie) {
-  
+    const movieInitial = initialMovies.find(i => i.movieId === movie.movieId);
+    setInitialMovies(() => initialMovies.map(item => item.movieId === movieInitial.movieId ? {...item, owner: {_id: ''}} : item));
+    const movieNewList = moviesSaved.filter((item) => item.movieId !== movie.movieId);
+    setMoviesSaved(movieNewList);
   }
 
   function handleProfileNav() {
@@ -127,17 +130,23 @@ function App() {
         }>   
         </Route>
         <Route path="movies" element={
-          <Movies movies={ininitialMovies}
+          <Movies movies={initialMovies}
                  useResize={useResize}
                  userData={userData}
                  onMovieLike={handleMovieLike} 
-                 onMovieDelete={handleMovieDelete}
+                 loggedIn={loggedIn} 
+                 account={account} 
+                 onAuthorization={handleProfileNav}
           />
         }>
         </Route>
         <Route path="saved-movies" element={
           <SavedMovies movies={moviesSaved}
+                       userData={userData}
+                       onMovieDelete={handleMovieDelete}
                        loggedIn={loggedIn}
+                       account={account}
+                       onAuthorization={handleProfileNav}
           />
         }>
         </Route>
