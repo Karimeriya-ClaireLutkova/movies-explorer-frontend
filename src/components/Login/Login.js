@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom';
 import Header from './Header';
 import PopupWithForm from './PopupWithForm';
 
-export default function Login ({onSubmit, isOpen, onClose}) {
+export default function Login ({onSubmit, isOpen, onClose, usersBase}) {
   const [userEmail, setUserEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
 
@@ -17,7 +17,7 @@ export default function Login ({onSubmit, isOpen, onClose}) {
 
   function handleSubmit(evt) {
     evt.preventDefault();
-    onSubmit(userEmail, password);
+    onSubmit(userEmail, password, usersBase);
     setUserEmail('');
     setPassword('');
     onClose();

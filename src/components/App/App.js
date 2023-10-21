@@ -6,7 +6,8 @@ import NotFoundPage from '../NotFoundPage/NotFoundPage';
 import Movies from '../Movies/Movies';
 import SavedMovies from '../SavedMovies';
 import Register from '../Register/Register';
-import { initialMoviesCards, SCREEN_MIN, SCREEN_MEDIUM, SCREEN_BIG, SCREEN_MAX } from '../../utils/constants';
+import Login from '../Login/Login';
+import { initialMoviesCards, SCREEN_MIN, SCREEN_MEDIUM, SCREEN_BIG, SCREEN_MAX, JWT } from '../../utils/constants';
 
 function App() {
   const [usersBase, setUsersBase] = React.useState([]);
@@ -60,6 +61,24 @@ function App() {
     handleCloseRegistration();
   }
 
+  function handleСheckAuthorization(usersBase, userEmail, password) {
+    const authorization = usersBase.some(i => (i.email === userEmail && i.password === password));
+    if (authorization) {
+      const user = usersBase.find(i => (i.email === userEmail && i.password === password));
+      setUserData({ _id: user._id, name: user.name, email: user.email });
+    }
+    setLoggedIn(authorization);
+  }
+
+  function handleLoginSubmit(userEmail, password, usersBase) {
+    handleСheckAuthorization(userEmail, password, usersBase);
+    if (loggedIn) {
+      localStorage.setItem('jwt', JWT);
+      navigate('/movies', { replace: true });
+      setAccount('Аккаунт')
+    }
+  }
+
   function handleProfileNav() {
     navigate('/profile', {replace: true});
   }
@@ -68,10 +87,6 @@ function App() {
     setEditProfilePopupOpen(false);
     setRegisterPopupOpen(false);
     setLoginPopupOpen(false);
-  }
-
-  function handleLoginNav() {
-    navigate('/sign-in', {replace: true});
   }
 
   function handleLogoutNav() {
@@ -123,11 +138,9 @@ function App() {
         </Route>
         <Route path="sign-in" element={
           <Login isOpen={isLoginPopupOpen}
-                 loggedIn={loggedIn}
-                 userData={userData.email}
                  onSubmit={handleLoginSubmit}
                  onClose={closeAllPopups}
-                 onAuthorization={handleLogoutNav}
+                 usersBase={usersBase}
           />
         }>
         </Route>
