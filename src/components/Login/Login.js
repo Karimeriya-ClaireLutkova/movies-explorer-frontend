@@ -1,7 +1,7 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
-import Header from './Header';
-import PopupWithForm from './PopupWithForm';
+import Header from '../Header/Header';
+import PopupWithForm from '../PopupWithForm/PopupWithForm';
 
 export default function Login ({onSubmit, isOpen, onClose, usersBase}) {
   const [userEmail, setUserEmail] = React.useState('');
