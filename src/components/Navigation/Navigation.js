@@ -18,8 +18,8 @@ function Navigation({account, loggedIn, onAuthorization}) {
         </nav>
       ) : (
         <nav className="navigate-access">
-          <Link to="/signup" className="navigate-access__link">Регистрация</Link>
-          <Link to="/signup" className="navigate-access__link">Войти</Link>
+          <Link to="/sign-up" className="navigate-access__link">Регистрация</Link>
+          <Link to="/sign-in" className="navigate-access__link">Войти</Link>
         </nav>
       )}
     </div>    
