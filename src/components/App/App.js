@@ -15,8 +15,8 @@ function App() {
   const [usersBase, setUsersBase] = React.useState([]);
   const [userData, setUserData] = React.useState({_id: '', name: '', email: ''});
   const [counterUser, setcounterUser] = React.useState(0);
-  const [loggedIn, setLoggedIn] = React.useState(false);
-  const [account, setAccount] = React.useState('');
+  const [loggedIn, setLoggedIn] = React.useState(true);
+  const [account, setAccount] = React.useState('Аккаунт');
   const [moviesSaved, setMoviesSaved] = React.useState([]);
   const navigate = useNavigate();
   const { pathname } = useLocation();
@@ -110,6 +110,15 @@ function App() {
     navigate(-1, {replace: true});
   }
 
+  function handleNavigationBar() {
+    const nav = document.getElementById("navBar");
+    if (nav.className === "navigate-autorized") {
+      nav.className += " navigate-autorized_responsive";
+    } else {
+      nav.className = "navigate-autorized";
+    }
+  }
+
   function handleUpdateUser(item) {
     setUserData(item);
     closeAllPopups();
@@ -134,7 +143,11 @@ function App() {
    <>
       <Routes>
         <Route path="/" element={
-          <Main loggedIn={loggedIn} account={account} onAuthorization={handleProfileNav}/>
+          <Main loggedIn={loggedIn} 
+                account={account} 
+                onAuthorization={handleProfileNav} 
+                onNavigation={handleNavigationBar}
+          />
         }>   
         </Route>
         <Route path="movies" element={

@@ -5,11 +5,11 @@ import AboutProject from '../AboutProject/AboutProject';
 import Techs from '../Techs/Techs';
 import AboutMe from '../AboutMe/AboutMe';
 
-function Main({account, loggedIn, onAuthorization}) {
+function Main({account, loggedIn, onAuthorization, onNavigation}) {
 
   return (
     <>
-    <Header id="1" account={account} loggedIn={loggedIn} onAuthorization={onAuthorization} />
+    <Header id="1" account={account} loggedIn={loggedIn} onAuthorization={onAuthorization} onNavigation={onNavigation}/>
     <main>
       <Promo />
       <AboutProject />

@@ -4,14 +4,14 @@ import { Link, useLocation } from 'react-router-dom';
 import './Header.css';
 
 
-function Header({account, loggedIn, onAuthorization}) {
+function Header({account, loggedIn, onAuthorization, onNavigation}) {
   const { pathname } = useLocation();
   return (
     <header className="header">
       <Link className="header__link" to="/">
-        <img className="header__logo" alt="Логотип Movies Explorer" src={logoHeader}/>
+        <img className="header__logo" alt="Логотип Movies Explorer" src={logoHeader} />
       </Link>
-      { (pathname === '/' || pathname === '/movies' || pathname === '/saved-movies') && <Navigation account={account} loggedIn={loggedIn} onAuthorization={onAuthorization}></Navigation>
+      { (pathname === '/' || pathname === '/movies' || pathname === '/saved-movies') && <Navigation account={account} loggedIn={loggedIn} onAuthorization={onAuthorization} onNavigation={onNavigation} />
       }
     </header>
   )
