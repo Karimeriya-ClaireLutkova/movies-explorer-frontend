@@ -4,7 +4,7 @@ import SearchForm from '../SearchForm/SearchForm';
 import Preloader from '../Preloader/Preloader';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 
-function Movies({ movies, useResize, userData, onMovieLike, account, loggedIn, onAuthorization}) {
+function Movies({ movies, useResize, userData, onMovieLike, account, loggedIn, onAuthorization, onNavigation}) {
   const length = movies.length;
   const { counterMovies } = useResize();
   const [initialDisplay, setInitialDisplay] = React.useState(0);
@@ -34,7 +34,7 @@ function Movies({ movies, useResize, userData, onMovieLike, account, loggedIn, o
 
   return (
     <>
-      <Header id="2" account={account} loggedIn={loggedIn} onAuthorization={onAuthorization} />
+      <Header id="2" account={account} loggedIn={loggedIn} onAuthorization={onAuthorization} onNavigation={onNavigation} />
       <main>
         <section className="movies">
           <SearchForm />

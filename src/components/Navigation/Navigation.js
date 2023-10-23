@@ -5,6 +5,9 @@ import dropdownNavBar from '../../images/nav_bar.svg';
 import './Navigation.css';
 
 function Navigation({account, loggedIn, onAuthorization, onNavigation}) {
+  function handleCloseNavBar() {
+    onNavigation();
+  }
 
   return (
     <div>
@@ -13,7 +16,7 @@ function Navigation({account, loggedIn, onAuthorization, onNavigation}) {
           <button onClick={onNavigation} className="navigate-autorized__dropdown">
             <img className="header__logo" alt="Логотип Movies Explorer" src={dropdownNavBar} />
           </button>
-          <button type="button" className="navigate-autorized__button navigate-autorized__button_type_close" onClick={onAuthorization}></button>
+          <button type="button" className="navigate-autorized__button navigate-autorized__button_type_close" onClick={handleCloseNavBar}></button>
           <NavLink to="/" className="navigate-autorized__link navigate-autorized__link_hidden">Главная</NavLink>
           <NavLink to="/movies" className="navigate-autorized__link">Фильмы</NavLink>
           <NavLink to="/saved-movies" className="navigate-autorized__link">Сохранённые фильмы</NavLink>

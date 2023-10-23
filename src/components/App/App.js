@@ -159,6 +159,7 @@ function App() {
                  loggedIn={loggedIn} 
                  account={account} 
                  onAuthorization={handleProfileNav}
+                 onNavigation={handleNavigationBar}
           />
         }>
         </Route>
@@ -169,6 +170,7 @@ function App() {
                        loggedIn={loggedIn}
                        account={account}
                        onAuthorization={handleProfileNav}
+                       onNavigation={handleNavigationBar}                       
           />
         }>
         </Route>
@@ -181,7 +183,7 @@ function App() {
                  account={account}
                  onAuthorization={handleProfileNav}
                  onUpdateUser={handleUpdateUser}
-                 onNavigation={handleProfileNav}
+                 onNavigation={handleNavigationBar}
           />
         }>
         </Route>
