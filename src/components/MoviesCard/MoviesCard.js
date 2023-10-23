@@ -4,7 +4,7 @@ import { useLocation } from 'react-router-dom';
 function MoviesCard({ userData, movie, onMovieLike, onMovieDelete }) {
   const { pathname } = useLocation();
   const isOwn = movie.owner._id !== userData._id;
-  const cardLikeButtonClassName = (`element__button element__button_like ${isOwn && "element__button_like_active"}`);
+  const cardLikeButtonClassName = `element__button element__button_like ${isOwn ? "element__button_like_active" : ""}`;
 
   function handleLikeClick() {
     onMovieLike(movie, userData);

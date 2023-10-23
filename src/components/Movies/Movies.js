@@ -9,10 +9,11 @@ function Movies({ movies, useResize, userData, onMovieLike, account, loggedIn, o
   const { counterMovies } = useResize();
   const [initialDisplay, setInitialDisplay] = React.useState(0);
   const [counterMoviesNew, setCounterMoviesNew] = React.useState(counterMovies);
-  const [moviesList, setMoviesList] = React.useState();
+  const [moviesList, setMoviesList] = React.useState(movies.slice(initialDisplay, counterMoviesNew));
   const [buttonActive, setButtonActive] = React.useState(true);
   const [loading, setloading] = React.useState(false);
   const className = `movies__button movies__button_type_${buttonActive ? "active" : ""}`;
+
   function handleChangeDescription() {
     setCounterMoviesNew(counterMoviesNew + counterMovies);
     setInitialDisplay(initialDisplay + counterMovies);

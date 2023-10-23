@@ -11,7 +11,7 @@ import Login from '../Login/Login';
 import { initialMoviesCards, SCREEN_MIN, SCREEN_MEDIUM, SCREEN_BIG, SCREEN_MAX, JWT } from '../../utils/constants';
 
 function App() {
-  const [initialMovies, setInitialMovies] = React.useState([initialMoviesCards]);
+  const [initialMovies, setInitialMovies] = React.useState(initialMoviesCards);
   const [usersBase, setUsersBase] = React.useState([]);
   const [userData, setUserData] = React.useState({_id: '', name: '', email: ''});
   const [counterUser, setcounterUser] = React.useState(0);

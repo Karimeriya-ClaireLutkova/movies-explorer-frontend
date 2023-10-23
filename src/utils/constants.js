@@ -713,6 +713,13 @@ export const initialMoviesCards = [
     nameRU: '33 слова о дизайне',
     image: wordsAboutDesign,
     owner: {},
+    movieId: 99
+  }, 
+  {
+    duration: '1ч 42м',
+    nameRU: '33 слова о дизайне',
+    image: wordsAboutDesign,
+    owner: {},
     movieId: 100
   }  
 ];
