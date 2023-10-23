@@ -21,8 +21,10 @@ function Navigation({account, loggedIn, onAuthorization, onNavigation}) {
           <NavLink to="/movies" className="navigate-autorized__link">Фильмы</NavLink>
           <NavLink to="/saved-movies" className="navigate-autorized__link">Сохранённые фильмы</NavLink>
           <button type="button" className="navigate-autorized__button navigate-autorized__button_type_account" onClick={onAuthorization}>
-            <span className="">{account}</span>
-            <img className="navigate-autorized__logo" alt="Иконка аккаунта" src={imgAccount}/>
+            <p className="navigate-autorized_text">{account}</p>
+            <div className="navigate-autorized__container-logo">
+              <img className="navigate-autorized__logo" alt="Иконка аккаунта" src={imgAccount}/>
+            </div>            
           </button>
         </nav>
       ) : (
