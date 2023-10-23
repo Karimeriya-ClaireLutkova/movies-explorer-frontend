@@ -2,7 +2,7 @@ import React from 'react';
 import PopupWithForm from '../PopupWithForm/PopupWithForm';
 import Header from '../Header/Header';
 
-export default function Profile({isOpen, onSignOut, onUpdateUser, account, loggedIn, onAuthorization, userData}) {
+export default function Profile({isOpen, onSignOut, onUpdateUser, account, loggedIn, onAuthorization, userData, onNavigation}) {
   const [name, setName] = React.useState('');
   const [email, setEmail] = React.useState('');
   const currentUserData = userData;
@@ -35,7 +35,7 @@ export default function Profile({isOpen, onSignOut, onUpdateUser, account, logge
 
   return (
     <>
-      <Header id="4" account={account} loggedIn={loggedIn} onAuthorization={onAuthorization} />
+      <Header id="4" account={account} loggedIn={loggedIn} onAuthorization={onAuthorization} onNavigation={onNavigation} />
       <main>
         <PopupWithForm id="1" name="profile-info" title={greeting}
                        isOpen={isOpen}

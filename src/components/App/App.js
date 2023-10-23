@@ -104,6 +104,7 @@ function App() {
 
   function handleProfileNav() {
     navigate('/profile', {replace: true});
+    handleNavigationBar();
   }
    
   function handleGoBackPageNav() {
@@ -180,6 +181,7 @@ function App() {
                  account={account}
                  onAuthorization={handleProfileNav}
                  onUpdateUser={handleUpdateUser}
+                 onNavigation={handleProfileNav}
           />
         }>
         </Route>
