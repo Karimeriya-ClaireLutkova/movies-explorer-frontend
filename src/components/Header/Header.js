@@ -11,7 +11,11 @@ function Header({account, loggedIn, onAuthorization, onNavigation}) {
       <Link className="header__link" to="/">
         <img className="header__logo" alt="Логотип Movies Explorer" src={logoHeader} />
       </Link>
-      { (pathname === '/' || pathname === '/movies' || pathname === '/saved-movies') && <Navigation account={account} loggedIn={loggedIn} onAuthorization={onAuthorization} onNavigation={onNavigation} />
+      { (pathname === '/' || pathname === '/movies' || pathname === '/saved-movies') && 
+        <Navigation account={account}
+                    loggedIn={loggedIn}
+                    onAuthorization={onAuthorization}
+                    onNavigation={onNavigation} />
       }
     </header>
   )

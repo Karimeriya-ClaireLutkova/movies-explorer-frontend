@@ -9,7 +9,7 @@ function Main({account, loggedIn, onAuthorization, onNavigation}) {
 
   return (
     <>
-    <Header id="1" account={account} loggedIn={loggedIn} onAuthorization={onAuthorization} onNavigation={onNavigation}/>
+    <Header id="1" account={account} loggedIn={loggedIn} onAuthorization={onAuthorization} onNavigation={onNavigation} />
     <main>
       <Promo />
       <AboutProject />

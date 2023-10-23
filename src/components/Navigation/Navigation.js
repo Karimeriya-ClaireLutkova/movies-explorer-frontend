@@ -14,10 +14,10 @@ function Navigation({account, loggedIn, onAuthorization, onNavigation}) {
             <img className="header__logo" alt="Логотип Movies Explorer" src={dropdownNavBar} />
           </button>
           <button type="button" className="navigate-autorized__button navigate-autorized__button_type_close" onClick={onAuthorization}></button>
-          <NavLink to="/" className="navigate-autorized__link">Главная</NavLink>
+          <NavLink to="/" className="navigate-autorized__link navigate-autorized__link_hidden">Главная</NavLink>
           <NavLink to="/movies" className="navigate-autorized__link">Фильмы</NavLink>
           <NavLink to="/saved-movies" className="navigate-autorized__link">Сохранённые фильмы</NavLink>
-          <button type="button" className="navigate-autorized__button" onClick={onAuthorization}>
+          <button type="button" className="navigate-autorized__button navigate-autorized__button_type_account" onClick={onAuthorization}>
             <span className="">{account}</span>
             <img className="navigate-autorized__logo" alt="Иконка аккаунта" src={imgAccount}/>
           </button>
