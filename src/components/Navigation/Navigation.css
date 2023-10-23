@@ -35,6 +35,9 @@
   border: none;
 }
 .navigate-autorized__container-logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 26px;
   height: 26px;
   border-radius: 50%;
@@ -49,12 +52,12 @@
   font-weight: 500;
   line-height: 0.92;
   color: #FFFFFF;
-  margin: 0;
+  margin: 0 7px 0 0;
   padding: 0;
 }
 
 .navigate-autorized__logo {
- 
+   
 }
 
 .navigate-autorized__button_type_close {
@@ -68,6 +71,8 @@
 }
 
 .navigate-autorized__button_type_account {
+  display: flex;
+  align-items: center;
   width: 100px;
   height: 32px;
   margin: 0;
@@ -125,7 +130,7 @@
   }
 
   .navigate-autorized_responsive .navigate-autorized__button_type_account {
-    display: block;
+    display: flex;
   }
 
   .navigate-autorized_responsive .navigate-autorized__button_type_close {

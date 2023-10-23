@@ -3,7 +3,10 @@
   justify-content: flex-start;
   padding: 18px 70px;
   box-sizing: border-box;
-  background-color: #073042;
+}
+
+.header_type_main {
+  background-color: #073042; 
 }
 
 .header__link {

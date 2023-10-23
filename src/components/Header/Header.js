@@ -6,8 +6,9 @@ import './Header.css';
 
 function Header({account, loggedIn, onAuthorization, onNavigation}) {
   const { pathname } = useLocation();
+  const className = `header ${(pathname === '/') ? "header_type_main" : ""}`;
   return (
-    <header className="header">
+    <header className={className}>
       <Link className="header__link" to="/">
         <img className="header__logo" alt="Логотип Movies Explorer" src={logoHeader} />
       </Link>
