@@ -10,11 +10,11 @@ function Navigation({account, loggedIn, onAuthorization, onNavigation}) {
   }
 
   return (
-    <div>
+    <div className="navigate-autorized__container">
       {loggedIn ? (
         <nav className="navigate-autorized" id="navBar">
           <button onClick={onNavigation} className="navigate-autorized__dropdown">
-            <img className="header__logo" alt="Логотип Movies Explorer" src={dropdownNavBar} />
+            <img className="navigate-autorized__logo " alt="Три черты выпвдающего списка навигации" src={dropdownNavBar} />
           </button>
           <button type="button" className="navigate-autorized__button navigate-autorized__button_type_close" onClick={handleCloseNavBar}></button>
           <NavLink to="/" className="navigate-autorized__link navigate-autorized__link_hidden">Главная</NavLink>
