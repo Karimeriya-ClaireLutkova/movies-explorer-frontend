@@ -2,6 +2,12 @@
   width: calc(100% - 82px);
 }
 
+.navigate-autorized__list {
+  align-items: center;
+  display: flex;
+  column-gap: 16px;
+}
+
 .navigate-autorized {
   display: flex;
   position: relative;
@@ -63,10 +69,6 @@
   padding: 0;
 }
 
-.navigate-autorized__logo {
-   
-}
-
 .navigate-autorized__button_type_close {
   width: 22px;
   height: 22px;
@@ -98,6 +100,7 @@
     display: none;
   }
   .navigate-autorized .navigate-autorized__dropdown {
+    padding: 0;
     float: right;
     display: block;
   }

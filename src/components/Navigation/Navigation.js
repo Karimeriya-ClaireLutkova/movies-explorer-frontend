@@ -14,12 +14,14 @@ function Navigation({account, loggedIn, onAuthorization, onNavigation}) {
       {loggedIn ? (
         <nav className="navigate-autorized" id="navBar">
           <button onClick={onNavigation} className="navigate-autorized__dropdown">
-            <img className="navigate-autorized__logo " alt="Три черты выпвдающего списка навигации" src={dropdownNavBar} />
+            <img className="navigate-autorized__logo " alt="Три черты выпадающего списка навигации" src={dropdownNavBar} />
           </button>
           <button type="button" className="navigate-autorized__button navigate-autorized__button_type_close" onClick={handleCloseNavBar}></button>
-          <NavLink to="/" className="navigate-autorized__link navigate-autorized__link_hidden">Главная</NavLink>
-          <NavLink to="/movies" className="navigate-autorized__link">Фильмы</NavLink>
-          <NavLink to="/saved-movies" className="navigate-autorized__link">Сохранённые фильмы</NavLink>
+          <div className="navigate-autorized__list">
+            <NavLink to="/" className="navigate-autorized__link navigate-autorized__link_hidden">Главная</NavLink>
+            <NavLink to="/movies" className="navigate-autorized__link">Фильмы</NavLink>
+            <NavLink to="/saved-movies" className="navigate-autorized__link">Сохранённые фильмы</NavLink>
+          </div>          
           <button type="button" className="navigate-autorized__button navigate-autorized__button_type_account" onClick={onAuthorization}>
             <p className="navigate-autorized_text">{account}</p>
             <div className="navigate-autorized__container-logo">
