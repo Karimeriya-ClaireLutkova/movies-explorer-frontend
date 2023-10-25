@@ -15,7 +15,7 @@ function App() {
   const [usersBase, setUsersBase] = React.useState([]);
   const [userData, setUserData] = React.useState({_id: '', name: '', email: ''});
   const [counterUser, setcounterUser] = React.useState(0);
-  const [loggedIn, setLoggedIn] = React.useState(false);
+  const [loggedIn, setLoggedIn] = React.useState(true);
   const [account, setAccount] = React.useState('Аккаунт');
   const [moviesSaved, setMoviesSaved] = React.useState([]);
   const navigate = useNavigate();
@@ -114,12 +114,16 @@ function App() {
   function handleNavigationBar() {
     const navigationSection = document.querySelector(".navigate-autorized");
     const navigationContainer = document.querySelector(".navigate-autorized__container");
-    if (navigationSection.className === "navigate-autorized" && navigationContainer.className === "navigate-autorized__container") {
+    const page = document.querySelector(".page");
+    if (navigationSection.className === "navigate-autorized" && navigationContainer.className === "navigate-autorized__container" && page.className === "page") {
       navigationSection.className += " navigate-autorized_responsive";
       navigationContainer.className += " navigate-autorized_responsive-active";
+      page.className += " page_disable-scroll";
+
     } else {
       navigationSection.className = "navigate-autorized";
       navigationContainer.className = "navigate-autorized__container";
+      page.className = "page";
     }
   }
 
