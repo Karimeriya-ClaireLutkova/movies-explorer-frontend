@@ -125,7 +125,7 @@
 }
 
 .navigate-access__link_type_entry {
-  width: 76px;
+  min-width: 76px;
   color: #000;
   border-radius: 3px;
   background: #3DDC84;
@@ -259,6 +259,24 @@
   .navigate-autorized_responsive .navigate-autorized__button_type_account {
     margin-top: 434px;
     margin: 435px 110px auto;
-
   }
+
+  .navigate-access {
+    column-gap: 14px;
+    margin: 6px 0;
+    padding: 0;
+  }
+
+  .navigate-access__link {
+    min-width: 54px;
+    padding: 5px 0;
+    font-size: 10px;
+    line-height: 1.6;
+  }
+
+  .navigate-access__link_type_entry {
+    padding: 5px 0;
+    font-size: 10px;
+    line-height: 1.6;
+  } 
 }
