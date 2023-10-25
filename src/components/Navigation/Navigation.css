@@ -101,6 +101,11 @@
   border-radius: 40px;
   box-shadow: 0px 3px 14px 0px rgba(0, 0, 0, 0.08);
 }
+
+.navigate-autorized__container-logo_type_header {
+  background-color: #0F4157;
+}
+
 .navigate-access {
   width: calc(100% - 38px);
   display: flex;
@@ -163,6 +168,10 @@
     background-color: #202020;
     top: 0;
     right: 0;
+  }
+
+  .navigate-autorized__container-logo_type_header {
+    background-color: #313131;
   }
 
   .navigate-autorized_responsive .navigate-autorized__dropdown {

@@ -1,10 +1,11 @@
 import React from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useLocation } from 'react-router-dom';
 import imgAccount from '../../images/img_account.svg';
 import dropdownNavBar from '../../images/nav_bar.svg';
 import './Navigation.css';
 
 function Navigation({account, loggedIn, onAuthorization, onNavigation}) {
+  const { pathname } = useLocation();
   let classNameNavActive = "navigate-autorized__link navigate-autorized__link_type_active";
 
   return (
@@ -23,9 +24,15 @@ function Navigation({account, loggedIn, onAuthorization, onNavigation}) {
             </div>          
             <button type="button" className="navigate-autorized__button navigate-autorized__button_type_account" onClick={onAuthorization}>
               <p className="navigate-autorized_text">{account}</p>
-              <div className="navigate-autorized__container-logo">
-                <img className="navigate-autorized__logo" alt="Иконка аккаунта" src={imgAccount}/>
-              </div>            
+              { pathname === '/' ? (
+                  <div className="navigate-autorized__container-logo navigate-autorized__container-logo_type_header">
+                   <img className="navigate-autorized__logo" alt="Иконка аккаунта" src={imgAccount}/>
+                  </div> 
+              ) : (
+                  <div className="navigate-autorized__container-logo">
+                    <img className="navigate-autorized__logo" alt="Иконка аккаунта" src={imgAccount}/>
+                  </div>
+              )}           
             </button>
           </nav>
         </div>
