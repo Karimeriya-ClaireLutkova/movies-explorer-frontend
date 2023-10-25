@@ -13,7 +13,7 @@
   display: flex;
   position: relative;
   justify-content: space-between;
-  overflow: hidden;
+  box-sizing: border-box;
 }
 
 .navigate-autorized__link {
