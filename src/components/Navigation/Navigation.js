@@ -39,7 +39,7 @@ function Navigation({account, loggedIn, onAuthorization, onNavigation}) {
       ) : (
         <nav className="navigate-access">
           <Link to="/sign-up" className="navigate-access__link">Регистрация</Link>
-          <Link to="/sign-in" className="navigate-access__link">Войти</Link>
+          <Link to="/sign-in" className="navigate-access__link navigate-access__link_type_entry">Войти</Link>
         </nav>
       )}
     </>    
