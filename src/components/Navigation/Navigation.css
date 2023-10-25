@@ -236,6 +236,15 @@
 }
 
 @media (max-width: 620px) {
+  .navigate-autorized__container {
+    width: 40px;
+  }
+
+  .navigate-autorized .navigate-autorized__dropdown {
+    width: 40px;
+    height: 43px;
+  }
+
   .navigate-autorized_responsive {
     width: 320px;
   }
