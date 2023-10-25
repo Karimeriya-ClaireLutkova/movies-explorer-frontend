@@ -10,7 +10,7 @@
   grid-template-columns: repeat(2, 550px);
   grid-template-rows: repeat(3, auto);
   grid-row-gap: 70px;
-  grid-column-gap: 40px;  
+  grid-column-gap: 40px;
   grid-template-areas:
   "title title"
   "stages time"
@@ -76,7 +76,6 @@
   padding: 10px 0;
   box-sizing: border-box;
   letter-spacing: normal;
-
 }
 
 .about-project__brief_type_increase {
@@ -95,4 +94,49 @@
   font-weight: 500;
   line-height: 1.21;
   text-align: center;
+}
+
+@media (max-width: 800px) {
+  .about-project {
+    padding: 90px 50px;
+  }
+  
+  .about-project__container {
+    grid-template-columns: repeat(2, 319px);
+    grid-template-rows: repeat(3, auto);
+    grid-column-gap: 30px;
+  }
+  .about-project__brief {
+    margin: 0 0 22px;
+  }
+
+  .about-project__distribution {
+    margin-top: 23px;
+  }
+  .about-project__brief_type_decrease {
+    width: 140px;
+  }
+
+  .about-project__brief_type_increase {
+    width: 528px;
+  }
+
+  .about-project__paragraph {
+    font-size: 12px;
+    line-height: 1.5;
+  }
+
+  .about-project__paragraph_type_distribution {
+    font-weight: 400;
+  }
+}
+
+@media (max-width: 600px) {
+  .header {
+    padding: 15px 14px 16px;
+  }
+
+  .header__logo {
+    margin: 3px 0 2px;
+  }
 }
