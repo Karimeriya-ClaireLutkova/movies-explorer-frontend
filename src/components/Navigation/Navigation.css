@@ -205,12 +205,12 @@
   }
 
   .navigate-autorized_responsive .navigate-autorized__button_type_close {
-    margin: 13.44px 13.44px 99.44px auto;
+    margin: 18px 18px 105px auto;
     display: block;
   }
     
   .navigate-autorized__list {
-    row-gap: 15px;
+    row-gap: 16px;
     width: calc(100% - 10px*2);
     margin: 0 10px;
   }
@@ -224,5 +224,7 @@
 
   .navigate-autorized_responsive .navigate-autorized__button_type_account {
     margin-top: 434px;
+    margin: 435px 110px auto;
+
   }
 }
