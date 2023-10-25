@@ -68,10 +68,10 @@
   max-width: 53px;
   font-size: 13px;
   font-weight: 500;
-  line-height: 0.92;
+  line-height: 1;
   color: #FFFFFF;
-  margin: 0 7px 0 0;
-  padding: 0;
+  margin: 0;
+  padding-left: 11px;
 }
 
 .navigate-autorized__button_type_close {
@@ -80,8 +80,10 @@
   background: rgba(255, 255, 255, 0);
   background-image: url("../../images/button_close.svg");
   background-position: 50% 50%;
-  margin: 22.44px 22.44px 105.44px auto;
+  margin: 26px 26px 111px auto;  
+  padding: 0;
   border: none;
+  box-sizing: border-box;
   display: none;
 }
 
@@ -126,7 +128,7 @@
     padding: 0;
     flex-direction: column;
     column-gap: 0;
-    row-gap: 22px;
+    row-gap: 23px;
     width: calc(100% - 90px*2);
     margin: 0 90px;
   }
@@ -173,12 +175,12 @@
 
   .navigate-autorized_responsive .navigate-autorized__button_type_account {
     padding: 0;
-    margin-top: 615px;
+    margin: 617px 210px auto;
     display: flex;
+    column-gap: 7px;
   }
 
   .navigate-autorized_responsive .navigate-autorized__button_type_close {
-    margin: 22.44px 22.44px 105.44px auto;
     display: block;
   }
 
