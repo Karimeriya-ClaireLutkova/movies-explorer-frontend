@@ -112,11 +112,14 @@ function App() {
   }
 
   function handleNavigationBar() {
-    const nav = document.getElementById("navBar");
-    if (nav.className === "navigate-autorized") {
-      nav.className += " navigate-autorized_responsive";
+    const navigationSection = document.querySelector(".navigate-autorized");
+    const navigationContainer = document.querySelector(".navigate-autorized__container");
+    if (navigationSection.className === "navigate-autorized" && navigationContainer.className === "navigate-autorized__container") {
+      navigationSection.className += " navigate-autorized_responsive";
+      navigationContainer.className += " navigate-autorized_responsive-active";
     } else {
-      nav.className = "navigate-autorized";
+      navigationSection.className = "navigate-autorized";
+      navigationContainer.className = "navigate-autorized__container";
     }
   }
 

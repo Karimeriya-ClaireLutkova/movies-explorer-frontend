@@ -22,7 +22,6 @@ export const SCREEN_MAX = 1280;
 
 export const JWT = '36a96b968f20dc9d9e7a0e5b769eec6a63355c740e9a65fff921c89000d30854';
 
-
 export const initialMoviesCards = [
   {
     duration: '1ч 42м',
