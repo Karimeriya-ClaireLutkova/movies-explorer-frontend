@@ -17,7 +17,6 @@
 
 .header__logo {
   width: 100%;
-  margin: 3px 0;
 }
 
 .header__logo:hover {
@@ -29,6 +28,9 @@
   .header {
     justify-content: space-between;
     padding: 15px 30px;
+  }
+  .header__logo {
+    margin: 3px 0;
   }
 }
 

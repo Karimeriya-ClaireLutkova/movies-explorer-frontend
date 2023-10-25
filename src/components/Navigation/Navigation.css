@@ -167,9 +167,11 @@
   .navigate-autorized__container {
     width: 44px;
   }
-}
 
-@media (max-width: 800px) {
+  .navigate-access {
+    margin: 6px 0;
+  }
+  
   .navigate-autorized_responsive {
     width: 520px;
     height: 100%;
@@ -263,7 +265,6 @@
 
   .navigate-access {
     column-gap: 14px;
-    margin: 6px 0;
     padding: 0;
   }
 
