@@ -61,3 +61,41 @@
   letter-spacing: -0.56px;
   line-height: 1.21;
 }
+
+@media (max-width: 800px) {
+  .techs {
+    padding: 90px 50px;
+  }
+
+  .techs__container {
+    max-width: calc(100% - 10px*2);
+    margin: 80px 10px 0;
+  }
+
+  .section__subtitle_type_techs {
+    margin: 0 34px 22px;
+  }
+
+  .section__paragraph {
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 1.5;
+    letter-spacing: -0.48px;
+  }
+
+  .section__paragraph_type_techs {
+    margin: 0 104px 83px;
+  }
+
+  .techs__list-item {
+    width: 84px;
+    height: 57px;
+    font-size: 12px;
+    letter-spacing: -0.48px;
+    line-height: 1.25;
+  }
+}
+
+@media (max-width: 600px) {
+
+}
