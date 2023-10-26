@@ -275,6 +275,7 @@
   .navigate-access {
     column-gap: 14px;
     padding: 0;
+    margin: 9px 0;
   }
 
   .navigate-access__link {

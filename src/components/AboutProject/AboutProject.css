@@ -22,6 +22,7 @@
   font-size: 22px;
   font-weight: 400;
   letter-spacing: -0.88px;
+  line-height: 1.22;
   border-bottom: 1px solid #DADADA;
   padding: 0 0 24px;
   margin: 0;
@@ -53,6 +54,7 @@
   font-size: 20px;
   font-weight: 400;
   letter-spacing: -0.8px;
+  line-height: 1.2;
   padding: 0;
   margin: 0 0 26px;
   color: #FFF;
@@ -76,6 +78,7 @@
   padding: 10px 0;
   box-sizing: border-box;
   letter-spacing: normal;
+  line-height: 1.21;
 }
 
 .about-project__brief_type_increase {
@@ -87,6 +90,7 @@
   padding: 10px 0;
   box-sizing: border-box;
   letter-spacing: normal;
+  line-height: 1.21;
 }
 
 .about-project__paragraph_type_distribution {
@@ -106,6 +110,7 @@
     grid-template-rows: repeat(3, auto);
     grid-column-gap: 30px;
   }
+
   .about-project__brief {
     margin: 0 0 22px;
   }
@@ -113,6 +118,7 @@
   .about-project__distribution {
     margin-top: 23px;
   }
+
   .about-project__brief_type_decrease {
     width: 140px;
     margin: 0;
@@ -138,11 +144,71 @@
 }
 
 @media (max-width: 600px) {
-  .header {
-    padding: 15px 14px 16px;
+  .about-project {
+    padding: 70px 0 69px;
   }
 
-  .header__logo {
-    margin: 3px 0 2px;
+  .about-project__container {
+    width: calc(100% - 18px*2);
+    padding: 0 18px;
+    display: flex;
+    flex-direction: column;
+    grid-row-gap: 0;
+    grid-column-gap: 30px;
+  }
+
+  .section__title {
+    font-size: 18px;
+    padding: 0 0 28px;
+    letter-spacing: -0.72px;
+    margin: 0 0 60px;
+  }
+
+  .about-project__brief {
+    font-size: 18px;
+    letter-spacing: -0.72px;
+    line-height: 1.22;
+    margin: 0 0 16px;
+  }
+
+  .about-project__paragraph {
+    font-size: 11px;
+    line-height: 1.45;
+    margin: 0 0 56px;
+  }
+
+  .about-project__distribution {
+    display: grid;
+    margin-top: 4px;
+    grid-template-columns: 100px 184px;
+  }
+
+  .about-project__scheme {
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
+  }
+  
+  .about-project__brief_type_decrease {
+    width: 100px;
+    font-size: 11px;
+    letter-spacing: normal;
+    line-height: 1.18;
+    margin: 0;
+  }
+
+  .about-project__brief_type_increase {
+    width: 184px;
+    font-size: 11px;
+    letter-spacing: normal;
+    line-height: 1.18;
+    margin: 0;
+  }
+
+  .about-project__paragraph_type_distribution {
+    font-size: 11px;
+    line-height: 1.18;
+    margin: 0;
+    padding: 0;
   }
 }
