@@ -25,9 +25,8 @@ function AboutProject() {
             <p className="about-project__paragraph about-project__paragraph_type_distribution">Front-end</p>
           </div>
         </article>
-      </div>
-      
-    </section>    
+      </div>      
+    </section> 
   )
 }
 
