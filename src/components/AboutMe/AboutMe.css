@@ -49,3 +49,44 @@
   margin-top: 66px;
   border-radius: 10px;
 }
+
+@media (max-width: 800px) {
+  .about-me {
+    padding: 90px 50px;
+  }
+
+  .about-me__info {
+    max-width: 364px;
+    margin: 66px 49px 91px 0;
+  }
+
+  .section__subline {
+    font-size: 12px;    
+    line-height: 1.5;
+    margin: 16px 16px 20px 0;
+  }
+
+  .section__subtitle_type_about-me {
+    font-size: 40px;
+    line-height: 1;
+    letter-spacing: -1.6px;
+  }
+  
+  .section__paragraph_type_about-me {
+    max-width: 364px;
+    line-height: 1.5;
+    margin: 0 0 87px;
+  }
+
+  .about-me__image {
+    width: 255px;
+    height: 307px;
+    margin-top: 66px;
+    border-radius: 10px;
+    background-size: cover;
+  }
+}
+
+@media (max-width: 600px) {
+ 
+}
