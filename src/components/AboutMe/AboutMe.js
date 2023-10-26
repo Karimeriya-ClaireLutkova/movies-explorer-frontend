@@ -19,9 +19,7 @@ function AboutMe() {
           </p>
           <a className="about-me__link" href="https://github.com/Karimeriya-ClaireLutkova" target="_blank" rel="noreferrer">Github</a>
         </div> 
-        <div className="about-me__avatar">
-          <img className="about-me__image" src={avatarStudent} alt="Фотография студента"/>        
-        </div>      
+        <img className="about-me__image" src={avatarStudent} alt="Фотография студента"/>       
       </div>
       <Portfolio />      
     </section>    
