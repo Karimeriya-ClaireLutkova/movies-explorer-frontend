@@ -28,7 +28,7 @@
   margin: 0;
 }
 
-.about-project__title {
+.section__title_type_about-project {
   grid-area: title;
 }
 
