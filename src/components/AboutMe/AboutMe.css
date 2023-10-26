@@ -82,11 +82,48 @@
     width: 255px;
     height: 307px;
     margin-top: 66px;
-    border-radius: 10px;
     background-size: cover;
   }
 }
 
 @media (max-width: 600px) {
- 
+  .about-me {
+    padding: 70px 14px 70px;
+  }
+
+  .about-me__container {
+    flex-direction: column;
+  }
+
+  .about-me__info {
+    max-width: 364px;
+    margin: 0 0 91px 0;
+    order: 2;
+  }
+
+  .about-me__image {
+    width: 292px;
+    height: 352px;
+    margin-top: 60px;
+    order: 1;
+  }
+
+  .section__subline {
+    font-size: 11px;    
+    line-height: 1.45;
+    margin: 0 0 20px 0;
+  }
+
+  .section__subtitle_type_about-me {
+    font-size: 30px;
+    line-height: 1.2;
+    letter-spacing: -1.2px;
+    margin: 40px 0 20px;
+  }
+
+  .section__paragraph_type_about-me {
+    max-width: 292px;
+    line-height: 1.45;
+    margin: 0 0 40px;
+  }
 }
