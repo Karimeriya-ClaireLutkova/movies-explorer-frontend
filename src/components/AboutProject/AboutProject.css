@@ -26,6 +26,9 @@
   border-bottom: 1px solid #DADADA;
   padding: 0 0 23px;
   margin: 0;
+}
+
+.about-project__title {
   grid-area: title;
 }
 
