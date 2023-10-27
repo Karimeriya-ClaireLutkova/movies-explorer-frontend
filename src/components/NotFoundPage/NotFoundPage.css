@@ -11,8 +11,7 @@
   justify-items: center;
   align-items: center;
   text-align: center;
-  margin: 0;
- 
+  margin: 0; 
 }
 
 .missing-page__title {
@@ -48,21 +47,26 @@
 }
 
 @media (max-width: 800px) {
-  .header {
-    justify-content: space-between;
-    padding: 15px 30px;
-  }
-  .header__logo {
-    margin: 3px 0;
+  .missing-page__container {
+    padding: 408px 184px 222px;
   }
 }
 
 @media (max-width: 600px) {
-  .header {
-    padding: 15px 14px 16px;
+  .missing-page__container {
+    padding: 329px 10px 30px;
   }
 
-  .header__logo {
-    margin: 3px 0 2px;
+  .missing-page__title {
+    max-width: 300px;
+    font-size: 80px;
+    margin: 0 0 10px;
+  }
+
+  .missing-page__subtitle {
+    max-width: 300px;
+    font-size: 12px;
+    line-height: 1.25;
+    margin: 0 0 284px;
   }
 }
