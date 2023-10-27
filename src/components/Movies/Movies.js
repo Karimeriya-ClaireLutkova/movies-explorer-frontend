@@ -58,8 +58,8 @@ function Movies({ movies, userData, onMovieLike, account, loggedIn, onAuthorizat
     const arrayLastNew = (arrayLast - arrayFirst)*2;
     const arrayNew = [arrayLast, arrayLastNew];
     setCounterMoviesNew([arrayNew]);
-  } 
-  /*
+  }
+
   React.useEffect(() => {
     const width = document.documentElement.clientWidth;
     function handleInitialMovies() {
@@ -86,7 +86,7 @@ function Movies({ movies, userData, onMovieLike, account, loggedIn, onAuthorizat
     return () => {
       window.removeEventListener('resize', handleInitialMovies());        
     };
-  }, []);*/
+  });
 
   return (
     <>
