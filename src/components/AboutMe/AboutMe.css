@@ -20,6 +20,11 @@
   font-size: 18px;
   font-weight: 500;
   line-height: 1.11;
+  padding: 0;
+  margin: 0;
+}
+
+.section__subline_type_about-me {
   margin: 18px 0 26px;
 }
 
@@ -62,7 +67,10 @@
 
   .section__subline {
     font-size: 12px;    
-    line-height: 1.5;
+    line-height: 1.5;    
+  }
+
+  .section__subline_type_about-me {
     margin: 16px 16px 20px 0;
   }
 
@@ -111,6 +119,9 @@
   .section__subline {
     font-size: 11px;    
     line-height: 1.45;
+  }
+
+  .section__subline_type_about-me {
     margin: 0 0 20px 0;
   }
 
