@@ -1,7 +1,7 @@
 import React from 'react';
 import avatarStudent from '../../images/avatar_student.jpg';
-import Portfolio from '../Portfolio/Portfolio';
 import './AboutMe.css';
+import Portfolio from '../Portfolio/Portfolio';
 
 function AboutMe() {
 
