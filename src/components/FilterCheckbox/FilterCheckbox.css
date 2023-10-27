@@ -1,8 +1,21 @@
+.filter-checkbox {
+  display: flex;
+}
+
+.filter-checkbox__subtitle {
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.38;
+  margin: 0;
+  padding: 0;
+}
+
 .filter-checkbox__toggle {
   position: relative;
   display: inline-block;
   width: 36px;
   height: 20px;
+  margin: 0 14px 0 0;
 }
 
 .filter-checkbox__input {
