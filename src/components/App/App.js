@@ -8,14 +8,14 @@ import SavedMovies from '../SavedMovies/SavedMovies';
 import Profile from '../Profile/Profile';
 import Register from '../Register/Register';
 import Login from '../Login/Login';
-import { initialMoviesCards, SCREEN_MIN, SCREEN_MEDIUM, SCREEN_BIG, SCREEN_MAX, JWT } from '../../utils/constants';
+import { initialMoviesCards, JWT } from '../../utils/constants';
 
 function App() {
   const [initialMovies, setInitialMovies] = React.useState(initialMoviesCards);
   const [usersBase, setUsersBase] = React.useState([]);
   const [userData, setUserData] = React.useState({_id: '', name: '', email: ''});
   const [counterUser, setcounterUser] = React.useState(0);
-  const [loggedIn, setLoggedIn] = React.useState(false);
+  const [loggedIn, setLoggedIn] = React.useState(true);
   const [account, setAccount] = React.useState('Аккаунт');
   const [moviesSaved, setMoviesSaved] = React.useState([]);
   const navigate = useNavigate();
@@ -23,35 +23,6 @@ function App() {
   const [isRegisterPopupOpen, setRegisterPopupOpen] = React.useState(true);
   const [isLoginPopupOpen, setLoginPopupOpen] = React.useState(true);
   const [isEditProfilePopupOpen, setEditProfilePopupOpen] = React.useState(false);
-
-  function useResize () {
-    const [width, setWidth] = React.useState(window.innerWidth);
-    const [counterMovies, setCounterMovies] = React.useState(0);
-    React.useEffect(() => {
-      const handleResize = (event) => {
-        setWidth(event.target.innerWidth);
-        if (width <= SCREEN_MIN) {
-          setCounterMovies(5)
-        } else if (SCREEN_MIN < width && width <= SCREEN_MEDIUM) {
-          setCounterMovies(8)
-        } else if (SCREEN_MEDIUM < width && width <= SCREEN_BIG) {
-          setCounterMovies(12)
-        } else if (SCREEN_MAX <= width && width <= 1440) {
-          setCounterMovies(16)
-        } else {
-          setCounterMovies(20)
-        }
-      };
-      window.addEventListener('resize', handleResize);
-      return () => {
-        window.removeEventListener('resize', handleResize);
-      };
-    }, [width]);
-  
-    return {
-      counterMovies      
-    }
-  }
 
   function handleCloseRegistration() {
     setRegisterPopupOpen(false)
@@ -159,11 +130,10 @@ function App() {
         }>   
         </Route>
         <Route path="movies" element={
-          <Movies movies={initialMovies}
-                 useResize={useResize}
+          <Movies movies={initialMoviesCards}
                  userData={userData}
                  onMovieLike={handleMovieLike} 
-                 loggedIn={loggedIn} 
+                 loggedIn={loggedIn}
                  account={account} 
                  onAuthorization={handleProfileNav}
                  onNavigation={handleNavigationBar}

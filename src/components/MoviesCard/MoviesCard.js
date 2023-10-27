@@ -1,5 +1,6 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
+import './MoviesCard.css';
 
 function MoviesCard({ userData, movie, onMovieLike, onMovieDelete }) {
   const { pathname } = useLocation();
@@ -27,8 +28,8 @@ function MoviesCard({ userData, movie, onMovieLike, onMovieDelete }) {
             )
           }
         </div>
-        <div>{movie.duration}</div>
       </div>
+      <div>{movie.duration}</div>
     </div>  
   )
 }
