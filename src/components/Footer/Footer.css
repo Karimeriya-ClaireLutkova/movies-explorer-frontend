@@ -64,11 +64,10 @@
     margin: 0;
     box-sizing: border-box;
   }
-  
+
   .footer__container {
     display: flex;
     flex-direction: column-reverse;
-    justify-content: center;
     align-items: center;
     row-gap: 30px;
   }
@@ -82,7 +81,6 @@
 
   .footer__links {
     flex-direction: column;
-    justify-content: center;
     align-items: center;
     row-gap: 12px;
     max-width: 111px;
