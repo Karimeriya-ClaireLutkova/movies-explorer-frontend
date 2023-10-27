@@ -1,20 +1,24 @@
 .about-project {
   display: flex;
+  max-width: calc(100% - 70px*2);
   flex-direction: column;
   padding: 110px 70px;
 }
 
 .about-project__container {
-  display: grid;
-  width: 100%;
-  grid-template-columns: repeat(2, 550px);
-  grid-template-rows: repeat(3, auto);
-  grid-row-gap: 70px;
-  grid-column-gap: 40px;
-  grid-template-areas:
-  "title title"
-  "stages time"
-  "distribution distribution";
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 40px;
+  margin-top: 70px;
+}
+
+.stages {
+  width: 550px;
+  margin-bottom: 110px;
+}
+
+.distribution {
+  display: flex;
 }
 
 .section__title {
@@ -26,25 +30,6 @@
   border-bottom: 1px solid #DADADA;
   padding: 0 0 23px;
   margin: 0;
-}
-
-.section__title_type_about-project {
-  grid-area: title;
-}
-
-.about-project__stages {
-  grid-area: stages;
-  margin: 0;
-}
-
-.about-project__time {
-  grid-area: time;
-}
-
-.about-project__distribution {
-  display: flex;
-  grid-area: distribution;
-  margin-top: 40px;
 }
 
 .about-project__scheme {
@@ -106,6 +91,7 @@
 
 @media (max-width: 800px) {
   .about-project {
+    max-width: calc(100% - 50px*2);
     padding: 90px 50px;
   }
   
@@ -117,10 +103,6 @@
 
   .about-project__brief {
     margin: 0 0 22px;
-  }
-
-  .about-project__distribution {
-    margin-top: 23px;
   }
 
   .about-project__brief_type_decrease {
@@ -149,6 +131,7 @@
 
 @media (max-width: 600px) {
   .about-project {
+    max-width: 320px;
     padding: 70px 0 69px;
   }
 
@@ -182,12 +165,6 @@
     font-size: 11px;
     line-height: 1.45;
     margin: 0 0 56px;
-  }
-
-  .about-project__distribution {
-    display: grid;
-    margin-top: 4px;
-    grid-template-columns: 100px 184px;
   }
 
   .about-project__scheme {
