@@ -70,9 +70,11 @@ function Movies({ movies, userData, onMovieLike, account, loggedIn, onAuthorizat
       initialCardsMovies = movies.slice(counterCurrent[0], counterCurrent[1]);
     
       return initialCardsMovies;
-    }    
-    if(width !== isWidthFirst) {
+    } 
+    if (width !== isWidthFirst) {
       setInitialMovies([]);
+      setCounterMovies([])
+      setWidthFirst('')
       setInitialMovies(handleInitialMovies());
       setWidthFirst(width);
     } else if (width === isWidthFirst) {
@@ -80,11 +82,11 @@ function Movies({ movies, userData, onMovieLike, account, loggedIn, onAuthorizat
         setInitialMovies(handleInitialMovies());        
       }
     }
-    window.addEventListener('resize', handleInitialMovies);
+    window.addEventListener('resize', handleInitialMovies());
     return () => {
-      window.removeEventListener('resize', handleInitialMovies);        
+      window.removeEventListener('resize', handleInitialMovies());        
     };
-  }, [ movies, isWidthFirst, isInitialMovies ]);
+  }, []);
 
   return (
     <>

@@ -174,7 +174,6 @@
   
   .navigate-autorized_responsive {
     width: 520px;
-    height: 100vh;
     position: absolute;
     background-color: #202020;
     top: 0;
@@ -251,7 +250,7 @@
   }
 
   .navigate-autorized_responsive .navigate-autorized__button_type_close {
-    margin: 18px 18px 105px auto;
+    margin: 18px 18px 105px 275px;
     display: block;
   }
     
