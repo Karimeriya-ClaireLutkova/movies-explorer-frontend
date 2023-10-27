@@ -174,7 +174,7 @@
   
   .navigate-autorized_responsive {
     width: 520px;
-    max-height: 1024px;
+    height: 100vh;
     position: absolute;
     background-color: #202020;
     top: 0;
@@ -213,7 +213,7 @@
 
   .navigate-autorized_responsive .navigate-autorized__button_type_account {
     padding: 0;
-    margin: 617px 210px auto;
+    margin: 617px 210px 90px;
     display: flex;
   }
 
@@ -270,7 +270,7 @@
 
   .navigate-autorized_responsive .navigate-autorized__button_type_account {
     margin-top: 434px;
-    margin: 435px 110px auto;
+    margin: 435px 110px 46px;
   }
 
   .navigate-access {

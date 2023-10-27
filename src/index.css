@@ -13,13 +13,15 @@
   box-sizing: border-box;
 }
 
-.page_disable-scroll {
-  overflow: hidden;
-  position: fixed;
-}
-
 @media (max-width: 1279px) {
   .page {
     max-width: 100%;
+  }
+}
+
+@media (max-width: 800px) {
+  .page_disable-scroll {
+    overflow: hidden;
+    position: fixed;
   }
 }
