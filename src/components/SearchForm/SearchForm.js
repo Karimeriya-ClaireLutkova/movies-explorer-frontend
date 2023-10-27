@@ -1,6 +1,7 @@
 import React from 'react';
 import loupeIcon from '../../images/loupe_icon.svg';
 import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
+import './SearchForm.css';
 
 function SearchForm() {
 

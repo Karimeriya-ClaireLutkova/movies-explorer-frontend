@@ -95,8 +95,8 @@ function App() {
       navigationContainer.className = "navigate-autorized__container";
       page.className = "page";
     }
-    if (navigationContainer === "navigate-autorized__container") {
-      page.className = "page";
+    if (navigationSection === "navigate-autorized navigate-autorized_responsive") {
+      page.className += " page_disable-scroll";
     }      
   }
 

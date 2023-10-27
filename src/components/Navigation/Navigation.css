@@ -247,6 +247,7 @@
 
   .navigate-autorized_responsive {
     width: 320px;
+    height: 100%;
   }
 
   .navigate-autorized_responsive .navigate-autorized__button_type_close {
