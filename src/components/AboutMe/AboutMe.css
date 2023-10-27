@@ -65,13 +65,10 @@
     margin: 66px 49px 91px 0;
   }
 
-  .section__subline {
-    font-size: 12px;    
-    line-height: 1.5;    
-  }
-
   .section__subline_type_about-me {
     margin: 16px 16px 20px 0;
+    font-size: 12px;    
+    line-height: 1.5;
   }
 
   .section__subtitle_type_about-me {

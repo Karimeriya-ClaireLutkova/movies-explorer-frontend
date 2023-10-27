@@ -48,3 +48,23 @@
   width: 29px;
   height: 50px;
 }
+
+@media (max-width: 800px) {
+  .portfolio {
+    margin: 0 0 90px;
+  }
+
+  .section__subline_type_portfolio {
+    color: #A0A0A0;
+  }
+
+  .section__subtitle_type_portfolio {
+    font-size: 28px;
+    line-height: 1.78;
+    letter-spacing:  -1.12px;
+  }
+}
+
+@media (max-width: 600px) {
+
+}
