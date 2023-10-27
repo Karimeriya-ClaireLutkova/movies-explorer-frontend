@@ -19,11 +19,11 @@ function Portfolio() {
             <div className="portfolio__arrow"></div>
           </a>
         </li>
-        <li className="portfolio__list-item">
+        <li className="portfolio__list-item portfolio__list-item_type_last-child">
         <a className="portfolio__link" href="https://github.com/Karimeriya-ClaireLutkova/react-mesto-api-full-gha" target="_blank" rel="noreferrer">
             <h3 className="section__subtitle section__subtitle_type_portfolio">Одностраничное приложение</h3>
             <div className="portfolio__arrow"></div>
-          </a>
+        </a>
         </li>
       </ul>
     </section>    

@@ -33,6 +33,11 @@
   border-bottom: 1px solid #424242;
 }
 
+.portfolio__list-item_type_last-child{
+  padding: 0;
+  border-bottom: none;
+}
+
 .portfolio__link {
   display: flex;
   justify-content: space-between;

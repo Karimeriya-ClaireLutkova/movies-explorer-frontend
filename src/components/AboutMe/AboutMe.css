@@ -1,7 +1,7 @@
 .about-me {
   display: flex;
   flex-direction: column;
-  padding: 110px 70px 125px;
+  padding: 110px 70px 0;
 }
 
 .about-me__container {
