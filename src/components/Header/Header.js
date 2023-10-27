@@ -1,7 +1,9 @@
-import logoHeader from '../../images/logo_header.svg';
-import Navigation from '../Navigation/Navigation';
 import { Link, useLocation } from 'react-router-dom';
+import logoHeader from '../../images/logo_header.svg';
 import './Header.css';
+import Navigation from '../Navigation/Navigation';
+
+
 
 
 function Header({account, loggedIn, onAuthorization, onNavigation}) {
