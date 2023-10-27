@@ -64,11 +64,7 @@
     margin: 0;
     box-sizing: border-box;
   }
-
-  .footer__nav {
-    display: flex;
-  }
-
+  
   .footer__container {
     display: flex;
     flex-direction: column-reverse;
@@ -85,7 +81,6 @@
   }
 
   .footer__links {
-    display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -94,6 +89,7 @@
   }
 
   .footer__link {
+    display: flex;
     font-size: 12px;
     line-height: 1.25;
   }
