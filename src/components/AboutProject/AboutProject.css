@@ -138,6 +138,7 @@
   .about-project {
     max-width: 320px;
     padding: 70px 0 69px;
+    margin: 0 auto;
   }
 
   .about-project__container {
