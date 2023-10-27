@@ -9,16 +9,16 @@ function MoviesCardList({ initialCardsMovies, moviesLength, moviesNew, userData,
   const addingCards = initialCardsMovies;
   React.useEffect(() => {
     const moviesCheck = () => {
-      if (isMoviesList < moviesLength) {
+      if (isMoviesList.length < moviesLength) {
         setButtonActive(true);
         const moviesList = addingCards.concat(moviesNew);
         setMoviesList(moviesList);
-      } else if (isMoviesList >= moviesLength) {
+      } else if (isMoviesList.length >= moviesLength) {
         setButtonActive(false)
       }
     };
     moviesCheck();
-  }, [moviesNew, moviesLength, isMoviesList, addingCards]);
+  }, [moviesNew, moviesLength, isMoviesList, addingCards ]);
 
   return (
     <section className="elements" aria-label="Список фильмов">

@@ -68,22 +68,23 @@ function Movies({ movies, userData, onMovieLike, account, loggedIn, onAuthorizat
       setCounterMovies(counterCurrent);
       let initialCardsMovies = [];
       initialCardsMovies = movies.slice(counterCurrent[0], counterCurrent[1]);
-      
+    
       return initialCardsMovies;
-    }
+    }    
     if(width !== isWidthFirst) {
-      setLoading(true);
       setInitialMovies([]);
       setInitialMovies(handleInitialMovies());
       setWidthFirst(width);
-    }    
+    } else if (width === isWidthFirst) {
+      if (isInitialMovies === null) {
+        setInitialMovies(handleInitialMovies());        
+      }
+    }
     window.addEventListener('resize', handleInitialMovies);
-    setLoading(false);
     return () => {
-      window.removeEventListener('resize', handleInitialMovies);
-      
+      window.removeEventListener('resize', handleInitialMovies);        
     };
-  }, [ movies, isWidthFirst ]);
+  }, [ movies, isWidthFirst, isInitialMovies ]);
 
   return (
     <>

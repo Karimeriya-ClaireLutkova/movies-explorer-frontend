@@ -174,7 +174,7 @@
   
   .navigate-autorized_responsive {
     width: 520px;
-    height: 100%;
+    max-height: 1024px;
     position: absolute;
     background-color: #202020;
     top: 0;
@@ -199,7 +199,8 @@
     line-height: 1.22;
     font-weight: 500;
     text-align: left;
-    padding-bottom: 4px;
+    padding-bottom: 5px;
+    box-sizing: border-box;
   }
 
   .navigate-autorized_responsive .navigate-autorized__link_type_active {
