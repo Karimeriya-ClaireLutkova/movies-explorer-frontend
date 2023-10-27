@@ -66,7 +66,7 @@
   line-height: 1.21;
 }
 
-@media (max-width: 800px) {
+@media (max-width: 1100px) {
   .techs {
     padding: 90px 50px;
   }
@@ -77,7 +77,8 @@
   }
 
   .section__subtitle_type_techs {
-    margin: 0 34px 22px;
+    padding: 0 34px 0;
+    margin: 0 auto 22px;
   }
 
   .section__paragraph {
@@ -87,7 +88,14 @@
   }
 
   .section__paragraph_type_techs {
-    margin: 0 104px 83px;
+    padding: 0 104px 0;
+    margin: 0 auto 83px;
+  }
+
+  .techs__list {
+    margin: 0 auto 0;
+    padding: 0 10px 0;
+    justify-content: center;
   }
 
   .techs__list-item {
@@ -106,7 +114,8 @@
 
   .techs__container {
     max-width: calc(100% - 14px*2);
-    margin: 60px 14px 0;
+    padding: 0 14px 0;
+    margin: 60px auto 0;
   }
 
   .section__subtitle {
@@ -118,27 +127,34 @@
 
   .section__title_type_techs {
     margin: 0 18px 0;
-    max-width: 284px;
+    max-width: 100%;
     padding: 0 0 28px;
   }
 
   .section__subtitle_type_techs {
-    margin: 0 0 24px;
+    max-width: 292px;
+    padding: 0;
+    margin: 0 auto 24px;
   }
 
   .section__paragraph {
+    max-width: 292px;
     font-size: 11px;
     line-height: 1.45;
     letter-spacing: -0.44px;
   }
 
   .section__paragraph_type_techs {
-    margin: 0 0 50px;
+    margin: 0 auto 50px;
+    max-width: 320px;
+    padding: 0;
   }
 
   .techs__list {
     flex-wrap: wrap;
+    justify-content: flex-start;
     row-gap: 10px;
-    margin: 0 57px;
+    padding: 0 57px;
+    margin: 0 auto;
   }
 }
