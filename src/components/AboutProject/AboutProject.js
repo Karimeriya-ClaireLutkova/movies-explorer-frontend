@@ -16,14 +16,10 @@ function AboutProject() {
           <p className="about-project__paragraph">У каждого этапа был мягкий и жёсткий дедлайн, которые нужно было соблюдать, чтобы успешно защититься.</p>
         </article>
         <article className="distribution">
-          <div className="about-project__scheme">
             <h3 className="about-project__brief about-project__brief_type_decrease">1 неделя</h3>
             <p className="about-project__paragraph about-project__paragraph_type_distribution">Back-end</p>
-          </div>
-          <div className="about-project__scheme">
             <h3 className="about-project__brief about-project__brief_type_increase">4 недели</h3>
             <p className="about-project__paragraph about-project__paragraph_type_distribution">Front-end</p>
-          </div>
         </article>        
       </div>      
     </section>
