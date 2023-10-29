@@ -135,13 +135,13 @@
 
   .search-form__field {
     display: flex;
-    width: calc(100% - 58px);
+    width: calc(100% - 79px);
     padding: 25px 0 25px 19px;
     margin: 0 auto;
   }
 
   .search-form__icon {
-    visibility: hidden;
+    display: none;
   }
 
   .search-form__input {
@@ -150,7 +150,6 @@
   }
   
   .search-form__button {
-    width: 58px;
     padding: 10px 8px;
     margin: 19px 19px 19px 0;
   }
