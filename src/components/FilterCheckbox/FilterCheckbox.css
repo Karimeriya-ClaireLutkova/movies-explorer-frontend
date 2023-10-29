@@ -54,3 +54,15 @@
   background-color:#2BE080;
   transform: translateX(14px);
 }
+
+
+@media (max-width: 1000px) {
+  .filter-checkbox__toggle {
+    margin: 0 15px 0 0;
+  }
+}
+
+@media (max-width: 765px) {
+
+  
+}
