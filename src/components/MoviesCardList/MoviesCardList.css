@@ -23,3 +23,16 @@
     padding: 0 19px 0px;
   }
 }
+
+.elements-adding {
+  display: flex;
+  padding: 50px auto 80px;
+}
+
+.elements-adding__button {
+  max-width: 320px;
+}
+
+.elements-adding__button_type_active {
+
+}

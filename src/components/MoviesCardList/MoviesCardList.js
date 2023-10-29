@@ -5,7 +5,7 @@ import './MoviesCardList.css';
 function MoviesCardList({ initialCardsMovies, moviesLength, moviesNew, userData, onMovieLike, onMovieDelete, onCangeDescription, counterMoviesNew }) {
   const [buttonActive, setButtonActive] = React.useState(true);
   const [isMoviesList, setMoviesList] =  React.useState([]);
-  const className = `movies__button movies__button_type_${buttonActive ? "active" : ""}`;
+  const className = `elements-adding elements-adding__button_type_${buttonActive ? "active" : ""}`;
   const addingCards = initialCardsMovies;
   React.useEffect(() => {
     const moviesCheck = () => {
@@ -22,10 +22,12 @@ function MoviesCardList({ initialCardsMovies, moviesLength, moviesNew, userData,
 
   return (
     <section className="elements" aria-label="Список фильмов">
-      {initialCardsMovies.map((movie, i) => (
-        <MoviesCard key={movie.movieId} userData={userData} movie={movie} onMovieLike={onMovieLike} onMovieDelete={onMovieDelete} />
-      ))}
-      <div className="movies__container">
+      <div className="elements__container">
+        {initialCardsMovies.map((movie, i) => (
+          <MoviesCard key={movie.movieId} userData={userData} movie={movie} onMovieLike={onMovieLike} onMovieDelete={onMovieDelete} />
+        ))}        
+      </div>      
+      <div className="elements-adding">
         <button className={className} type="button" onClick={onCangeDescription}>Ещё</button>
       </div>  
     </section>    
