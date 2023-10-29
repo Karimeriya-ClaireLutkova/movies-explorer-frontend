@@ -5,7 +5,7 @@ import './MoviesCardList.css';
 function MoviesCardList({ initialCardsMovies, moviesLength, moviesNew, userData, onMovieLike, onMovieDelete, onCangeDescription, counterMoviesNew }) {
   const [buttonActive, setButtonActive] = React.useState(true);
   const [isMoviesList, setMoviesList] =  React.useState([]);
-  const className = `elements-adding elements-adding__button_type_${buttonActive ? "active" : ""}`;
+  const className = `elements-adding__button elements-adding__button_type_${buttonActive ? "active" : ""}`;
   const addingCards = initialCardsMovies;
   React.useEffect(() => {
     const moviesCheck = () => {
