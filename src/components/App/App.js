@@ -13,7 +13,7 @@ import { initialMoviesCards, JWT } from '../../utils/constants';
 function App() {
   const [initialMovies, setInitialMovies] = React.useState(initialMoviesCards);
   const [usersBase, setUsersBase] = React.useState([]);
-  const [userData, setUserData] = React.useState({_id: '', name: '', email: ''});
+  const [userData, setUserData] = React.useState({_id: '', name: 'Удача', email: 'tyyu@mail.ru'});
   const [counterUser, setcounterUser] = React.useState(0);
   const [loggedIn, setLoggedIn] = React.useState(true);
   const [account, setAccount] = React.useState('Аккаунт');
@@ -22,7 +22,7 @@ function App() {
   const { pathname } = useLocation();
   const [isRegisterPopupOpen, setRegisterPopupOpen] = React.useState(true);
   const [isLoginPopupOpen, setLoginPopupOpen] = React.useState(true);
-  const [isEditProfilePopupOpen, setEditProfilePopupOpen] = React.useState(false);
+  const [isEditProfilePopupOpen, setEditProfilePopupOpen] = React.useState(true);
 
   function handleCloseRegistration() {
     setRegisterPopupOpen(false)

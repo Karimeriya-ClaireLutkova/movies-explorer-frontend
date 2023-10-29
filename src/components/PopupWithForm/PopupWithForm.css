@@ -1,0 +1,243 @@
+.popup {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  right: 0;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  position: fixed;
+  background-color: rgba(0, 0, 0, 0.5);
+  visibility: hidden;
+  transition: 0.5s linear;
+  opacity: 0;
+}
+
+.popup_opened {
+  visibility: visible;
+  opacity: 1;
+  transition: visibility 0s, opacity 0.5s linear;
+}
+
+.popup__container {
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+  align-items: center;
+  position: fixed;
+  background-color: #FFF;
+  padding: 0 74px 70px;
+  box-sizing: border-box;
+}
+
+.popup__title {
+  width: 396px;
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 1.2;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  margin: 0 0 40px;
+  padding: 0;
+  z-index: 1;
+  color: #000;
+  box-sizing: border-box;
+}
+
+.popup__form {
+  position: relative;
+  color: #000;
+  margin: 0;
+}
+
+.popup__form-info {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+
+.popup__button {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  background-color: #202020;
+  color: #FFF;
+  box-sizing: border-box;
+  background-repeat: no-repeat;
+  border: none;
+  cursor: pointer;
+}
+
+.popup__button_save {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 358px;
+  height: 50px;
+  font-size: 18px;
+  line-height: 1.22;
+  font-weight: 400;
+  border-radius: 2px;
+  margin: 18px 0 0;
+}
+
+.popup__field {
+  display: flex;
+  flex-direction: column;
+  width: 396px;
+  min-height: 27px;
+  margin: 0 0 24px;
+  box-sizing: border-box;
+}
+
+.popup__input-text {
+  width: 390px;
+  height: 12px;
+  font-size: 10px;
+  font-weight: 400;
+  line-height: 1.2;
+  color: #8B8B8B;
+  padding: 0;
+  margin: 0;
+}
+
+.popup__input {
+  width: 100%;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.21;
+  font-family: inherit;
+  border: none;
+  border-bottom: 1px solid #000;
+  color: #000;
+  background-color: #FFF;
+  padding: 0 0 10px;
+  box-sizing: border-box;
+  margin: 0;
+}
+
+.popup__input_type_entry {
+  background-color: #202020;
+  color: #FFF;
+  border-bottom: 1px solid #424242;
+}
+
+.popup__input-error {
+  max-width: 390px;
+  font-size: 10px;
+  line-height: 1.2;
+  font-weight: 400;
+  margin: 0;
+  padding: 0;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  color: #EE3465;
+  opacity: 0;
+}
+
+.popup__input-error_active {
+  display: inline-block;
+  min-height: 12px;
+  opacity: 1;
+}
+
+.popup__button_save:hover {
+  opacity: 0.7;
+  cursor: pointer;
+}
+
+.popup_type_profile-info {
+  display: block;
+  position: relative;
+  width: calc(100% - 2*70px);
+  margin: 0 70px 0;
+}
+
+.popup__container_type_profile-info {
+  position: relative;
+  background-color: #202020;
+  border: none;
+}
+
+.popup__title_profile-info {
+  max-width: 410px;
+  text-align: center;
+  color: #FFF;
+  margin: 74px auto 123px;
+}
+
+.popup__field_type_profile-info {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+  width: 410px;
+  padding: 0 0 16px;
+  margin: 0 0 17px;
+  border-bottom: 1px solid #424242;
+}
+
+.popup__field_type_not-underlined {
+  border-bottom: none;
+}
+
+.popup__input-text_type_profile {
+  width: 141px;
+  height: 14px;
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 1.18;
+  color:#FFFFFF;
+}
+
+.profile-info__container {
+  display: flex;
+  flex-direction: column;
+}
+
+.popup__input_type_profile-info {
+  width: 122px;
+  background-color: #202020;
+  border-bottom: none;
+  font-size: 11px;
+  line-height: 1.18;
+  color: #FFF;
+  text-align: end;
+}
+
+
+@media (max-width: 800px) {
+  .popup__container {
+    padding: 4px 21px 25px;
+  }
+
+  .popup__title {
+    width: 238px;
+    font-size: 18px;
+    line-height: 1.22;
+    margin: 0 0 75px;
+  }
+
+  .popup__button_save {
+    width: 238px;
+    height: 46px;
+    font-size: 14px;
+    line-height: 1.21;
+    margin: 15px 0 0;
+  }
+
+  .popup__field {
+    width: 238px;
+  }
+
+  .popup_type_profile-info  {
+    width: 260px;
+    margin: 0 auto 0;
+    padding: 0 30px 0;
+  }
+}

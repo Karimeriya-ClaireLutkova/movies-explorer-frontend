@@ -1,6 +1,7 @@
 import React from 'react';
-import PopupWithForm from '../PopupWithForm/PopupWithForm';
 import Header from '../Header/Header';
+import PopupWithForm from '../PopupWithForm/PopupWithForm';
+import './Profile.css';
 
 export default function Profile({isOpen, onSignOut, onUpdateUser, account, loggedIn, onAuthorization, userData, onNavigation}) {
   const [name, setName] = React.useState('');
@@ -41,15 +42,19 @@ export default function Profile({isOpen, onSignOut, onUpdateUser, account, logge
                        isOpen={isOpen}
                        onSubmit={handleSubmit}
                        buttonText={"Редактировать"}>
-          <div className="popup__field">
-            <p className="popup__input-text">Имя</p>
-            <input id="profile-name-input" type="text" className="popup__input popup__input_type_name" name="name" placeholder="Имя" value={name} onChange={handleChangeName} required  />
-            <span className="profile-name-input-error popup__input-error"></span>
+          <div className="popup__field popup__field_type_profile-info">
+            <p className="popup__input-text popup__input-text_type_profile">Имя</p>
+            <div className='profile-info__container'>
+              <input id="profile-name-input" type="text" className="popup__input popup__input_type_profile-info" name="name" placeholder="Имя" value={name} onChange={handleChangeName} required  />
+              <span className="profile-name-input-error popup__input-error"></span>
+            </div>            
           </div>
-          <div className="popup__field">
-            <p className="popup__input-text">E-mail</p>
-            <input id="profile-email-input" type="email" className="popup__input popup__input_type_email" name="email" placeholder="Email" value={email} onChange={handleChangeEmail} required  />
-            <span className="profile-email-input-error popup__input-error"></span>
+          <div className="popup__field popup__field_type_profile-info popup__field_type_not-underlined">
+            <p className="popup__input-text popup__input-text_type_profile">E-mail</p>
+            <div className="profile-info__container">
+              <input id="profile-email-input" type="email" className="popup__input popup__input_type_profile-info" name="email" placeholder="Email" value={email} onChange={handleChangeEmail} required  />
+              <span className="profile-email-input-error popup__input-error"></span>
+            </div>            
           </div>
           <div className="popup__signOut">
             <button type="button" className="popup__button" onClick={onSignOut}>Выйти из аккаунта</button>

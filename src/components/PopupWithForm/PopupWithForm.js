@@ -1,4 +1,5 @@
 import React from 'react';
+import './PopupWithForm.css';
 
 function PopupWithForm(props) {
   const {name, isOpen, title, onSubmit, children, buttonText} = props;
