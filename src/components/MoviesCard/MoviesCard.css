@@ -1,7 +1,7 @@
 .element {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  justify-content: space-between;
   background: #202020;
   color: #FFF;
 }
@@ -10,23 +10,25 @@
   width: 270px;
   height: 151px;
   object-fit: cover;
-  margin: 0 0 14px;
+  background-repeat: no-repeat;
+  margin: 0 0 10px;
 }
 
 .element__description {
   width: 100%;
   display: flex;
   justify-content: space-between;
-  border-bottom: 1px solid #424242;
-  padding-bottom: 29px;
+  margin: 0 0 12px;
+  padding: 0;
 }
 
 .element__title {
+  min-height: 32px;
   font-size: 13px;
   font-weight: 500;
   line-height: 1.23;
-  margin: 0 20px 0 0;
-  padding: 0;
+  margin: 0 20px auto 0;
+  padding: 4px 0 0;
 }
 
 .element__button {
@@ -49,7 +51,8 @@
   width: 24px;
   height: 24px;
   background-image: url("../../images/like-active.svg");
-  background-size: 10px;
+  background-repeat: no-repeat;
+  border-radius: 50%;
   background-position: 50% 50%;
   margin: 0;
 }
@@ -59,11 +62,12 @@
 }
 
 .element__duration {
-  align-self: flex-start;
+  display: flex;
+  max-width: 100%;
   color: #8B8B8B;
   font-size: 11px;
   font-weight: 400;
   line-height: 1.18;
-  margin: 6px 0 0 0;
-  padding: 0;
+  padding: 6px 0 0 0;
+  border-top: 1px solid #424242;
 }

@@ -3,7 +3,7 @@
   margin: 70px 70px 10px;
   display: grid;
   grid-template-columns: repeat(4, 270px);
-  grid-template-rows: auto;
+  grid-template-rows: repeat(4, 230px);
   gap: 38px 20px;
   box-sizing: border-box;
 }
@@ -11,7 +11,6 @@
 @media (max-width: 900px) {
   .elements {
     grid-template-columns: repeat(2, 282px);
-    justify-content: center;
   }
 }
 
