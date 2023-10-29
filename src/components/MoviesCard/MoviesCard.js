@@ -29,7 +29,7 @@ function MoviesCard({ userData, movie, onMovieLike, onMovieDelete }) {
           }
         </div>
       </div>
-      <div>{movie.duration}</div>
+      <div className="element__duration">{movie.duration}</div>
     </div>  
   )
 }
