@@ -51,7 +51,7 @@
   }
 }
 
-@media (max-width: 1020px) {
+@media (max-width: 1000px) {
   .elements__container {
     justify-content: center;
     grid-template-columns: repeat(2, 339px);

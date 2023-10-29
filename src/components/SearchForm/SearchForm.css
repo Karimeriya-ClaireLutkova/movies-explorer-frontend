@@ -82,14 +82,14 @@
   justify-content: center;
 }
 
-@media (max-width: 845px) {
+@media (max-width: 1000px) {
   .search {
     width: calc(100% - 30px*2);
-    margin: 80px 30px 7px;
+    margin: 80px 30px 10px;
   }
 
   .search-form {
-    margin: 0 0 109px;
+    margin: 0 0 108px;
   }
 
   .search-form__field {
@@ -97,7 +97,7 @@
   }
 
   .search-form__button {
-    padding: 0 11px 0;
+    padding: 0 13px 0;
     margin: 19px 19px 0;
   }
 
