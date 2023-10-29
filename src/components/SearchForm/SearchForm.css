@@ -82,7 +82,7 @@
   justify-content: center;
 }
 
-@media (max-width: 800px) {
+@media (max-width: 845px) {
   .search {
     width: calc(100% - 30px*2);
     margin: 80px 30px 7px;
