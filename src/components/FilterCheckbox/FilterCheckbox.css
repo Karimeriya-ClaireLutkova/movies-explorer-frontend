@@ -8,6 +8,7 @@
   line-height: 1.38;
   margin: 0;
   padding: 0;
+  text-align: center;
 }
 
 .filter-checkbox__toggle {
@@ -37,8 +38,8 @@
 .filter-checkbox__slider:before {
   position: absolute;
   content: "";
-  height: 16px;
-  width: 16px;
+  height: 14px;
+  width: 14px;
   left: 2px;
   bottom: 2px;
   background-color: #A0A0A0;
@@ -49,5 +50,5 @@
 
 .filter-checkbox__input:checked + .filter-checkbox__slider:before {
   background-color:#2BE080;
-  transform: translateX(16px);
+  transform: translateX(14px);
 }
