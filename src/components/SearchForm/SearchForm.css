@@ -11,7 +11,7 @@
   border-radius: 9px;
   background: #2F2F2F;
   margin: 0 0 69px;
-  padding: 0; 
+  padding: 0;
 }
 
 .search-form__container {
@@ -80,4 +80,32 @@
   padding: 28px 30px 27px 29px;
   display: flex;
   justify-content: center;
+}
+
+@media (max-width: 800px) {
+  .search {
+    width: calc(100% - 30px*2);
+    margin: 80px 30px 7px;
+  }
+
+  .search-form {
+    margin: 0 0 109px;
+  }
+
+  .search-form__field {
+    padding: 19px 19px;  
+  }
+
+  .search-form__button {
+    padding: 0 11px 0;
+    margin: 19px 19px 0;
+  }
+
+  .search-form__filter {
+    padding: 27px 20px 27px 19px;
+  }
+}
+
+@media (max-width: 600px) {
+
 }
