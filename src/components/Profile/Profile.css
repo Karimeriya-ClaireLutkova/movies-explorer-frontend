@@ -1,0 +1,11 @@
+.profil-info__signOut {
+  display: flex;
+  width: calc(100% - 70px*2);
+  justify-content: center;
+  margin: 0 70px 0;
+}
+.popup__button_signOut {
+  color: #EE3465;
+  justify-content: center;
+  margin: 0;
+}

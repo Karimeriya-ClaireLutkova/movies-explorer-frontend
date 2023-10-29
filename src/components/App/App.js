@@ -13,7 +13,7 @@ import { initialMoviesCards, JWT } from '../../utils/constants';
 function App() {
   const [initialMovies, setInitialMovies] = React.useState(initialMoviesCards);
   const [usersBase, setUsersBase] = React.useState([]);
-  const [userData, setUserData] = React.useState({_id: '', name: 'Удача', email: 'tyyu@mail.ru'});
+  const [userData, setUserData] = React.useState({_id: '', name: 'Виталий', email: 'pochta@yandex.ru'});
   const [counterUser, setcounterUser] = React.useState(0);
   const [loggedIn, setLoggedIn] = React.useState(true);
   const [account, setAccount] = React.useState('Аккаунт');

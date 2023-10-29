@@ -56,10 +56,10 @@ export default function Profile({isOpen, onSignOut, onUpdateUser, account, logge
               <span className="profile-email-input-error popup__input-error"></span>
             </div>            
           </div>
-          <div className="popup__signOut">
-            <button type="button" className="popup__button" onClick={onSignOut}>Выйти из аккаунта</button>
-          </div>
         </PopupWithForm>
+        <div className="profil-info__signOut">
+          <button type="button" className="popup__button popup__button_profile-info popup__button_signOut" onClick={onSignOut}>Выйти из аккаунта</button>
+        </div>
       </main>
    </>
   )
