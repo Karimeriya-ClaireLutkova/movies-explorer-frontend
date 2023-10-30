@@ -163,8 +163,8 @@
   .navigate-autorized {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
+    align-items: flex-end;
+    justify-content: center;
   }
 
   .navigate-autorized__list {
@@ -177,7 +177,8 @@
   }
 
   .navigate-autorized__container {
-    width: 44px;
+    width: calc(100% - 38px);
+    margin: 0;
   }
 
   .navigate-access {
