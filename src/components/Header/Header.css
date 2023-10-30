@@ -30,14 +30,11 @@
   .header {
     justify-content: space-between;
     padding: 15px 30px;
-    margin: 0 auto;
   }
 }
 
 @media (max-width: 600px) {
   .header {
-    max-width: 320px;
     padding: 15px 14px 16px;
-    margin: 0 auto;
   }
 }
