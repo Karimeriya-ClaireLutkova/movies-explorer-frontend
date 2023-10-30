@@ -7,7 +7,7 @@
   align-items: center;
   display: flex;
   column-gap: 16px;
-  padding-top: 10px;
+  padding: 2px 0;
 }
 
 .navigate-autorized {
@@ -48,6 +48,7 @@
   background: rgba(255, 255, 255, 0);
   border: none;
 }
+
 .navigate-autorized__container-logo {
   display: flex;
   justify-content: center;
@@ -60,19 +61,18 @@
   background-color: #313131;
 }
 
-.navigate-autorized__icon {
-  width: 100%;
-  height: 100%;
+.navigate-autorized__logo {
+  width: 11px;
+  height: 11px;
 }
 
 .navigate-autorized_text {
-  max-width: 53px;
   font-size: 13px;
   font-weight: 500;
-  line-height: 1;
+  line-height: 0.92;
   color: #FFFFFF;
   margin: 0;
-  padding-left: 11px;
+  padding: 0 0 0 11px;
 }
 
 .navigate-autorized__button:hover {
@@ -96,11 +96,12 @@
 .navigate-autorized__button_type_account {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   width: 100px;
   height: 32px;
   margin: 0;
-  padding: 8px 0 0;
-  column-gap: 8px;
+  padding: 0;
+  column-gap: 7px;
   border: none;
   background: rgba(255, 255, 255, 0);
   border-radius: 40px;
