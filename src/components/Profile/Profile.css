@@ -2,10 +2,25 @@
   display: flex;
   width: calc(100% - 70px*2);
   justify-content: center;
-  margin: 0 70px 0;
+  margin: 0 70px 70px;
 }
+
 .popup__button_signOut {
   color: #EE3465;
   justify-content: center;
   margin: 0;
+}
+
+@media (max-width: 800px) {
+  .profil-info__signOut {
+    width: calc(100% - 30px*2);
+    margin: 0 30px 269px;
+  }
+}
+
+@media (max-width: 600px) {
+  .profil-info__signOut {
+    width: calc(100% - 2*10px);
+    margin: 0 10px 40px;
+  }
 }
