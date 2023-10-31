@@ -13,7 +13,7 @@ import { initialMoviesCards, JWT } from '../../utils/constants';
 function App() {
   const [initialMovies, setInitialMovies] = React.useState(initialMoviesCards);
   const [usersBase, setUsersBase] = React.useState([]);
-  const [userData, setUserData] = React.useState({_id: '', name: 'Виталий', email: 'pochta@yandex.ru'});
+  const [userData, setUserData] = React.useState({_id: '1', name: 'Виталий', email: 'pochta@yandex.ru'});
   const [counterUser, setcounterUser] = React.useState(0);
   const [loggedIn, setLoggedIn] = React.useState(true);
   const [account, setAccount] = React.useState('Аккаунт');
@@ -81,6 +81,7 @@ function App() {
   function handleGoBackPageNav() {
     navigate(-1, {replace: true});
   }
+
   function handleActiveMenu() {
     const navigationSection = document.querySelector(".navigate-autorized");
     const navigationContainer = document.querySelector(".navigate-autorized__container");
@@ -108,8 +109,7 @@ function App() {
   }
 
   function handleUpdateUser(item) {
-    setUserData(item);
-    closeAllPopups();
+    setUserData(userData => ({...userData, _id: item._id, name: item.name, email: item.email}));
   }
   
   function closeAllPopups() {

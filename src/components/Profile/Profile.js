@@ -31,7 +31,7 @@ export default function Profile({isOpen, onSignOut, onUpdateUser, account, logge
       _id: userData._id,
       name: name,
       email: email,
-    });
+    }, currentUserData);
   }
 
   return (
