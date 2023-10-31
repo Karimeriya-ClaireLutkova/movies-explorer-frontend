@@ -38,7 +38,7 @@
   line-height: 1.2;
   text-overflow: ellipsis;
   overflow: hidden;
-  margin: 0 0 40px;
+  margin: 40 0 40px;
   padding: 0;
   z-index: 1;
   color: #000;
@@ -223,6 +223,32 @@
   border-radius: 0;
   margin: 188px auto 16px;
 }
+
+.popup_type_registration-user {
+  display: block;
+  position: relative;
+  width: calc(100% - 2*442px);
+  margin: 0 442px 0;
+}
+
+.popup__container_type_registration-user {
+  position: relative;
+  background-color: #202020;
+  border: none;
+}
+
+.popup__title_registration-user {
+  color: #FFF;
+}
+
+.popup__field_type_registration-user {
+  padding: 0 0 10px;
+}
+
+.popup__input-text_type_registration-user {
+  margin: 0 0 5px
+}
+
 
 @media (max-width: 800px) {
   .popup_type_profile-info {

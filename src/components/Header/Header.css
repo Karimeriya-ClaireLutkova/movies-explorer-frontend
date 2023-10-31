@@ -10,6 +10,12 @@
   background-color: #073042; 
 }
 
+.header_type_entry {
+  width: 396px;
+  padding: 0;
+  margin: 70px auto 0;
+}
+
 .header__link {
   width: 38px;
   height: 38px;

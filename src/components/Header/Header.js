@@ -8,7 +8,7 @@ import Navigation from '../Navigation/Navigation';
 
 function Header({account, loggedIn, onAuthorization, onNavigation, onActiveMenu}) {
   const { pathname } = useLocation();
-  const className = `header ${(pathname === '/') ? "header_type_main" : ""}`;
+  const className = `header ${((pathname === '/') ? "header_type_main" : "") || ((pathname === '/sign-up' || pathname === '/sign-in') ? "header_type_entry" : "")}`;
   return (
     <header className={className}>
       <Link className="header__link" to="/">
