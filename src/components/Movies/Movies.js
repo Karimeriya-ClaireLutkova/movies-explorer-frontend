@@ -6,7 +6,7 @@ import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import { SCREEN_MIN, SCREEN_MEDIUM, SCREEN_BIG, SCREEN_MAX } from '../../utils/constants';
 import './Movies.css';
 
-function Movies({ movies, userData, onMovieLike, account, loggedIn, onAuthorization, onNavigation }) {
+function Movies({ movies, userData, onMovieLike, account, loggedIn, onAuthorization, onNavigation, onActiveMenu }) {
   const [isWidthFirst, setWidthFirst] = React.useState(document.documentElement.clientWidth);
   const [isCounterMovies, setCounterMovies] = React.useState([]);
   const [isCounterMoviesNew, setCounterMoviesNew] = React.useState([]);
@@ -92,7 +92,7 @@ function Movies({ movies, userData, onMovieLike, account, loggedIn, onAuthorizat
 
   return (
     <>
-      <Header id="2" account={account} loggedIn={loggedIn} onAuthorization={onAuthorization} onNavigation={onNavigation} />
+      <Header id="2" account={account} loggedIn={loggedIn} onAuthorization={onAuthorization} onNavigation={onNavigation} onActiveMenu={onActiveMenu} />
       <main>
         <section className="movies">
           <SearchForm />

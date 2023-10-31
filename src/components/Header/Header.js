@@ -6,7 +6,7 @@ import Navigation from '../Navigation/Navigation';
 
 
 
-function Header({account, loggedIn, onAuthorization, onNavigation}) {
+function Header({account, loggedIn, onAuthorization, onNavigation, onActiveMenu}) {
   const { pathname } = useLocation();
   const className = `header ${(pathname === '/') ? "header_type_main" : ""}`;
   return (
@@ -18,7 +18,8 @@ function Header({account, loggedIn, onAuthorization, onNavigation}) {
         <Navigation account={account}
                     loggedIn={loggedIn}
                     onAuthorization={onAuthorization}
-                    onNavigation={onNavigation} />
+                    onNavigation={onNavigation}
+                    onActiveMenu={onActiveMenu} />
       }
     </header>
   )

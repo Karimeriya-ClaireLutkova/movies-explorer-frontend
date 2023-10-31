@@ -75,29 +75,36 @@ function App() {
 
   function handleProfileNav() {
     navigate('/profile', {replace: true});
-    handleNavigationBar();
+    handleCloseNavigationBar();
   }
    
   function handleGoBackPageNav() {
     navigate(-1, {replace: true});
   }
-
-  function handleNavigationBar() {
+  function handleActiveMenu() {
     const navigationSection = document.querySelector(".navigate-autorized");
     const navigationContainer = document.querySelector(".navigate-autorized__container");
     const page = document.querySelector(".page");
     if (navigationSection.className === "navigate-autorized" && navigationContainer.className === "navigate-autorized__container" && page.className === "page") {
       navigationSection.className += " navigate-autorized_responsive";
       navigationContainer.className += " navigate-autorized_responsive-active";
-      page.className += " page_disable-scroll";
+      page.className += " page_disable-scroll"; 
     } else {
       navigationSection.className = "navigate-autorized";
       navigationContainer.className = "navigate-autorized__container";
       page.className = "page";
     }
-    if (navigationSection === "navigate-autorized navigate-autorized_responsive") {
-      page.className += " page_disable-scroll";
-    }      
+  }
+
+  function handleCloseNavigationBar() {
+    const navigationSection = document.querySelector(".navigate-autorized");
+    const navigationContainer = document.querySelector(".navigate-autorized__container");
+    const page = document.querySelector(".page");
+    if (navigationSection.className === "navigate-autorized navigate-autorized_responsive" && navigationContainer.className === "navigate-autorized__container navigate-autorized_responsive-active" && page.className === "page page_disable-scroll") {
+      navigationSection.className = "navigate-autorized";
+      navigationContainer.className = "navigate-autorized__container";
+      page.className = "page";
+    }
   }
 
   function handleUpdateUser(item) {
@@ -127,7 +134,8 @@ function App() {
           <Main loggedIn={loggedIn} 
                 account={account} 
                 onAuthorization={handleProfileNav} 
-                onNavigation={handleNavigationBar}
+                onNavigation={handleCloseNavigationBar}
+                onActiveMenu={handleActiveMenu}
           />
         }>   
         </Route>
@@ -138,7 +146,8 @@ function App() {
                  loggedIn={loggedIn}
                  account={account} 
                  onAuthorization={handleProfileNav}
-                 onNavigation={handleNavigationBar}
+                 onNavigation={handleCloseNavigationBar}
+                 onActiveMenu={handleActiveMenu}
           />
         }>
         </Route>
@@ -149,7 +158,8 @@ function App() {
                        loggedIn={loggedIn}
                        account={account}
                        onAuthorization={handleProfileNav}
-                       onNavigation={handleNavigationBar}                       
+                       onNavigation={handleCloseNavigationBar}
+                       onActiveMenu={handleActiveMenu}                      
           />
         }>
         </Route>
@@ -162,7 +172,8 @@ function App() {
                  account={account}
                  onAuthorization={handleProfileNav}
                  onUpdateUser={handleUpdateUser}
-                 onNavigation={handleNavigationBar}
+                 onNavigation={handleCloseNavigationBar}
+                 onActiveMenu={handleActiveMenu}
           />
         }>
         </Route>
