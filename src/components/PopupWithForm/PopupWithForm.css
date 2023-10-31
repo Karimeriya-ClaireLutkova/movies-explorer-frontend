@@ -290,6 +290,30 @@
   margin: 128px 0 16px;
 }
 
+.popup_type_login-user {
+  display: block;
+  position: relative;
+  width: calc(100% - 2*442px);
+  margin: 0 442px 0;
+}
+
+.popup__container_type_login-user {
+  position: relative;
+  background-color: #202020;
+  border: none;
+}
+
+.popup__title_login-user {
+  color: #FFF;
+}
+
+.popup__field_type_login-user {
+  padding: 0 0 10px;
+}
+
+.popup__input-text_type_login-user {
+  margin: 0 0 5px
+}
 
 @media (max-width: 800px) {
   .popup_type_profile-info {
