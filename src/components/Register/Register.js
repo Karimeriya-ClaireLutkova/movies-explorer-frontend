@@ -1,11 +1,20 @@
 import React from 'react';
-import PopupWithForm from '../PopupWithForm/PopupWithForm';
+import {listValidation} from '../../utils/constants';
 import Header from '../Header/Header';
+import PopupWithForm from '../PopupWithForm/PopupWithForm';
+import FormValidator from '../FormValidator/FormValidator';
 
 export default function Register({isOpen, onSubmit, onClose}) {
   const [name, setName] = React.useState('');
   const [userEmail, setUserEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
+
+  function handleValidateForm(form) {
+    if (isOpen) {
+      const validationPopupRegister = new FormValidator(listValidation, form);
+      validationPopupRegister.enableValidation();
+    }   
+  }
 
   function handleChangeName(evt) {
     setName(evt.target.value);
@@ -35,7 +44,8 @@ export default function Register({isOpen, onSubmit, onClose}) {
         <PopupWithForm id="2" name="registration-user" title="Добро пожаловать!"
                        isOpen={isOpen}
                        onSubmit={handleSubmit}
-                       buttonText={"Зарегистрироваться"}>
+                       buttonText={"Зарегистрироваться"}
+                       onValidateForm={handleValidateForm}>
           <div className="popup__field">
             <p className="popup__input-text">Имя</p>
             <input id="user-name-input" type="text" className="popup__input popup__input_type_entry" name="name" placeholder="Имя" value={name} onChange={handleChangeName} required  />

@@ -99,6 +99,15 @@
   cursor: pointer;
 }
 
+.popup__button_inactive {
+  border: 1px solid #000000;
+  color: #000000;
+  background-color: #FFF;
+  cursor: default;
+  pointer-events: none;
+  opacity: 0.2;
+}
+
 .popup__field {
   display: flex;
   flex-direction: column;
@@ -106,6 +115,10 @@
   min-height: 27px;
   margin: 0 0 24px;
   box-sizing: border-box;
+}
+
+.popup__field_type_error {
+  margin: 0;
 }
 
 .popup__input-text {
@@ -161,6 +174,14 @@
   display: inline-block;
   min-height: 12px;
   opacity: 1;
+}
+
+.popup__input_type_error {
+  color: #EE3465;
+}
+
+.popup__input_type_error:hover {
+  border-bottom: 1px solid #424242;
 }
 
 .popup__redirection {

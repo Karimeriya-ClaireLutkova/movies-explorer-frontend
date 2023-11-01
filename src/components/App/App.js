@@ -24,8 +24,33 @@ function App() {
   const [isLoginPopupOpen, setLoginPopupOpen] = React.useState(true);
   const [isEditProfilePopupOpen, setEditProfilePopupOpen] = React.useState(true);
 
+  /*
+  const validationPopup = new FormValidator(listValidation, form);
+  const validationPopupRegister = new FormValidator(listValidation, formRegister);
+  const validationPopupLogin = new FormValidator(listValidation, formLogin);
+   validationPopupRegister.clearErrorFull();
+    validationPopupRegister.disableButtonSubmit();
+     validationPopupRegister.enableValidation();
+  validationPopupLogin.enableValidation();
+  
+    validationPopupLogin.clearErrorFull();
+    validationPopupLogin.disableButtonSubmit();
+    validationPopupProfile.clearErrorFull();
+    validationPopupProfile.disableButtonSubmit();
+
+    const popupProfile = document.querySelector('.popup_type_profile-info');
+    const popupRegister = document.querySelector('.popup_type_registration-user');
+    const popupLogin = document.querySelector('.popup_type_login-user');
+    export const formProfile = popupProfile.querySelector('.popup__form');
+    export const formRegister = popupRegister.querySelector('.popup__form');
+    export const formLogin = popupLogin.querySelector('.popup__form');
+  */
+
+ 
+ 
+
   function handleCloseRegistration() {
-    setRegisterPopupOpen(false)
+    setRegisterPopupOpen(false);
     setLoginPopupOpen(true);
     navigate("/sign-in", {replace: true});
   }
