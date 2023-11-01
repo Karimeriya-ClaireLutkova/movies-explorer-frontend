@@ -278,6 +278,12 @@
   color: #FFF;
 }
 
+.popup__form_registration-user {
+  flex-direction: column;
+  display: flex;
+  align-items: center;
+}
+
 .popup__field_type_registration-user {
   padding: 0 0 10px;
 }
