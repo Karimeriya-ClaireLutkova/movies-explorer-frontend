@@ -15,7 +15,7 @@ function App() {
   const [usersBase, setUsersBase] = React.useState([]);
   const [userData, setUserData] = React.useState({_id: '1', name: 'Виталий', email: 'pochta@yandex.ru'});
   const [counterUser, setcounterUser] = React.useState(0);
-  const [loggedIn, setLoggedIn] = React.useState(false);
+  const [loggedIn, setLoggedIn] = React.useState(true);
   const [account, setAccount] = React.useState('Аккаунт');
   const [moviesSaved, setMoviesSaved] = React.useState([]);
   const navigate = useNavigate();
@@ -23,32 +23,7 @@ function App() {
   const [isRegisterPopupOpen, setRegisterPopupOpen] = React.useState(true);
   const [isLoginPopupOpen, setLoginPopupOpen] = React.useState(true);
   const [isEditProfilePopupOpen, setEditProfilePopupOpen] = React.useState(true);
-
-  /*
-  const validationPopup = new FormValidator(listValidation, form);
-  const validationPopupRegister = new FormValidator(listValidation, formRegister);
-  const validationPopupLogin = new FormValidator(listValidation, formLogin);
-   validationPopupRegister.clearErrorFull();
-    validationPopupRegister.disableButtonSubmit();
-     validationPopupRegister.enableValidation();
-  validationPopupLogin.enableValidation();
-  
-    validationPopupLogin.clearErrorFull();
-    validationPopupLogin.disableButtonSubmit();
-    validationPopupProfile.clearErrorFull();
-    validationPopupProfile.disableButtonSubmit();
-
-    const popupProfile = document.querySelector('.popup_type_profile-info');
-    const popupRegister = document.querySelector('.popup_type_registration-user');
-    const popupLogin = document.querySelector('.popup_type_login-user');
-    export const formProfile = popupProfile.querySelector('.popup__form');
-    export const formRegister = popupRegister.querySelector('.popup__form');
-    export const formLogin = popupLogin.querySelector('.popup__form');
-  */
-
  
- 
-
   function handleCloseRegistration() {
     setRegisterPopupOpen(false);
     setLoginPopupOpen(true);

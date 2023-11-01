@@ -1,6 +1,8 @@
 import React from 'react';
+import {listValidation} from '../../utils/constants';
 import Header from '../Header/Header';
 import PopupWithForm from '../PopupWithForm/PopupWithForm';
+import FormValidator from '../FormValidator/FormValidator';
 import './Profile.css';
 
 export default function Profile({isOpen, onSignOut, onUpdateUser, account, loggedIn, onAuthorization, userData, onNavigation, onActiveMenu}) {
@@ -8,6 +10,13 @@ export default function Profile({isOpen, onSignOut, onUpdateUser, account, logge
   const [email, setEmail] = React.useState('');
   const currentUserData = userData;
   const greeting = `Привет, ${currentUserData.name}!`;
+
+  function handleValidateForm(form) {
+    if (isOpen) {
+      const validationPopupRegister = new FormValidator(listValidation, form);
+      validationPopupRegister.enableValidation();
+    }   
+  }
 
   React.useEffect(() => {
     if (isOpen) {
@@ -41,7 +50,8 @@ export default function Profile({isOpen, onSignOut, onUpdateUser, account, logge
         <PopupWithForm id="1" name="profile-info" title={greeting}
                        isOpen={isOpen}
                        onSubmit={handleSubmit}
-                       buttonText={"Редактировать"}>
+                       buttonText={"Редактировать"}
+                       onValidateForm={handleValidateForm}>
           <div className="popup__field popup__field_type_profile-info">
             <p className="popup__input-text popup__input-text_type_profile">Имя</p>
             <div className='profile-info__container'>
