@@ -50,6 +50,9 @@
   position: relative;
   color: #000;
   margin: 0;
+  flex-direction: column;
+  display: flex;
+  align-items: center;
 }
 
 .popup__form-info {
@@ -86,7 +89,7 @@
   line-height: 1.21;
   font-weight: 400;
   border-radius: 3px;
-  margin: 199px 0 16px;
+  margin: 197px 0 16px;
   padding: 0;
   background: #4285F4;
 }
@@ -278,12 +281,6 @@
   color: #FFF;
 }
 
-.popup__form_registration-user {
-  flex-direction: column;
-  display: flex;
-  align-items: center;
-}
-
 .popup__field_type_registration-user {
   padding: 0 0 10px;
 }
@@ -321,7 +318,11 @@
   margin: 0 0 5px
 }
 
-@media (max-width: 800px) {
+@media (max-width: 890px) {
+  .popup__redirection {
+    margin: 0 0 232px;
+  }
+
   .popup_type_profile-info {
     width: calc(100% - 2*30px);
     margin: 0 30px 0;
@@ -334,6 +335,17 @@
   .popup__button_profile-info {
     margin: 178px auto 16px;
   }
+
+  .popup_type_registration-user {
+    width: calc(100% - 2*186px);
+    margin: 0 186px 0;
+  }
+
+  .popup_type_login-user {
+    width: calc(100% - 2*186px);
+    margin: 0 186px 0;
+  }
+  
 }
 
 @media (max-width: 600px) {

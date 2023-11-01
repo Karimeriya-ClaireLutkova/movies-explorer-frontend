@@ -32,7 +32,7 @@ export default function Login ({onSubmit, isOpen, onClose, usersBase}) {
                        buttonText={"Войти"}>
           <div className="popup__field">
             <p className="popup__input-text">E-mail</p>
-            <input id="user-email-input" type="email" className="popup__input popup__input_type_entry" name="email" value={userEmail} placeholder="pochta@yandex.ru|" onChange={handleChangeEmail} required  />
+            <input id="user-email-input" type="email" className="popup__input popup__input_type_entry" name="email" value={userEmail} placeholder="Email" onChange={handleChangeEmail} required  />
             <span className="user-email-input-error popup__input-error"></span>
           </div>
           <div className="popup__field">

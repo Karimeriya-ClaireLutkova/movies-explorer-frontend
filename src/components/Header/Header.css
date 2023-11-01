@@ -36,6 +36,11 @@
     justify-content: space-between;
     padding: 15px 30px;
   }
+
+  .header_type_entry {
+    margin: 232px auto 0;
+    padding: 0;
+  }
 }
 
 @media (max-width: 600px) {
