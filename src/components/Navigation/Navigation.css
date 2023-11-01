@@ -136,6 +136,10 @@
   text-decoration: none;
 }
 
+.navigate-access__link:hover {
+  opacity: 0.7;
+}
+
 .navigate-access__link_type_entry {
   min-width: 76px;
   color: #000;
