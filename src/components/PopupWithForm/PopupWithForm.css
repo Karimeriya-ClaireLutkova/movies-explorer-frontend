@@ -344,8 +344,7 @@
   .popup_type_login-user {
     width: calc(100% - 2*186px);
     margin: 0 186px 0;
-  }
-  
+  }  
 }
 
 @media (max-width: 600px) {
@@ -375,6 +374,22 @@
     max-width: 260px;
   }
 
+  .popup__redirection {
+    width: 260px; 
+    margin: 0 auto 30px;
+  }
+
+  .popup__title_type_redirection {
+    margin: 0 7px 0 0;
+    font-size: 12px;
+    line-height: 1.25;
+  }
+
+  .popup__link_type_redirection {
+    font-size: 12px;
+    line-height: 1.25;
+  }  
+
   .popup_type_profile-info {
     width: calc(100% - 2*10px);
     margin: 0 10px 0;
@@ -400,4 +415,35 @@
     line-height: 1.25;
     margin: 347px auto 16px;
   }
+
+  .popup_type_registration-user {
+    width: calc(100% - 2*30px);
+    margin: 0 30px 0;
+  }
+
+  .popup__button_registration-user {
+    margin: 216px 0 14px;
+  }
+
+  .popup__title_registration-user {
+    justify-content: center;
+    display: flex;
+    margin: 0 auto 80px;  
+  }
+
+  .popup_type_login-user {
+    width: calc(100% - 2*30px);
+    margin: 0 30px 0;
+  }
+
+  .popup__button_login-user {
+    margin: 285px 0 14px;
+  }
+ 
+  .popup__title_login-user {
+    justify-content: center;
+    display: flex;
+    margin: 0 auto 80px;  
+  }
+  
 }

@@ -47,4 +47,11 @@
   .header {
     padding: 15px 14px 16px;
   }
+
+  .header_type_entry {
+    width: 260px;
+    justify-content: center;
+    margin: 56px auto 50px;
+    padding: 0;
+  }
 }
