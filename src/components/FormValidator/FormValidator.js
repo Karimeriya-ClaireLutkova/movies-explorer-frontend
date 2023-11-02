@@ -88,20 +88,14 @@ export default class FormValidator {
     }
   }
 
-  clearErrorFull () {
+  clearErrorFull() {
     this._fieldsetList.forEach((fieldSet) => {
       const inputElement = fieldSet.querySelector(this._inputSelector);
       this._hideInputError(inputElement);
     });
   }
 
-  disableButtonSubmit () {
-    this._buttonElement.classList.add(this._inactiveButtonClass);
-    this._buttonElement.setAttribute('disabled', true);
-  }
-
-  enableButtonSubmit () {
-    this._buttonElement.classList.remove(this._inactiveButtonClass);
-    this._buttonElement.removeAttribute('disabled');
+  checkButtonSubmit () {
+    this._toggleButtonState();
   }
 }

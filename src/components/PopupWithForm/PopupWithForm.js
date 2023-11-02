@@ -4,29 +4,17 @@ import './PopupWithForm.css';
 
 function PopupWithForm(props) {
   const {name, isOpen, title, onSubmit, children, buttonText, onValidateForm} = props;
-  const [isButtonInactive, setButtonInactive] = React.useState(true);
   const { pathname } = useLocation();
   const className = `popup popup_type_${name} ${isOpen ? "popup_opened" : ""}`;
-  const classNameButton = `popup__button popup__button_save popup__button_${name} ${(isButtonInactive) ? "popup__button_inactive" : ""}`;
+  const classNameButton = `popup__button popup__button_save popup__button_${name}`;
 
   React.useEffect(() => {
     const form = document.querySelector('[class = "popup__form"]');
-    const buttonSubmit = document.querySelector('[class ~= "popup__button"]');
     const handleValidateForm = (form) => {
       onValidateForm(form)
-    };
-    const handleActiveButton = () => {
-      if (pathname === "/profile") {
-        setButtonInactive(false);
-        buttonSubmit.removeAttribute('disabled');
-      } else {
-        setButtonInactive(true);
-        buttonSubmit.setAttribute('disabled', true);
-      }
-    };
-    handleActiveButton ();
+    }; 
     handleValidateForm(form);
-  }, [onValidateForm, setButtonInactive, pathname]);
+  }, [onValidateForm]);
 
   return (
     <div className = {className}>

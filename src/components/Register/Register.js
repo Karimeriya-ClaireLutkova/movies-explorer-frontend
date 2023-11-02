@@ -4,7 +4,7 @@ import Header from '../Header/Header';
 import PopupWithForm from '../PopupWithForm/PopupWithForm';
 import FormValidator from '../FormValidator/FormValidator';
 
-export default function Register({isOpen, onSubmit, onClose}) {
+export default function Register({isOpen, onSubmit}) {
   const [name, setName] = React.useState('');
   const [userEmail, setUserEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
@@ -12,7 +12,8 @@ export default function Register({isOpen, onSubmit, onClose}) {
   function handleValidateForm(form) {
     if (isOpen) {
       const validationPopupRegister = new FormValidator(listValidation, form);
-      validationPopupRegister.enableValidation();
+      validationPopupRegister.checkButtonSubmit();
+      validationPopupRegister.enableValidation();           
     }   
   }
 
@@ -34,7 +35,6 @@ export default function Register({isOpen, onSubmit, onClose}) {
     setUserEmail('');
     setPassword('');
     setName('');
-    onClose()
   }
 
   return (

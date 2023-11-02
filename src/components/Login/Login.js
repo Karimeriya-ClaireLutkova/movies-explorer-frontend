@@ -4,14 +4,15 @@ import Header from '../Header/Header';
 import PopupWithForm from '../PopupWithForm/PopupWithForm';
 import FormValidator from '../FormValidator/FormValidator';
 
-export default function Login ({onSubmit, isOpen, onClose, usersBase}) {
+export default function Login ({onSubmit, isOpen, usersBase}) {
   const [userEmail, setUserEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
 
   function handleValidateForm(form) {
     if (isOpen) {
-      const validationPopupRegister = new FormValidator(listValidation, form);
-      validationPopupRegister.enableValidation();
+      const validationPopupLogin = new FormValidator(listValidation, form);
+      validationPopupLogin.disableButtonSubmit();
+      validationPopupLogin.enableValidation();
     }   
   }
 
@@ -28,7 +29,6 @@ export default function Login ({onSubmit, isOpen, onClose, usersBase}) {
     onSubmit(userEmail, password, usersBase);
     setUserEmail('');
     setPassword('');
-    onClose();
   }
 
   return (

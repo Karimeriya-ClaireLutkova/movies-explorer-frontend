@@ -15,14 +15,14 @@ function App() {
   const [usersBase, setUsersBase] = React.useState([]);
   const [userData, setUserData] = React.useState({_id: '1', name: 'Виталий', email: 'pochta@yandex.ru'});
   const [counterUser, setcounterUser] = React.useState(0);
-  const [loggedIn, setLoggedIn] = React.useState(true);
+  const [loggedIn, setLoggedIn] = React.useState(false);
   const [account, setAccount] = React.useState('Аккаунт');
   const [moviesSaved, setMoviesSaved] = React.useState([]);
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const [isRegisterPopupOpen, setRegisterPopupOpen] = React.useState(true);
   const [isLoginPopupOpen, setLoginPopupOpen] = React.useState(true);
-  const [isEditProfilePopupOpen, setEditProfilePopupOpen] = React.useState(true);
+  const [isEditProfilePopupOpen, setEditProfilePopupOpen] = React.useState(false);
  
   function handleCloseRegistration() {
     setRegisterPopupOpen(false);
@@ -31,8 +31,10 @@ function App() {
   }
 
   function handleRegisterSubmit(name, userEmail, password) {
+    console.log(name, userEmail, password);
     setcounterUser(counterUser + 1)
-    setUsersBase({ _id: counterUser, name: name, email: userEmail, password: password })
+    setUsersBase(...usersBase, { _id: counterUser, name: name, email: userEmail, password: password })
+    console.log(usersBase);
     handleCloseRegistration();
   }
 
@@ -75,6 +77,7 @@ function App() {
 
   function handleProfileNav() {
     navigate('/profile', {replace: true});
+    setEditProfilePopupOpen(true);
     handleCloseNavigationBar();
   }
    
@@ -111,18 +114,15 @@ function App() {
   function handleUpdateUser(item) {
     setUserData(userData => ({...userData, _id: item._id, name: item.name, email: item.email}));
   }
-  
-  function closeAllPopups() {
-    setEditProfilePopupOpen(false);
-    setRegisterPopupOpen(false);
-    setLoginPopupOpen(false);
-  }
 
   function signOut() {
     localStorage.removeItem('jwt');
     setLoggedIn(false);
     setAccount('');
     setUserData({_id: '', name: '', email: ''});
+    setEditProfilePopupOpen(false);
+    setLoginPopupOpen(true);
+    setRegisterPopupOpen(true);
     navigate('/');   
   }
 
@@ -179,14 +179,12 @@ function App() {
         <Route path="sign-up" element={
           <Register isOpen={isRegisterPopupOpen}
                     onSubmit={handleRegisterSubmit}
-                    onClose={closeAllPopups}
           />
         }>   
         </Route>
         <Route path="sign-in" element={
           <Login isOpen={isLoginPopupOpen}
                  onSubmit={handleLoginSubmit}
-                 onClose={closeAllPopups}
                  usersBase={usersBase}
           />
         }>

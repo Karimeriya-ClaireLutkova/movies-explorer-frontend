@@ -13,8 +13,9 @@ export default function Profile({isOpen, onSignOut, onUpdateUser, account, logge
 
   function handleValidateForm(form) {
     if (isOpen) {
-      const validationPopupRegister = new FormValidator(listValidation, form);
-      validationPopupRegister.enableValidation();
+      const validationPopupProfile = new FormValidator(listValidation, form);
+      validationPopupProfile.enableButtonSubmit();
+      validationPopupProfile.enableValidation();
     }   
   }
 
