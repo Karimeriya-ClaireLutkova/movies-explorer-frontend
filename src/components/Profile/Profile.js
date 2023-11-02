@@ -62,7 +62,7 @@ export default function Profile({isOpen, onSignOut, onUpdateUser, account, logge
           <div className="popup__field popup__field_type_profile-info popup__field_type_not-underlined">
             <p className="popup__input-text popup__input-text_type_profile">E-mail</p>
             <div className="profile-info__container">
-              <input id="profile-email-input" type="email" className="popup__input popup__input_type_profile-info" name="email" placeholder="Email" value={email} onChange={handleChangeEmail} required  />
+              <input id="profile-email-input" type="email" className="popup__input popup__input_type_profile-info" name="email" placeholder="Email" pattern="^([^ ]+@[^ ]+\.[a-z]{2,6}|)$" value={email} onChange={handleChangeEmail} required  />
               <span className="profile-email-input-error popup__input-error"></span>
             </div>            
           </div>
