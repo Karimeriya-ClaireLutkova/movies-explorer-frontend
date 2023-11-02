@@ -28,6 +28,7 @@ export const listValidation = ({
   inactiveButtonClass: 'popup__button_inactive',
   inputErrorClass: 'popup__input_type_error',
   errorClass: 'popup__input-error_active',
+  errorClassProfile: 'popup__input-error_active_type_profile',
   fieldClass: 'popup__field_type_error',
   fieldSelector: '.popup__field',
   errorSelector: '.popup__input-error'

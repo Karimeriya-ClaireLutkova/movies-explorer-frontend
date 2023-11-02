@@ -15,7 +15,7 @@ function App() {
   const [usersBase, setUsersBase] = React.useState([]);
   const [userData, setUserData] = React.useState({_id: '1', name: 'Виталий', email: 'pochta@yandex.ru'});
   const [counterUser, setcounterUser] = React.useState(0);
-  const [loggedIn, setLoggedIn] = React.useState(false);
+  const [loggedIn, setLoggedIn] = React.useState(true);
   const [account, setAccount] = React.useState('Аккаунт');
   const [moviesSaved, setMoviesSaved] = React.useState([]);
   const navigate = useNavigate();
@@ -121,7 +121,6 @@ function App() {
   function signOut() {
     localStorage.removeItem('jwt');
     setLoggedIn(false);
-    closeAllPopups();
     setAccount('');
     setUserData({_id: '', name: '', email: ''});
     navigate('/');   

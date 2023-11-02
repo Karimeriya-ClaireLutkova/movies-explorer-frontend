@@ -100,7 +100,6 @@
 }
 
 .popup__button_inactive {
-  border: 1px solid #000000;
   color: #000000;
   background-color: #FFF;
   cursor: default;
@@ -113,7 +112,7 @@
   flex-direction: column;
   width: 396px;
   min-height: 27px;
-  margin: 0 0 24px;
+  padding: 0 0 24px;
   box-sizing: border-box;
 }
 
@@ -167,6 +166,12 @@
 }
 
 .popup__input-error_active {
+  display: inline-block;
+  min-height: 24px;
+  opacity: 1;
+}
+
+.popup__input-error_active_type_profile {
   display: inline-block;
   min-height: 16px;
   opacity: 1;
@@ -233,6 +238,7 @@
   flex-wrap: nowrap;
   width: 410px;
   margin: 0 0 17px;
+  padding: 0;
   border-bottom: 1px solid #424242;
 }
 

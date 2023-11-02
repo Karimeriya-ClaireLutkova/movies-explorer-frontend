@@ -7,6 +7,7 @@ export default class FormValidator {
     this._inactiveButtonClass = listValidation.inactiveButtonClass;
     this._inputErrorClass = listValidation.inputErrorClass;
     this._errorClass = listValidation.errorClass;
+    this._errorClassProfile = listValidation.errorClassProfile;
     this._fieldClass = listValidation.fieldClass;
     this._fieldSelector = listValidation.fieldSelector;
     this._errorSelector = listValidation.errorSelector;
@@ -43,14 +44,22 @@ export default class FormValidator {
     const fieldElement = inputElement.parentElement;
     errorElement.textContent = errorMessage;
     this._increaseFormView(fieldElement);
-    errorElement.classList.add(this._errorClass)
+    if (fieldElement.classList[0] === 'profile-info__container') {
+      errorElement.classList.add(this._errorClassProfile)
+    } else {
+      errorElement.classList.add(this._errorClass)
+    }
   }
 
   _hideInputError(inputElement) {
     const errorElement = this._formElement.querySelector(`.${inputElement.id}-error`);
     inputElement.classList.remove(this._inputErrorClass);
     const fieldElement = inputElement.parentElement;
-    errorElement.classList.remove(this._errorClass);
+    if (fieldElement.classList[0] === 'profile-info__container') {
+      errorElement.classList.remove(this._errorClassProfile)
+    } else {
+      errorElement.classList.remove(this._errorClass)
+    }
     errorElement.textContent = '';
     this._restoreSizeForm(fieldElement)
   }
