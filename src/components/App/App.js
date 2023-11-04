@@ -52,11 +52,11 @@ function App() {
 
   function handleMovieLike(movie, userData) {
     const movieInitial = initialMovies.find(i => i.movieId === movie.movieId);
-    if (movieInitial.owner._id === undefined || movieInitial.owner._id === null) {
-      setInitialMovies(() => initialMovies.map(item => item.movieId === movieInitial.movieId ? {...item, owner: {_id: userData._id}} : item));
+    if (movieInitial.owner.jwt === undefined) {
+      setInitialMovies(() => initialMovies.map(item => item.movieId === movieInitial.movieId ? {...item, owner: {jwt: userData.jwt}} : item));
       setMoviesSaved([movie, ...moviesSaved]);
     } else {
-      setInitialMovies(() => initialMovies.map(item => item.movieId === movieInitial.movieId ? {...item, owner: {_id: ''}} : item));
+      setInitialMovies(() => initialMovies.map(item => item.movieId === movieInitial.movieId ? {...item, owner: {jwt: ''}} : item));
       const movieNewList = moviesSaved.filter((item) => item.movieId !== movie.movieId);
       setMoviesSaved(movieNewList);
     }
@@ -64,7 +64,7 @@ function App() {
 
   function handleMovieDelete(movie) {
     const movieInitial = initialMovies.find(i => i.movieId === movie.movieId);
-    setInitialMovies(() => initialMovies.map(item => item.movieId === movieInitial.movieId ? {...item, owner: {_id: ''}} : item));
+    setInitialMovies(() => initialMovies.map(item => item.movieId === movieInitial.movieId ? {...item, owner: {jwt: ''}} : item));
     const movieNewList = moviesSaved.filter((item) => item.movieId !== movie.movieId);
     setMoviesSaved(movieNewList);
   }
@@ -143,7 +143,7 @@ function App() {
         }>
         </Route>
         <Route path="saved-movies" element={
-          <SavedMovies movies={initialMoviesCards}
+          <SavedMovies movies={moviesSaved}
                        userData={userData}
                        onMovieDelete={handleMovieDelete}
                        loggedIn={loggedIn}

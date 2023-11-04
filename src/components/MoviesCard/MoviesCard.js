@@ -4,7 +4,7 @@ import './MoviesCard.css';
 
 function MoviesCard({ userData, movie, onMovieLike, onMovieDelete }) {
   const { pathname } = useLocation();
-  const isOwn = movie.owner._id !== userData.jwt;
+  const isOwn = movie.owner.jwt === userData.jwt;
   const cardLikeButtonClassName = `element__button element__button_like ${isOwn ? "element__button_like_active" : ""}`;
 
   function handleLikeClick() {
@@ -12,7 +12,7 @@ function MoviesCard({ userData, movie, onMovieLike, onMovieDelete }) {
   }
 
   function handleDeleteClick() {
-    onMovieDelete(movie);
+    onMovieDelete(movie, userData);
   }
 
   return (
@@ -24,7 +24,7 @@ function MoviesCard({ userData, movie, onMovieLike, onMovieDelete }) {
           { pathname === '/movies' ? (
               <button type="button" className={cardLikeButtonClassName} aria-label="Добавить фильм в сохраненные" onClick={handleLikeClick} />
             ) : (
-              <button type="button" className="element__button element__button_delete element__button_delete_active" aria-label="Удалить фильм из сохраненных" onClick={handleDeleteClick} />              
+              <button type="button" className="element__button element__button_delete" aria-label="Удалить фильм из сохраненных" onClick={handleDeleteClick} />              
             )
           }
         </div>

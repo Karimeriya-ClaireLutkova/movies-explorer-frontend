@@ -50,7 +50,7 @@
 .element__button_like {
   width: 24px;
   height: 24px;
-  background-image: url("../../images/like-active.svg");
+  background-image: url("../../images/like_inactive.svg");
   background-repeat: no-repeat;
   border-radius: 50%;
   background-position: 50% 50%;
@@ -58,7 +58,23 @@
 }
 
 .element__button_like_active {
-  background-image: url("../../images/like_inactive.svg");
+  background-image: url("../../images/like-active.svg");
+}
+
+.element__button_delete {
+  background-image: url("../../images/movies_delete.svg");
+  width: 24px;
+  height: 24px;
+  background-repeat: no-repeat;
+  border-radius: 50%;
+  background-position: 50% 50%;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.element__button_delete:hover {
+  opacity: 0.8;
 }
 
 .element__duration {
