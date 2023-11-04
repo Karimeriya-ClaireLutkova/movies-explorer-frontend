@@ -10,6 +10,7 @@ function Movies({ movies, userData, onMovieLike, account, loggedIn, onAuthorizat
   const [windowDimensions, setWindowDimensions] = React.useState(getWindowDimensions());
   const [isCounterMovies, setCounterMovies] = React.useState();
   const isInitialCounter = 0;
+  const [isCounterMoviesNew, setCounterMoviesNew] = React.useState();
   const [isInitialMovies, setInitialMovies] = React.useState([]);
   const [isButtonInactive, setButtonInactive] = React.useState(false);
   const [isLoading, setLoading] = React.useState(false);
@@ -54,7 +55,8 @@ function Movies({ movies, userData, onMovieLike, account, loggedIn, onAuthorizat
     const initialCardsMovies = currentMovies.concat(cardsMoviesNew);
     if(initialCardsMovies.length < movies.length) {
       setInitialMovies(initialCardsMovies);
-      setButtonInactive(false);
+      setCounterMoviesNew(initialCardsMovies.length);
+      setButtonInactive(false);      
     } else {
       setInitialMovies(item);
       setButtonInactive(true);
@@ -62,17 +64,25 @@ function Movies({ movies, userData, onMovieLike, account, loggedIn, onAuthorizat
   }
   
   React.useEffect(() => {
-    function runOnlyPageLoad() {
-      const counterCurrent = handleCounterWidth(windowDimensions);
-      setCounterMovies(counterCurrent);
+    if(isCounterMoviesNew === undefined) {
       let initialCardsMovies = [];
       initialCardsMovies = movies.slice(isInitialCounter, isCounterMovies);
-      return initialCardsMovies;
+      setInitialMovies(initialCardsMovies);
+    } else {
+      let initialCardsMovies = [];
+      initialCardsMovies = movies.slice(isInitialCounter, isCounterMoviesNew);
+      setInitialMovies(initialCardsMovies);
     }
-    runOnlyPageLoad();
-    const initialCardsMovies = runOnlyPageLoad();
-    setInitialMovies(initialCardsMovies);    
-  }, [isInitialCounter, movies, windowDimensions, isCounterMovies])
+  }, [movies, isCounterMovies, isCounterMoviesNew])
+  
+
+  React.useEffect(() => {
+    function runOnlyPageLoad() {
+      const counterCurrent = handleCounterWidth(windowDimensions);
+      setCounterMovies(counterCurrent); 
+    }
+    runOnlyPageLoad();    
+  }, [windowDimensions])
 
   return (
     <>
