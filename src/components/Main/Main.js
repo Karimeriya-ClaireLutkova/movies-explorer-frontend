@@ -14,9 +14,9 @@ function Main({account, loggedIn, onAuthorization, onNavigation, onActiveMenu}) 
       <Promo />
       <AboutProject />
       <Techs />
-      <AboutMe />     
+      <AboutMe />
     </main>
-    </>    
+    </> 
   )
 }
 

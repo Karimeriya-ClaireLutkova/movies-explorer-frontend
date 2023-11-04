@@ -20,8 +20,8 @@ function AboutProject() {
             <p className="about-project__paragraph about-project__paragraph_type_distribution">Back-end</p>
             <h3 className="about-project__brief about-project__brief_type_increase">4 недели</h3>
             <p className="about-project__paragraph about-project__paragraph_type_distribution">Front-end</p>
-        </article>        
-      </div>      
+        </article>       
+      </div>     
     </section>
   )
 }

@@ -34,7 +34,7 @@
 .search-form__field {
   display: flex;
   width: calc(100% - 26px);
-  padding: 19px 20px 19px 19px;  
+  padding: 19px 20px 19px 19px;
 }
 
 .search-form__input {
@@ -94,7 +94,7 @@
   }
 
   .search-form__field {
-    padding: 19px 19px;  
+    padding: 19px 19px;
   }
 
   .search-form__button {
@@ -121,7 +121,7 @@
     border-radius: 0px;
     background-color: #202020;
   }
-  
+
   .search-form__container {
     margin: 0;
     padding: 0;
@@ -148,7 +148,7 @@
     font-size: 14px;
     line-height: 1.42;
   }
-  
+
   .search-form__button {
     padding: 10px 8px;
     margin: 19px 19px 19px 0;

@@ -32,13 +32,13 @@ function MoviesCard({userData, movie, onMovieLike, onMovieDelete}) {
           { pathname === '/movies' ? (
               <button type="button" className={cardLikeButtonClassName} aria-label="Добавить фильм в сохраненные" onClick={handleLikeClick} />
             ) : (
-              <button type="button" className="element__button element__button_delete" aria-label="Удалить фильм из сохраненных" onClick={handleDeleteClick} />              
+              <button type="button" className="element__button element__button_delete" aria-label="Удалить фильм из сохраненных" onClick={handleDeleteClick} />          
             )
           }
         </div>
       </div>
       <div className="element__duration">{movie.duration}</div>
-    </div>  
+    </div>
   )
 }
 

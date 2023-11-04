@@ -21,18 +21,18 @@ function Navigation({account, loggedIn, onAuthorization, onNavigation, onActiveM
               <NavLink to="/" className={({ isActive }) => isActive ? `${classNameNavActive} navigate-autorized__link_hidden`: "navigate-autorized__link navigate-autorized__link_hidden"} onClick={onNavigation}>Главная</NavLink>
               <NavLink to="/movies" className={({ isActive }) => isActive ? classNameNavActive : "navigate-autorized__link"} onClick={onNavigation} >Фильмы</NavLink>
               <NavLink to="/saved-movies" className={({ isActive }) => isActive ? classNameNavActive : "navigate-autorized__link"} onClick={onNavigation}>Сохраненные фильмы</NavLink>
-            </div>          
+            </div>
             <button type="button" className="navigate-autorized__button navigate-autorized__button_type_account" onClick={onAuthorization}>
               <p className="navigate-autorized_text">{account}</p>
               { pathname === '/' ? (
                   <div className="navigate-autorized__container-logo navigate-autorized__container-logo_type_header">
                    <img className="navigate-autorized__logo" alt="Иконка аккаунта" src={imgAccount}/>
-                  </div> 
+                  </div>
               ) : (
                   <div className="navigate-autorized__container-logo">
                     <img className="navigate-autorized__logo" alt="Иконка аккаунта" src={imgAccount}/>
                   </div>
-              )}           
+              )}         
             </button>
           </nav>
         </div>
@@ -42,13 +42,8 @@ function Navigation({account, loggedIn, onAuthorization, onNavigation, onActiveM
           <Link to="/sign-in" className="navigate-access__link navigate-access__link_type_entry">Войти</Link>
         </nav>
       )}
-    </>    
+    </>
   )
 }
 
 export default Navigation;
-
-
-
-        
-      

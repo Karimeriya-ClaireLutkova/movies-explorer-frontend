@@ -12,7 +12,7 @@ function PopupWithForm(props) {
     const form = document.querySelector('[class = "popup__form"]');
     const handleValidateForm = (form) => {
       onValidateForm(form)
-    }; 
+    };
     handleValidateForm(form);
   }, [onValidateForm]);
 

@@ -16,14 +16,14 @@ function MoviesCardList({ cardsMovies, userData, onMovieLike, onMovieDelete, onC
       <div className="elements__container">
         {cardsMovies.map((movie, i) => (
           <MoviesCard key={movie.movieId} userData={userData} movie={movie} onMovieLike={onMovieLike} onMovieDelete={onMovieDelete} />
-        ))}        
+        ))}
       </div>
-      { pathname === '/movies' && 
+      { pathname === '/movies' &&
         <div className="elements-adding">
           <button className={className} type="button" onClick={handleChangeDescription}>Ещё</button>
         </div>
-      } 
-    </section>    
+      }
+    </section> 
   )
 }
 

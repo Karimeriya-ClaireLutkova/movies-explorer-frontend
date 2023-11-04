@@ -10,7 +10,7 @@ function FilterCheckbox() {
         <span className="filter-checkbox__slider"></span>
       </label>
       <h3 className="filter-checkbox__subtitle">Короткометражки</h3>
-    </div>   
+    </div>
   )
 }
 

@@ -2,7 +2,6 @@ import React from 'react';
 import './Techs.css';
 
 function Techs() {
-
   return (
     <section className="techs">
       <h2 className="section__title section__title_type_techs">Технологии</h2>
@@ -19,7 +18,7 @@ function Techs() {
           <li className="techs__list-item">mongoDB</li>
         </ul>
       </div>
-    </section>    
+    </section>
   )
 }
 

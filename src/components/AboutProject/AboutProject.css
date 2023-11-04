@@ -55,7 +55,7 @@
   line-height: 1.42;
   padding: 0;
   margin: 0;
-  order: 1; 
+  order: 1;
 }
 
 .about-project__brief_type_decrease {
@@ -93,7 +93,7 @@
     max-width: calc(100% - 50px*2);
     padding: 90px 50px;
   }
-  
+
   .about-project__container {
     column-gap: 30px;
   }
@@ -186,7 +186,7 @@
     line-height: 1.45;
     margin: 0;
   }
-  
+
   .about-project__brief_type_decrease {
     font-size: 11px;
     letter-spacing: normal;

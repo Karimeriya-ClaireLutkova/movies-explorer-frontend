@@ -2,7 +2,7 @@ import React from 'react';
 import './Portfolio.css';
 
 function Portfolio() {
-  
+
   return (
     <section className="portfolio">
       <p className="section__subline section__subline_type_portfolio">Портфолио</p>
@@ -26,7 +26,7 @@ function Portfolio() {
         </a>
         </li>
       </ul>
-    </section>    
+    </section>  
   )
 }
 

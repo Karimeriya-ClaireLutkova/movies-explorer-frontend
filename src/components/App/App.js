@@ -47,16 +47,16 @@ function App() {
     setUserData({ name: "Виталий", email: item.email, jwt: jwt});
     navigate('/movies', { replace: true });
     setAccount('Аккаунт');
-    setLoggedIn(true);    
+    setLoggedIn(true);  
   }
 
   function handleMovieLike(movie, userData) {
     const movieInitial = initialMovies.find(i => i.movieId === movie.movieId);
     let cards;
-    if (movieInitial.owner.jwt === undefined || movieInitial.owner.jwt === '') { 
+    if (movieInitial.owner.jwt === undefined || movieInitial.owner.jwt === '') {
       cards = initialMovies.map(item => item.movieId === movieInitial.movieId ? {...item, owner: {jwt: userData.jwt}} : item);
       setInitialMovies(cards);
-      setMoviesSaved([movie, ...moviesSaved]);   
+      setMoviesSaved([movie, ...moviesSaved]); 
     } else {
       cards = initialMovies.map(item => item.movieId === movieInitial.movieId ? {...item, owner: {jwt: ''}} : item);
       const movieNewList = moviesSaved.filter((item) => item.movieId !== movie.movieId);
@@ -80,7 +80,7 @@ function App() {
     setLoggedIn(true);
     handleCloseNavigationBar();
   }
-   
+
   function handleGoBackPageNav() {
     navigate(-1, {replace: true});
   }
@@ -92,7 +92,7 @@ function App() {
     if (navigationSection.className === "navigate-autorized" && navigationContainer.className === "navigate-autorized__container" && page.className === "page") {
       navigationSection.className += " navigate-autorized_responsive";
       navigationContainer.className += " navigate-autorized_responsive-active";
-      page.className += " page_disable-scroll"; 
+      page.className += " page_disable-scroll";
     } else {
       navigationSection.className = "navigate-autorized";
       navigationContainer.className = "navigate-autorized__container";
@@ -120,27 +120,27 @@ function App() {
     setLoggedIn(false);
     setAccount('');
     setUserData({ name: '', email: ''});
-    navigate('/');   
+    navigate('/'); 
   }
 
   return (
    <>
       <Routes>
         <Route path="/" element={
-          <Main loggedIn={loggedIn} 
-                account={account} 
-                onAuthorization={handleProfileNav} 
+          <Main loggedIn={loggedIn}
+                account={account}
+                onAuthorization={handleProfileNav}
                 onNavigation={handleCloseNavigationBar}
                 onActiveMenu={handleActiveMenu}
           />
-        }>   
+        }>  
         </Route>
         <Route path="movies" element={
           <Movies movies={initialMovies}
                  userData={userData}
-                 onMovieLike={handleMovieLike} 
+                 onMovieLike={handleMovieLike}
                  loggedIn={loggedIn}
-                 account={account} 
+                 account={account}
                  onAuthorization={handleProfileNav}
                  onNavigation={handleCloseNavigationBar}
                  onActiveMenu={handleActiveMenu}
@@ -155,7 +155,7 @@ function App() {
                        account={account}
                        onAuthorization={handleProfileNav}
                        onNavigation={handleCloseNavigationBar}
-                       onActiveMenu={handleActiveMenu}                      
+                       onActiveMenu={handleActiveMenu}                 
           />
         }>
         </Route>
@@ -173,13 +173,11 @@ function App() {
         }>
         </Route>
         <Route path="sign-up" element={
-          <Register onSubmit={handleRegisterSubmit}
-          />
-        }>   
+          <Register onSubmit={handleRegisterSubmit} />
+        }>
         </Route>
         <Route path="sign-in" element={
-          <Login onSubmit={handleСheckAuthorization}
-          />
+          <Login onSubmit={handleСheckAuthorization} />
         }>
         </Route>
         <Route path="*" element={
@@ -188,7 +186,7 @@ function App() {
         </Route>
       </Routes>
       { (pathname === '/' || pathname === '/movies' || pathname === '/saved-movies') && <Footer /> }
-    </> 
+    </>
   );
 }
 

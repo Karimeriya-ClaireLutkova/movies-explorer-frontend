@@ -5,7 +5,7 @@ import Preloader from '../Preloader/Preloader';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 
 function SavedMovies({ movies, userData, onMovieDelete, account, loggedIn, onAuthorization, onNavigation, onActiveMenu}) {
-  const [loading, setloading] = React.useState(false);
+  const loading = false;
 
   return (
     <>
@@ -18,9 +18,9 @@ function SavedMovies({ movies, userData, onMovieDelete, account, loggedIn, onAut
           ) : (
             <MoviesCardList id="2" cardsMovies={movies} userData={userData} onMovieDelete={onMovieDelete} buttonInactive="" />
           )}
-        </section>  
+        </section> 
       </main>
-    </> 
+    </>
   )
 }
 

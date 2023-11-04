@@ -13,7 +13,7 @@ export default function Profile({onSignOut, onUpdateUser, account, loggedIn, onA
 
   function handleValidateForm(form) {
     const validationPopupProfile = new FormValidator(listValidation, form);
-    validationPopupProfile.enableValidation();  
+    validationPopupProfile.enableValidation();
   }
 
   React.useEffect(() => {
@@ -51,14 +51,14 @@ export default function Profile({onSignOut, onUpdateUser, account, loggedIn, onA
             <div className='profile-info__container'>
               <input id="profile-name-input" type="text" className="popup__input popup__input_type_profile-info" name="name" placeholder="Имя" value={name} onChange={handleChangeName} required  />
               <span className="profile-name-input-error popup__input-error"></span>
-            </div>            
+            </div>           
           </div>
           <div className="popup__field popup__field_type_profile-info popup__field_type_not-underlined">
             <p className="popup__input-text popup__input-text_type_profile">E-mail</p>
             <div className="profile-info__container">
               <input id="profile-email-input" type="email" className="popup__input popup__input_type_profile-info" name="email" placeholder="Email" pattern="^([^ ]+@[^ ]+\.[a-z]{2,6}|)$" value={email} onChange={handleChangeEmail} required  />
               <span className="profile-email-input-error popup__input-error"></span>
-            </div>            
+            </div>           
           </div>
         </PopupWithForm>
         <div className="profil-info__signOut">

@@ -13,7 +13,7 @@ function Movies({ movies, userData, onMovieLike, account, loggedIn, onAuthorizat
   const [isCounterMoviesNew, setCounterMoviesNew] = React.useState();
   const [isInitialMovies, setInitialMovies] = React.useState([]);
   const [isButtonInactive, setButtonInactive] = React.useState(false);
-  const [isLoading, setLoading] = React.useState(false);
+  const isLoading = false;
 
   function handleCounterWidth(item) {
     let count;
@@ -37,15 +37,6 @@ function Movies({ movies, userData, onMovieLike, account, loggedIn, onAuthorizat
     };
   }
 
-  React.useEffect(() => {
-    function handleResize() {
-      setWindowDimensions(getWindowDimensions());
-    }
-
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, [windowDimensions]);
-
   function handleChangeDescription(item) {
     let currentMovies = item;
     const countPrimier = item.length;
@@ -56,13 +47,31 @@ function Movies({ movies, userData, onMovieLike, account, loggedIn, onAuthorizat
     if(initialCardsMovies.length < movies.length) {
       setInitialMovies(initialCardsMovies);
       setCounterMoviesNew(initialCardsMovies.length);
-      setButtonInactive(false);      
+      setButtonInactive(false);   
     } else {
       setInitialMovies(item);
       setButtonInactive(true);
-    }    
+    }
   }
-  
+
+  function handleUpdateMoviesList(item) {
+    let movieListScreach;
+    movieListScreach = movies.filter(movie => {
+      const nameRu = movie.nameRU.toLowerCase();
+      return nameRu.includes(item.name)
+    })
+    setInitialMovies(movieListScreach);
+    setButtonInactive(true);
+  }
+
+  React.useEffect(() => {
+    function handleResize() {
+      setWindowDimensions(getWindowDimensions());
+    }
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, [windowDimensions]);
+
   React.useEffect(() => {
     if(isCounterMoviesNew === undefined) {
       let initialCardsMovies = [];
@@ -74,14 +83,13 @@ function Movies({ movies, userData, onMovieLike, account, loggedIn, onAuthorizat
       setInitialMovies(initialCardsMovies);
     }
   }, [movies, isCounterMovies, isCounterMoviesNew])
-  
 
   React.useEffect(() => {
     function runOnlyPageLoad() {
       const counterCurrent = handleCounterWidth(windowDimensions);
-      setCounterMovies(counterCurrent); 
+      setCounterMovies(counterCurrent);
     }
-    runOnlyPageLoad();    
+    runOnlyPageLoad();
   }, [windowDimensions])
 
   return (
@@ -89,15 +97,15 @@ function Movies({ movies, userData, onMovieLike, account, loggedIn, onAuthorizat
       <Header id="2" account={account} loggedIn={loggedIn} onAuthorization={onAuthorization} onNavigation={onNavigation} onActiveMenu={onActiveMenu} />
       <main>
         <section className="movies">
-          <SearchForm id="1"/>
+          <SearchForm id="1" onUpdateMoviesList={handleUpdateMoviesList} />
           {isLoading ? (
             <Preloader />
           ) : (
             <MoviesCardList id="1" cardsMovies={isInitialMovies} buttonInactive={isButtonInactive} userData={userData} onMovieLike={onMovieLike} onChangeDescription={handleChangeDescription} />
-          )}     
+          )}
         </section>
-      </main> 
-    </>    
+      </main>
+    </> 
   )
 }
 

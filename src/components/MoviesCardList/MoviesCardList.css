@@ -19,11 +19,10 @@
   justify-content: center;
   max-width: calc(100% - 2*70px);
   margin: 0 70px 0;
-  
-} 
+}
 
 .elements-adding__button {
-  width: 320px;  
+  width: 320px;
   background-color: #2F2F2F;
   color: #FFF;
   text-align: center;

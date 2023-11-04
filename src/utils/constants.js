@@ -732,5 +732,5 @@ export const initialMoviesCards = [
     image: wordsAboutDesign,
     owner: {},
     movieId: 100
-  }  
+  }
 ];

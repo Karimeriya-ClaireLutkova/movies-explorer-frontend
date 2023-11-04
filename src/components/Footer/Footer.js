@@ -18,7 +18,7 @@ function Footer() {
             </li>
           </ul>
         </nav>
-      </div>        
+      </div>
     </footer>
   )
 }
