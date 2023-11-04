@@ -1,35 +1,28 @@
 import React from 'react';
+import { useLocation } from 'react-router-dom';
 import MoviesCard from '../MoviesCard/MoviesCard';
 import './MoviesCardList.css';
 
-function MoviesCardList({ initialCardsMovies, moviesLength, moviesNew, userData, onMovieLike, onMovieDelete, onChangeDescription, counterMoviesNew }) {
-  const [buttonInactive, setButtonInactive] = React.useState(true);
-  const [isMoviesList, setMoviesList] =  React.useState([]);
-  const className = `elements-adding__button elements-adding__button_type_${buttonInactive ? "inactive" : ""}`;
-  const addingCards = initialCardsMovies;
-  React.useEffect(() => {
-    const moviesCheck = () => {
-      if (isMoviesList.length < moviesLength) {
-        setButtonInactive(false);
-        const moviesList = addingCards.concat(moviesNew);
-        setMoviesList(moviesList);
-      } else if (isMoviesList.length >= moviesLength) {
-        setButtonInactive(true)
-      }
-    };
-    moviesCheck();
-  }, [moviesNew, moviesLength, isMoviesList, addingCards ]);
+function MoviesCardList({ cardsMovies, userData, onMovieLike, onMovieDelete, onChangeDescription, buttonInactive }) {
+  const className = `elements-adding__button ${buttonInactive ? "elements-adding__button_type_inactive" : ""}`;
+  const { pathname } = useLocation();
+
+  function handleChangeDescription() {
+    onChangeDescription(cardsMovies)
+  }
 
   return (
     <section className="elements" aria-label="Список фильмов">
       <div className="elements__container">
-        {initialCardsMovies.map((movie, i) => (
+        {cardsMovies.map((movie, i) => (
           <MoviesCard key={movie.movieId} userData={userData} movie={movie} onMovieLike={onMovieLike} onMovieDelete={onMovieDelete} />
         ))}        
-      </div>      
-      <div className="elements-adding">
-        <button className={className} type="button" onClick={onChangeDescription}>Ещё</button>
-      </div>  
+      </div>
+      { pathname === '/movies' && 
+        <div className="elements-adding">
+          <button className={className} type="button" onClick={handleChangeDescription}>Ещё</button>
+        </div>
+      } 
     </section>    
   )
 }

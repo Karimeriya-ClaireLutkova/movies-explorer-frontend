@@ -143,7 +143,7 @@ function App() {
         }>
         </Route>
         <Route path="saved-movies" element={
-          <SavedMovies movies={moviesSaved}
+          <SavedMovies movies={initialMoviesCards}
                        userData={userData}
                        onMovieDelete={handleMovieDelete}
                        loggedIn={loggedIn}
