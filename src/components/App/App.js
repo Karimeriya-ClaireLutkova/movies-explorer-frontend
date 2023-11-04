@@ -18,7 +18,7 @@ function App() {
   const [moviesSaved, setMoviesSaved] = React.useState([]);
   const navigate = useNavigate();
   const { pathname } = useLocation();
- 
+
   React.useEffect(() => {
     const tokenCheck = () => {
       if (localStorage.getItem('jwt')) {
@@ -52,20 +52,25 @@ function App() {
 
   function handleMovieLike(movie, userData) {
     const movieInitial = initialMovies.find(i => i.movieId === movie.movieId);
-    if (movieInitial.owner.jwt === undefined) {
-      setInitialMovies(() => initialMovies.map(item => item.movieId === movieInitial.movieId ? {...item, owner: {jwt: userData.jwt}} : item));
-      setMoviesSaved([movie, ...moviesSaved]);
+    let cards;
+    if (movieInitial.owner.jwt === undefined || movieInitial.owner.jwt === '') { 
+      cards = initialMovies.map(item => item.movieId === movieInitial.movieId ? {...item, owner: {jwt: userData.jwt}} : item);
+      setInitialMovies(cards);
+      setMoviesSaved([movie, ...moviesSaved]);   
     } else {
-      setInitialMovies(() => initialMovies.map(item => item.movieId === movieInitial.movieId ? {...item, owner: {jwt: ''}} : item));
+      cards = initialMovies.map(item => item.movieId === movieInitial.movieId ? {...item, owner: {jwt: ''}} : item);
       const movieNewList = moviesSaved.filter((item) => item.movieId !== movie.movieId);
+      setInitialMovies(cards);
       setMoviesSaved(movieNewList);
     }
   }
 
   function handleMovieDelete(movie) {
     const movieInitial = initialMovies.find(i => i.movieId === movie.movieId);
-    setInitialMovies(() => initialMovies.map(item => item.movieId === movieInitial.movieId ? {...item, owner: {jwt: ''}} : item));
+    let cards;
+    cards = initialMovies.map(item => item.movieId === movieInitial.movieId ? {...item, owner: {jwt: ''}} : item);
     const movieNewList = moviesSaved.filter((item) => item.movieId !== movie.movieId);
+    setInitialMovies(cards);
     setMoviesSaved(movieNewList);
   }
 
@@ -131,7 +136,7 @@ function App() {
         }>   
         </Route>
         <Route path="movies" element={
-          <Movies movies={initialMoviesCards}
+          <Movies movies={initialMovies}
                  userData={userData}
                  onMovieLike={handleMovieLike} 
                  loggedIn={loggedIn}

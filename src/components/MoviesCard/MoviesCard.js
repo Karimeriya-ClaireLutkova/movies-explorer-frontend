@@ -2,10 +2,18 @@ import React from 'react';
 import { useLocation } from 'react-router-dom';
 import './MoviesCard.css';
 
-function MoviesCard({ userData, movie, onMovieLike, onMovieDelete }) {
+function MoviesCard({userData, movie, onMovieLike, onMovieDelete}) {
   const { pathname } = useLocation();
-  const isOwn = movie.owner.jwt === userData.jwt;
-  const cardLikeButtonClassName = `element__button element__button_like ${isOwn ? "element__button_like_active" : ""}`;
+  const [isOwner, setOwner] = React.useState(false);
+  const cardLikeButtonClassName = `element__button element__button_like ${isOwner ? "element__button_like_active" : ""}`;
+
+  React.useEffect(() => {
+    if(movie.owner.jwt === undefined || movie.owner.jwt === '' ) {
+      setOwner(false);
+    } else if(movie.owner.jwt === userData.jwt) {
+      setOwner(true);
+    }
+  }, [movie.owner.jwt, userData.jwt, movie])
 
   function handleLikeClick() {
     onMovieLike(movie, userData);

@@ -6,16 +6,14 @@ import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import { SCREEN_MIN, SCREEN_MEDIUM, SCREEN_BIG } from '../../utils/constants';
 import './Movies.css';
 
-function Movies({ movies, userData, onMovieLike, account, loggedIn, onAuthorization, onNavigation, onActiveMenu }) {
+function Movies({ movies, userData, onMovieLike, account, loggedIn, onAuthorization, onNavigation, onActiveMenu}) {
   const [windowDimensions, setWindowDimensions] = React.useState(getWindowDimensions());
   const [isCounterMovies, setCounterMovies] = React.useState();
   const isInitialCounter = 0;
-  const [isMoviesList, setMoviesList] = React.useState([]);
   const [isInitialMovies, setInitialMovies] = React.useState([]);
   const [isButtonInactive, setButtonInactive] = React.useState(false);
   const [isLoading, setLoading] = React.useState(false);
-   
-  
+
   function handleCounterWidth(item) {
     let count;
     if (item.width < SCREEN_MIN) {
@@ -54,7 +52,6 @@ function Movies({ movies, userData, onMovieLike, account, loggedIn, onAuthorizat
     let cardsMoviesNew = [];
     cardsMoviesNew = movies.slice(countPrimier, counterNew);
     const initialCardsMovies = currentMovies.concat(cardsMoviesNew);
-    setMoviesList(initialCardsMovies);
     if(initialCardsMovies.length < movies.length) {
       setInitialMovies(initialCardsMovies);
       setButtonInactive(false);
