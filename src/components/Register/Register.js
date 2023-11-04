@@ -4,17 +4,15 @@ import Header from '../Header/Header';
 import PopupWithForm from '../PopupWithForm/PopupWithForm';
 import FormValidator from '../FormValidator/FormValidator';
 
-export default function Register({isOpen, onSubmit}) {
+export default function Register({onSubmit}) {
   const [name, setName] = React.useState('');
   const [userEmail, setUserEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
 
   function handleValidateForm(form) {
-    if (isOpen) {
-      const validationPopupRegister = new FormValidator(listValidation, form);
-      validationPopupRegister.checkButtonSubmit();
-      validationPopupRegister.enableValidation();           
-    }   
+    const validationPopupRegister = new FormValidator(listValidation, form);
+    validationPopupRegister.checkButtonSubmit();
+    validationPopupRegister.enableValidation();
   }
 
   function handleChangeName(evt) {
@@ -31,7 +29,7 @@ export default function Register({isOpen, onSubmit}) {
 
   function handleSubmit(evt) {
     evt.preventDefault();
-    onSubmit(name, userEmail, password);
+    onSubmit({name: name, userEmail: userEmail, password: password});
     setUserEmail('');
     setPassword('');
     setName('');
@@ -42,7 +40,6 @@ export default function Register({isOpen, onSubmit}) {
       <Header id="5" />
       <main>
         <PopupWithForm id="2" name="registration-user" title="Добро пожаловать!"
-                       isOpen={isOpen}
                        onSubmit={handleSubmit}
                        buttonText={"Зарегистрироваться"}
                        onValidateForm={handleValidateForm}>

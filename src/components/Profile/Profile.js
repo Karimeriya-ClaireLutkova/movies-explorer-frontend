@@ -5,26 +5,21 @@ import PopupWithForm from '../PopupWithForm/PopupWithForm';
 import FormValidator from '../FormValidator/FormValidator';
 import './Profile.css';
 
-export default function Profile({isOpen, onSignOut, onUpdateUser, account, loggedIn, onAuthorization, userData, onNavigation, onActiveMenu}) {
+export default function Profile({onSignOut, onUpdateUser, account, loggedIn, onAuthorization, userData, onNavigation, onActiveMenu}) {
   const [name, setName] = React.useState('');
   const [email, setEmail] = React.useState('');
   const currentUserData = userData;
   const greeting = `Привет, ${currentUserData.name}!`;
 
   function handleValidateForm(form) {
-    if (isOpen) {
-      const validationPopupProfile = new FormValidator(listValidation, form);
-      validationPopupProfile.enableButtonSubmit();
-      validationPopupProfile.enableValidation();
-    }   
+    const validationPopupProfile = new FormValidator(listValidation, form);
+    validationPopupProfile.enableValidation();  
   }
 
   React.useEffect(() => {
-    if (isOpen) {
-      setName(currentUserData.name);
-      setEmail(currentUserData.email);
-    };
-  }, [isOpen, currentUserData]);
+    setName(currentUserData.name);
+    setEmail(currentUserData.email);
+  }, [currentUserData]);
 
   function handleChangeName(evt) {
     setName(evt.target.value);
@@ -38,10 +33,9 @@ export default function Profile({isOpen, onSignOut, onUpdateUser, account, logge
     evt.preventDefault();
 
     onUpdateUser({
-      _id: userData._id,
       name: name,
       email: email,
-    }, currentUserData);
+    });
   }
 
   return (
@@ -49,7 +43,6 @@ export default function Profile({isOpen, onSignOut, onUpdateUser, account, logge
       <Header id="4" account={account} loggedIn={loggedIn} onAuthorization={onAuthorization} onNavigation={onNavigation} onActiveMenu={onActiveMenu} />
       <main>
         <PopupWithForm id="1" name="profile-info" title={greeting}
-                       isOpen={isOpen}
                        onSubmit={handleSubmit}
                        buttonText={"Редактировать"}
                        onValidateForm={handleValidateForm}>

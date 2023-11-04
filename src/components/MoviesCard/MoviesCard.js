@@ -4,7 +4,7 @@ import './MoviesCard.css';
 
 function MoviesCard({ userData, movie, onMovieLike, onMovieDelete }) {
   const { pathname } = useLocation();
-  const isOwn = movie.owner._id !== userData._id;
+  const isOwn = movie.owner._id !== userData.jwt;
   const cardLikeButtonClassName = `element__button element__button_like ${isOwn ? "element__button_like_active" : ""}`;
 
   function handleLikeClick() {

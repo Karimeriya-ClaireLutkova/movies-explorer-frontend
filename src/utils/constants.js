@@ -15,10 +15,9 @@ import skateKitchen from '../images/Скейт_кухня.jpg';
 import warOfArts from '../images/Война_искусств.jpg';
 import Zone from '../images/Зона.jpg';
 
-export const SCREEN_MIN = 767;
+export const SCREEN_MIN = 768;
 export const SCREEN_MEDIUM = 1023;
-export const SCREEN_BIG = 1279;
-export const SCREEN_MAX = 1280;
+export const SCREEN_BIG = 1280;
 
 export const JWT = '36a96b968f20dc9d9e7a0e5b769eec6a63355c740e9a65fff921c89000d30854';
 export const listValidation = ({
@@ -26,6 +25,7 @@ export const listValidation = ({
   inputSelector: '.popup__input',
   submitButtonSelector: '.popup__button',
   inactiveButtonClass: 'popup__button_inactive',
+  inactiveButtonClassProfile: 'popup__button_inactive_type_profile',
   inputErrorClass: 'popup__input_type_error',
   errorClass: 'popup__input-error_active',
   errorClassProfile: 'popup__input-error_active_type_profile',

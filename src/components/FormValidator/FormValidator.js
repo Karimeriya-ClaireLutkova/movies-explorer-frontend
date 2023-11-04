@@ -5,6 +5,7 @@ export default class FormValidator {
     this._inputSelector = listValidation.inputSelector;
     this._submitButtonSelector = listValidation.submitButtonSelector;
     this._inactiveButtonClass = listValidation.inactiveButtonClass;
+    this._inactiveButtonClassProfile = listValidation.inactiveButtonClassProfile;
     this._inputErrorClass = listValidation.inputErrorClass;
     this._errorClass = listValidation.errorClass;
     this._errorClassProfile = listValidation.errorClassProfile;
@@ -44,7 +45,7 @@ export default class FormValidator {
     const fieldElement = inputElement.parentElement;
     errorElement.textContent = errorMessage;
     this._increaseFormView(fieldElement);
-    if (fieldElement.classList[0] === 'profile-info__container') {
+    if (fieldElement.classList.contains('profile-info__container')) {
       errorElement.classList.add(this._errorClassProfile)
     } else {
       errorElement.classList.add(this._errorClass)
@@ -55,7 +56,7 @@ export default class FormValidator {
     const errorElement = this._formElement.querySelector(`.${inputElement.id}-error`);
     inputElement.classList.remove(this._inputErrorClass);
     const fieldElement = inputElement.parentElement;
-    if (fieldElement.classList[0] === 'profile-info__container') {
+    if (fieldElement.classList.contains('profile-info__container')) {
       errorElement.classList.remove(this._errorClassProfile)
     } else {
       errorElement.classList.remove(this._errorClass)
@@ -80,11 +81,19 @@ export default class FormValidator {
 
   _toggleButtonState() {
     if (this._hasInvalidInput(this._inputList)) {
-      this._buttonElement.classList.add(this._inactiveButtonClass);
       this._buttonElement.setAttribute('disabled', true);
+      if(this._buttonElement.classList.contains('popup__button_profile-info')) {
+        this._buttonElement.classList.add(this._inactiveButtonClassProfile);
+      } else {
+        this._buttonElement.classList.add(this._inactiveButtonClass);
+      }      
     } else {
-      this._buttonElement.classList.remove(this._inactiveButtonClass);
       this._buttonElement.removeAttribute('disabled');
+      if(this._buttonElement.classList.contains('popup__button_profile-info')) {
+        this._buttonElement.classList.remove(this._inactiveButtonClassProfile);
+      } else {
+        this._buttonElement.classList.remove(this._inactiveButtonClass);
+      }      
     }
   }
 
@@ -95,7 +104,7 @@ export default class FormValidator {
     });
   }
 
-  checkButtonSubmit () {
+  checkButtonSubmit() {
     this._toggleButtonState();
   }
 }

@@ -12,48 +12,42 @@ import { initialMoviesCards, JWT } from '../../utils/constants';
 
 function App() {
   const [initialMovies, setInitialMovies] = React.useState(initialMoviesCards);
-  const [usersBase, setUsersBase] = React.useState([]);
-  const [userData, setUserData] = React.useState({_id: '1', name: 'Виталий', email: 'pochta@yandex.ru'});
-  const [counterUser, setcounterUser] = React.useState(0);
+  const [userData, setUserData] = React.useState({ name: '', email: '', jwt:''});
   const [loggedIn, setLoggedIn] = React.useState(false);
   const [account, setAccount] = React.useState('Аккаунт');
   const [moviesSaved, setMoviesSaved] = React.useState([]);
   const navigate = useNavigate();
   const { pathname } = useLocation();
-  const [isRegisterPopupOpen, setRegisterPopupOpen] = React.useState(true);
-  const [isLoginPopupOpen, setLoginPopupOpen] = React.useState(true);
-  const [isEditProfilePopupOpen, setEditProfilePopupOpen] = React.useState(false);
  
+  React.useEffect(() => {
+    const tokenCheck = () => {
+      if (localStorage.getItem('jwt')) {
+        const jwt = localStorage.getItem('jwt');
+        if (jwt) {
+          setLoggedIn(true);
+          setUserData({name: 'Виталий', email: 'pochta@yandex.ru', jwt: jwt})
+        }
+      }
+    };
+    tokenCheck();
+  }, [loggedIn]);
+
   function handleCloseRegistration() {
-    setRegisterPopupOpen(false);
-    setLoginPopupOpen(true);
     navigate("/sign-in", {replace: true});
   }
 
-  function handleRegisterSubmit(name, userEmail, password) {
-    console.log(name, userEmail, password);
-    setcounterUser(counterUser + 1)
-    setUsersBase(...usersBase, { _id: counterUser, name: name, email: userEmail, password: password })
-    console.log(usersBase);
+  function handleRegisterSubmit(item) {
+    setUserData({ name: item.name, email: item.email });
     handleCloseRegistration();
   }
 
-  function handleСheckAuthorization(usersBase, userEmail, password) {
-    const authorization = usersBase.some(i => (i.email === userEmail && i.password === password));
-    if (authorization) {
-      const user = usersBase.find(i => (i.email === userEmail && i.password === password));
-      setUserData({ _id: user._id, name: user.name, email: user.email });
-    }
-    setLoggedIn(authorization);
-  }
-
-  function handleLoginSubmit(userEmail, password, usersBase) {
-    handleСheckAuthorization(userEmail, password, usersBase);
-    if (loggedIn) {
-      localStorage.setItem('jwt', JWT);
-      navigate('/movies', { replace: true });
-      setAccount('Аккаунт')
-    }
+  function handleСheckAuthorization(item) {
+    localStorage.setItem('jwt', JWT);
+    const jwt = localStorage.getItem('jwt');
+    setUserData({ name: "Виталий", email: item.email, jwt: jwt});
+    navigate('/movies', { replace: true });
+    setAccount('Аккаунт');
+    setLoggedIn(true);    
   }
 
   function handleMovieLike(movie, userData) {
@@ -77,7 +71,8 @@ function App() {
 
   function handleProfileNav() {
     navigate('/profile', {replace: true});
-    setEditProfilePopupOpen(true);
+    setAccount('Аккаунт');
+    setLoggedIn(true);
     handleCloseNavigationBar();
   }
    
@@ -112,17 +107,14 @@ function App() {
   }
 
   function handleUpdateUser(item) {
-    setUserData(userData => ({...userData, _id: item._id, name: item.name, email: item.email}));
+    setUserData({name: item.name, email: item.email});
   }
 
   function signOut() {
     localStorage.removeItem('jwt');
     setLoggedIn(false);
     setAccount('');
-    setUserData({_id: '', name: '', email: ''});
-    setEditProfilePopupOpen(false);
-    setLoginPopupOpen(true);
-    setRegisterPopupOpen(true);
+    setUserData({ name: '', email: ''});
     navigate('/');   
   }
 
@@ -163,29 +155,25 @@ function App() {
         }>
         </Route>
         <Route path="profile" element={
-          <Profile isOpen={isEditProfilePopupOpen}
-                 loggedIn={loggedIn}
-                 userData={userData}
-                 onSubmit={handleLoginSubmit}
-                 onSignOut={signOut}
-                 account={account}
-                 onAuthorization={handleProfileNav}
-                 onUpdateUser={handleUpdateUser}
-                 onNavigation={handleCloseNavigationBar}
-                 onActiveMenu={handleActiveMenu}
+          <Profile loggedIn={loggedIn}
+                   userData={userData}
+                   onSubmit={handleСheckAuthorization}
+                   onSignOut={signOut}
+                   account={account}
+                   onAuthorization={handleProfileNav}
+                   onUpdateUser={handleUpdateUser}
+                   onNavigation={handleCloseNavigationBar}
+                   onActiveMenu={handleActiveMenu}
           />
         }>
         </Route>
         <Route path="sign-up" element={
-          <Register isOpen={isRegisterPopupOpen}
-                    onSubmit={handleRegisterSubmit}
+          <Register onSubmit={handleRegisterSubmit}
           />
         }>   
         </Route>
         <Route path="sign-in" element={
-          <Login isOpen={isLoginPopupOpen}
-                 onSubmit={handleLoginSubmit}
-                 usersBase={usersBase}
+          <Login onSubmit={handleСheckAuthorization}
           />
         }>
         </Route>

@@ -284,6 +284,12 @@
   margin: 188px auto 16px;
 }
 
+.popup__button_inactive_type_profile {
+  color: #FFF;
+  cursor: default;
+  pointer-events: none;
+}
+
 .popup_type_registration-user {
   display: block;
   position: relative;

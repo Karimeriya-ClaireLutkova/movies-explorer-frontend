@@ -4,16 +4,14 @@ import Header from '../Header/Header';
 import PopupWithForm from '../PopupWithForm/PopupWithForm';
 import FormValidator from '../FormValidator/FormValidator';
 
-export default function Login ({onSubmit, isOpen, usersBase}) {
+export default function Login ({onSubmit}) {
   const [userEmail, setUserEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
 
   function handleValidateForm(form) {
-    if (isOpen) {
-      const validationPopupLogin = new FormValidator(listValidation, form);
-      validationPopupLogin.disableButtonSubmit();
-      validationPopupLogin.enableValidation();
-    }   
+    const validationPopupLogin = new FormValidator(listValidation, form);
+    validationPopupLogin.checkButtonSubmit();
+    validationPopupLogin.enableValidation();
   }
 
   function handleChangeEmail(evt) {
@@ -26,7 +24,7 @@ export default function Login ({onSubmit, isOpen, usersBase}) {
 
   function handleSubmit(evt) {
     evt.preventDefault();
-    onSubmit(userEmail, password, usersBase);
+    onSubmit({userEmail: userEmail, password: password});
     setUserEmail('');
     setPassword('');
   }
@@ -36,7 +34,6 @@ export default function Login ({onSubmit, isOpen, usersBase}) {
       <Header id="6" />
       <main>
         <PopupWithForm id="3" name="login-user" title="Рады видеть!"
-                       isOpen={isOpen}
                        onSubmit={handleSubmit}
                        buttonText={"Войти"}
                        onValidateForm={handleValidateForm}>
