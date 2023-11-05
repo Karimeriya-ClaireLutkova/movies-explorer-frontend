@@ -44,7 +44,7 @@ export default function Login ({onSubmit}) {
           </div>
           <div className="popup__field">
             <p className="popup__input-text">Пароль</p>
-            <input id="user-password-input" type="password" className="popup__input popup__input_type_entry" name="password" value={password} placeholder="" onChange={handleChangePassword} required />
+            <input id="user-password-input" type="password" className="popup__input popup__input_type_entry" name="password" value={password} placeholder="Пароль" onChange={handleChangePassword} required />
             <span className="user-password-input-error popup__input-error"></span>
           </div>
         </PopupWithForm>
