@@ -23,15 +23,11 @@ function Navigation({account, loggedIn, onAuthorization, onNavigation, onActiveM
               <NavLink to="/saved-movies" className={({ isActive }) => isActive ? classNameNavActive : "navigate-autorized__link"} onClick={onNavigation}>Сохраненные фильмы</NavLink>
             </div>
             <button type="button" className="navigate-autorized__button navigate-autorized__button_type_account" onClick={onAuthorization}>
-              <p className="navigate-autorized_text">{account}</p>
+              <span className="navigate-autorized__text">{account}</span>
               { pathname === '/' ? (
-                  <div className="navigate-autorized__container-logo navigate-autorized__container-logo_type_header">
-                   <img className="navigate-autorized__logo" alt="Иконка аккаунта" src={imgAccount}/>
-                  </div>
+                <img className="navigate-autorized__logo navigate-autorized__logo_type_header" alt="Иконка аккаунта" src={imgAccount}/>
               ) : (
-                  <div className="navigate-autorized__container-logo">
-                    <img className="navigate-autorized__logo" alt="Иконка аккаунта" src={imgAccount}/>
-                  </div>
+                <img className="navigate-autorized__logo" alt="Иконка аккаунта" src={imgAccount}/>
               )}         
             </button>
           </nav>
