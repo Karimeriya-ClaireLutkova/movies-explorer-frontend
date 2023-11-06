@@ -60,14 +60,16 @@
   border-radius: 10px;
 }
 
-@media (max-width: 880px) {
-  .about-me {
-    padding: 90px 50px 0;
-  }
-
+@media (max-width: 1000px) {
   .about-me__info {
     max-width: 364px;
     margin: 66px 49px 91px 0;
+  }
+}
+
+@media (max-width: 800px) {
+  .about-me {
+    padding: 90px 50px 0;
   }
 
   .section__subline {
@@ -99,7 +101,7 @@
   }
 }
 
-@media (max-width: 650px) {
+@media (max-width: 600px) {
   .about-me {
     padding: 70px 14px 0;
   }

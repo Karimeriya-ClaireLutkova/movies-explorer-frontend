@@ -80,7 +80,8 @@
 
 @media (max-width: 600px) {
   .portfolio {
-    margin: 0 0 70px;
+    width: 292px;
+    margin: 0 auto 70px;
   }
 
   .section__subline_type_portfolio {
