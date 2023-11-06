@@ -138,6 +138,7 @@
 
 .navigate-access__link:hover {
   opacity: 0.7;
+  cursor: pointer;
 }
 
 .navigate-access__link_type_entry {

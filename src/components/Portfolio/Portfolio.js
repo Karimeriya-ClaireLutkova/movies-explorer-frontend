@@ -26,7 +26,7 @@ function Portfolio() {
         </a>
         </li>
       </ul>
-    </section>  
+    </section>
   )
 }
 
