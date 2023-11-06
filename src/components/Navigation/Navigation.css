@@ -7,15 +7,14 @@
   align-items: center;
   display: flex;
   column-gap: 16px;
-  margin: 2px 0;
 }
 
 .navigate-autorized {
   display: flex;
   position: relative;
-  align-items: center;
   justify-content: space-between;
   box-sizing: border-box;
+  margin: 3px 0;
 }
 
 .navigate-autorized__link {
