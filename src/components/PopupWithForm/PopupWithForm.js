@@ -29,13 +29,13 @@ function PopupWithForm(props) {
         { pathname === '/sign-up' &&
           <div className="popup__redirection">
             <p className="popup__title popup__title_type_redirection">Уже зарегистрированы?</p>
-            <Link to="/sign-in" className="popup__link popup__link_type_redirection">Войти</Link>
+            <Link to="/sign-in" className="popup__link">Войти</Link>
           </div>
         }
         { pathname === '/sign-in' &&
           <div className="popup__redirection">
-            <p className="popup__link popup__title_type_redirection">Ещё не зарегистрированы?</p>
-            <Link to="/sign-up" className="popup__link popup__link_type_redirection">Регистрация</Link>
+            <p className="popup__title popup__title_type_redirection">Ещё не зарегистрированы?</p>
+            <Link to="/sign-up" className="popup__link">Регистрация</Link>
           </div>
         }
       </div>
