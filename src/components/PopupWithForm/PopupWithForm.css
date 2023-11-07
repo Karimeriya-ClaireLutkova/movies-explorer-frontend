@@ -359,6 +359,10 @@
   padding: 0;
 }
 
+.popup__redirection_type_login-user {
+  padding: 0 55px 0 56px;
+}
+
 @media (max-width: 890px) {
   .popup__redirection {
     margin: 0 0 232px;
@@ -483,6 +487,10 @@
 
   .popup__button_login-user {
     margin: 285px 0 14px;
+  }
+
+  .popup__redirection_type_login-user {
+    padding: 0 7px;
   }
 
   .popup__title_login-user {
