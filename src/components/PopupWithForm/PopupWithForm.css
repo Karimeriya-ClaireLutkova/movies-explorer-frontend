@@ -209,6 +209,7 @@
 
 .popup__link_type_redirection:hover {
   opacity: 0.7;
+  cursor: pointer;
 }
 
 .popup_type_profile-info {
