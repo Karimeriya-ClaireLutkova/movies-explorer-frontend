@@ -81,7 +81,7 @@ export default class FormValidator {
 
   _toggleButtonState() {
     if (this._hasInvalidInput(this._inputList)) {
-      this._buttonElement.setAttribute('disabled', true);
+      this._buttonElement.setAttribute('disabled', '');
       if(this._buttonElement.classList.contains('popup__button_profile-info')) {
         this._buttonElement.classList.add(this._inactiveButtonClassProfile);
       } else {
