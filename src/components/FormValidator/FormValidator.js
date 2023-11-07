@@ -82,18 +82,10 @@ export default class FormValidator {
   _toggleButtonState() {
     if (this._hasInvalidInput(this._inputList)) {
       this._buttonElement.setAttribute('disabled', '');
-      if(this._buttonElement.classList.contains('popup__button_profile-info')) {
-        this._buttonElement.classList.add(this._inactiveButtonClassProfile);
-      } else {
-        this._buttonElement.classList.add(this._inactiveButtonClass);
-      }
+      this._buttonElement.classList.add(this._inactiveButtonClass);
     } else {
       this._buttonElement.removeAttribute('disabled');
-      if(this._buttonElement.classList.contains('popup__button_profile-info')) {
-        this._buttonElement.classList.remove(this._inactiveButtonClassProfile);
-      } else {
-        this._buttonElement.classList.remove(this._inactiveButtonClass);
-      }
+      this._buttonElement.classList.remove(this._inactiveButtonClass);
     }
   }
 

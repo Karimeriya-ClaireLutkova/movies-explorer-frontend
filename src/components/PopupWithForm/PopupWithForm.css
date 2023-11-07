@@ -100,11 +100,22 @@
 }
 
 .popup__button_inactive {
-  color: #000000;
-  background-color: #FFF;
+  color: #C2C2C2;
+  background-color: #313131;
   cursor: default;
   pointer-events: none;
-  opacity: 0.2;
+}
+
+.popup__button_hide {
+  display: none;
+}
+
+.popup__button_show {
+  display: flex;
+}
+
+.popup__button_show_profile-info {
+  margin: 347px auto 40px;
 }
 
 .popup__field {
@@ -142,7 +153,7 @@
   outline: none;
 }
 
-.popup__input_type_entry {
+.popup__input_entry {
   background-color: #202020;
   color: #FFF;
   border-bottom: 1px solid #424242;
@@ -171,13 +182,13 @@
   opacity: 1;
 }
 
-.popup__input-error_active_type_profile {
+.popup__input-error_active_profile {
   display: inline-block;
   min-height: 16px;
   opacity: 1;
 }
 
-.popup__input_type_error:focus {
+.popup__input_error:focus {
   border-bottom: 1px solid #424242;
 }
 
@@ -191,7 +202,7 @@
   box-sizing: border-box;
 }
 
-.popup__title_type_redirection {
+.popup__title_redirection {
   color: #8B8B8B;
   font-size: 14px;
   font-weight: 400;
@@ -213,14 +224,14 @@
   cursor: pointer;
 }
 
-.popup_type_profile-info {
+.popup_profile-info {
   display: block;
   position: relative;
   width: calc(100% - 2*70px);
   margin: 0 70px 0;
 }
 
-.popup__container_type_profile-info {
+.popup__container_profile-info {
   position: relative;
   background-color: #202020;
   border: none;
@@ -233,7 +244,7 @@
   margin: 74px auto 123px;
 }
 
-.popup__field_type_profile-info {
+.popup__field_profile-info {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -244,11 +255,11 @@
   border-bottom: 1px solid #424242;
 }
 
-.popup__field_type_not-underlined {
+.popup__field_not-underlined {
   border-bottom: none;
 }
 
-.popup__input-text_type_profile {
+.popup__input-text_profile {
   width: 141px;
   height: 14px;
   font-size: 11px;
@@ -266,7 +277,7 @@
   padding: 0 0 16px;
 }
 
-.popup__input_type_profile-info {
+.popup__input_profile-info {
   background-color: #202020;
   border-bottom: none;
   font-size: 11px;
@@ -282,24 +293,23 @@
   font-size: 13px;
   line-height: 1.23;
   background-color: #202020;
+  justify-content: center;
   border-radius: 0;
   margin: 188px auto 16px;
 }
 
-.popup__button_inactive_type_profile {
-  color: #FFF;
-  cursor: default;
-  pointer-events: none;
+.popup__button_show_profile-info {
+  margin: 188px auto 70px;
 }
 
-.popup_type_registration-user {
+.popup_registration-user {
   display: block;
   position: relative;
   width: calc(100% - 2*442px);
   margin: 0 442px 0;
 }
 
-.popup__container_type_registration-user {
+.popup__container_registration-user {
   position: relative;
   background-color: #202020;
   border: none;
@@ -309,15 +319,15 @@
   color: #FFF;
 }
 
-.popup__field_type_registration-user {
+.popup__field_registration-user {
   padding: 0 0 10px;
 }
 
-.popup__input-text_type_registration-user {
+.popup__input-text_registration-user {
   margin: 0 0 5px
 }
 
-.popup__redirection_type_registration-user {
+.popup__redirection_registration-user {
   padding: 0 90px 0 89px;
 }
 
@@ -325,14 +335,14 @@
   margin: 128px 0 16px;
 }
 
-.popup_type_login-user {
+.popup_login-user {
   display: block;
   position: relative;
   width: calc(100% - 2*442px);
   margin: 0 442px 0;
 }
 
-.popup__container_type_login-user {
+.popup__container_login-user {
   position: relative;
   background-color: #202020;
   border: none;
@@ -342,24 +352,24 @@
   color: #FFF;
 }
 
-.popup__field_type_login-user {
+.popup__field_login-user {
   padding: 0 0 10px;
 }
 
-.popup__input-text_type_login-user {
+.popup__input-text_login-user {
   margin: 0 0 5px
 }
 
-.popup__input_type_error {
+.popup__input_error {
   color: #EE3465;
 }
 
-.popup__field_type_error {
+.popup__field_error {
   margin: 0;
   padding: 0;
 }
 
-.popup__redirection_type_login-user {
+.popup__redirection_login-user {
   padding: 0 55px 0 56px;
 }
 
@@ -368,7 +378,7 @@
     margin: 0 0 232px;
   }
 
-  .popup_type_profile-info {
+  .popup_profile-info {
     width: calc(100% - 2*30px);
     margin: 0 30px 0;
   }
@@ -381,12 +391,16 @@
     margin: 178px auto 16px;
   }
 
-  .popup_type_registration-user {
+  .popup__button_show_profile-info {
+    margin: 178px auto 269px;
+  }
+
+  .popup_registration-user {
     width: calc(100% - 2*186px);
     margin: 0 186px 0;
   }
 
-  .popup_type_login-user {
+  .popup_login-user {
     width: calc(100% - 2*186px);
     margin: 0 186px 0;
   }
@@ -424,11 +438,11 @@
     margin: 0 auto 30px;
   }
 
-  .popup__redirection_type_registration-user {
+  .popup__redirection_registration-user {
     padding: 0 36px;
   }
 
-  .popup__title_type_redirection {
+  .popup__title_redirection {
     margin: 0 7px 0 0;
     font-size: 12px;
     line-height: 1.25;
@@ -439,7 +453,7 @@
     line-height: 1.25;
   }
 
-  .popup_type_profile-info {
+  .popup_profile-info {
     width: calc(100% - 2*10px);
     margin: 0 10px 0;
   }
@@ -449,11 +463,11 @@
     margin: 70px auto 80px;
   }
 
-  .popup__input-text_type_profile {
+  .popup__input-text_profile {
     width: 130px;
   }
 
-  .popup__input_type_profile-info {
+  .popup__input_profile-info {
     width: 120px;
   }
 
@@ -465,7 +479,11 @@
     margin: 347px auto 16px;
   }
 
-  .popup_type_registration-user {
+  .popup__button_show_profile-info {
+    margin: 347px auto 40px;
+  }
+
+  .popup_registration-user {
     width: calc(100% - 2*30px);
     margin: 0 30px 0;
   }
@@ -480,7 +498,7 @@
     margin: 0 auto 80px;
   }
 
-  .popup_type_login-user {
+  .popup_login-user {
     width: calc(100% - 2*30px);
     margin: 0 30px 0;
   }
@@ -489,7 +507,7 @@
     margin: 285px 0 14px;
   }
 
-  .popup__redirection_type_login-user {
+  .popup__redirection_login-user {
     padding: 0 7px;
   }
 

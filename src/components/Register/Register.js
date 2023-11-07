@@ -45,17 +45,17 @@ export default function Register({onSubmit}) {
                        onValidateForm={handleValidateForm}>
           <div className="popup__field">
             <p className="popup__input-text">Имя</p>
-            <input id="user-name-input" type="text" className="popup__input popup__input_type_entry" name="name" placeholder="Имя" value={name} onChange={handleChangeName} required  />
+            <input id="user-name-input" type="text" className="popup__input popup__input_entry" name="name" placeholder="Имя" value={name} onChange={handleChangeName} required  />
             <span className="user-name-input-error popup__input-error"></span>
           </div>
           <div className="popup__field">
             <p className="popup__input-text">E-mail</p>
-            <input id="user-email-input" type="email" className="popup__input popup__input_type_entry" pattern="^([^ ]+@[^ ]+\.[a-z]{2,6}|)$" name="email" placeholder="Email" value={userEmail} onChange={handleChangeEmail} required  />
+            <input id="user-email-input" type="email" className="popup__input popup__input_entry" pattern="^([^ ]+@[^ ]+\.[a-z]{2,6}|)$" name="email" placeholder="Email" value={userEmail} onChange={handleChangeEmail} required  />
             <span className="user-email-input-error popup__input-error"></span>
           </div>
           <div className="popup__field">
             <p className="popup__input-text">Пароль</p>
-            <input id="user-password-input" type="password" className="popup__input popup__input_type_entry" name="password" placeholder="Пароль" value={password} onChange={handleChangePassword} required />
+            <input id="user-password-input" type="password" className="popup__input popup__input_entry" name="password" placeholder="Пароль" value={password} onChange={handleChangePassword} required />
             <span className="user-password-input-error popup__input-error"></span>
           </div>
         </PopupWithForm>

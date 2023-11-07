@@ -25,11 +25,10 @@ export const listValidation = ({
   inputSelector: '.popup__input',
   submitButtonSelector: '.popup__button',
   inactiveButtonClass: 'popup__button_inactive',
-  inactiveButtonClassProfile: 'popup__button_inactive_type_profile',
-  inputErrorClass: 'popup__input_type_error',
+  inputErrorClass: 'popup__input_error',
   errorClass: 'popup__input-error_active',
-  errorClassProfile: 'popup__input-error_active_type_profile',
-  fieldClass: 'popup__field_type_error',
+  errorClassProfile: 'popup__input-error_active_profile',
+  fieldClass: 'popup__field_error',
   fieldSelector: '.popup__field',
   errorSelector: '.popup__input-error'
 });

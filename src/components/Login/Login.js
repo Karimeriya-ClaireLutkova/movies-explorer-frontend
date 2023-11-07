@@ -10,8 +10,8 @@ export default function Login ({onSubmit}) {
 
   function handleValidateForm(form) {
     const validationPopupLogin = new FormValidator(listValidation, form);
-    validationPopupLogin.checkButtonSubmit();
     validationPopupLogin.enableValidation();
+    validationPopupLogin.checkButtonSubmit();
   }
 
   function handleChangeEmail(evt) {
@@ -39,12 +39,12 @@ export default function Login ({onSubmit}) {
                        onValidateForm={handleValidateForm}>
           <div className="popup__field">
             <p className="popup__input-text">E-mail</p>
-            <input id="user-email-input" type="email" className="popup__input popup__input_type_entry" pattern="^([^ ]+@[^ ]+\.[a-z]{2,6}|)$" name="email" value={userEmail} placeholder="Email" onChange={handleChangeEmail} required  />
+            <input id="user-email-input" type="email" className="popup__input popup__input_entry" pattern="^([^ ]+@[^ ]+\.[a-z]{2,6}|)$" name="email" value={userEmail} placeholder="Email" onChange={handleChangeEmail} required  />
             <span className="user-email-input-error popup__input-error"></span>
           </div>
           <div className="popup__field">
             <p className="popup__input-text">Пароль</p>
-            <input id="user-password-input" type="password" className="popup__input popup__input_type_entry" name="password" value={password} placeholder="Пароль" onChange={handleChangePassword} required />
+            <input id="user-password-input" type="password" className="popup__input popup__input_entry" name="password" value={password} placeholder="Пароль" onChange={handleChangePassword} required />
             <span className="user-password-input-error popup__input-error"></span>
           </div>
         </PopupWithForm>
