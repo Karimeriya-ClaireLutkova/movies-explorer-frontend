@@ -111,7 +111,9 @@
 
 @media (max-width: 600px) {
   .techs {
+    max-width: 320px;
     padding: 70px 0;
+    margin: 0 auto;
   }
 
   .techs__container {

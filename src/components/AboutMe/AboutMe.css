@@ -103,7 +103,9 @@
 
 @media (max-width: 600px) {
   .about-me {
+    max-width: 320px;
     padding: 70px 14px 0;
+    margin: 0 auto;
   }
 
   .about-me__container {
