@@ -188,10 +188,10 @@
   width: 396px;
   margin: 0 0 70px;
   padding: 0;
+  box-sizing: border-box;
 }
 
 .popup__title_type_redirection {
-  width: calc(100% - 227px);
   color: #8B8B8B;
   font-size: 14px;
   font-weight: 400;
@@ -317,6 +317,10 @@
   margin: 0 0 5px
 }
 
+.popup__redirection_type_registration-user {
+  padding: 0 90px 0 89px;
+}
+
 .popup__button_registration-user {
   margin: 128px 0 16px;
 }
@@ -416,8 +420,11 @@
     margin: 0 auto 30px;
   }
 
+  .popup__redirection_type_registration-user {
+    padding: 0 36px;
+  }
+
   .popup__title_type_redirection {
-    width: calc(100% - 108px);
     margin: 0 7px 0 0;
     font-size: 12px;
     line-height: 1.25;
