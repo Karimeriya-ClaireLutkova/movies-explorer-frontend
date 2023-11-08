@@ -1,0 +1,150 @@
+.about-me {
+  display: flex;
+  flex-direction: column;
+  padding: 110px 70px 0;
+}
+
+.about-me__container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.about-me__info {
+  display: flex;
+  flex-direction: column;
+  max-width: 600px;
+  margin: 66px 270px 101px 0;
+}
+
+.subline {
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1.11;
+  padding: 0;
+  margin: 0;
+}
+
+.subline_about-me {
+  margin: 18px 0 26px;
+}
+
+.subtitle_about-me {
+  text-align: start;
+}
+
+.paragraph_about-me {
+  max-width: 600px;
+  line-height: 1.57;
+  letter-spacing: normal;
+  text-align: start;
+  margin: 0 0 99px;
+}
+
+.about-me__link {
+  text-decoration: none;
+  color: #FFF;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.21;
+}
+
+.about-me__link:hover {
+  cursor: pointer;
+  opacity: 0.7;
+}
+
+.about-me__image {
+  width: 270px;
+  height: 327px;
+  margin-top: 66px;
+  border-radius: 10px;
+}
+
+@media (max-width: 1000px) {
+  .about-me__info {
+    max-width: 364px;
+    margin: 66px 49px 91px 0;
+  }
+}
+
+@media (max-width: 800px) {
+  .about-me {
+    padding: 90px 50px 0;
+  }
+
+  .subline {
+    font-size: 12px;
+    line-height: 1.5;
+  }
+
+  .subline_about-me {
+    margin: 16px 16px 20px 0;
+  }
+
+  .subtitle_about-me {
+    font-size: 40px;
+    line-height: 1;
+    letter-spacing: -1.6px;
+  }
+
+  .paragraph_about-me {
+    max-width: 364px;
+    line-height: 1.5;
+    margin: 0 0 87px;
+  }
+
+  .about-me__image {
+    width: 255px;
+    height: 307px;
+    margin-top: 66px;
+    background-size: cover;
+  }
+}
+
+@media (max-width: 600px) {
+  .about-me {
+    max-width: 320px;
+    padding: 70px 14px 0;
+    margin: 0 auto;
+  }
+
+  .about-me__container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .about-me__info {
+    max-width: 364px;
+    margin: 0 0 70px 0;
+    order: 2;
+  }
+
+  .about-me__image {
+    width: 292px;
+    height: 352px;
+    margin: 60px auto 0;
+    order: 1;
+  }
+
+  .subline {
+    font-size: 11px;
+    line-height: 1.45;
+  }
+
+  .subline_about-me { 
+    margin: 0 0 20px 0;
+  }
+
+  .subtitle_about-me {
+    font-size: 30px;
+    line-height: 1.2;
+    letter-spacing: -1.2px;
+    margin: 40px 0 20px;
+  }
+
+  .paragraph_about-me {
+    max-width: 292px;
+    line-height: 1.45;
+    margin: 0 0 40px;
+  }
+}
