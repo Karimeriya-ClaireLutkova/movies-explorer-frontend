@@ -12,7 +12,6 @@ export default function Profile({onSignOut, onUpdateUser, account, loggedIn, onA
   const inputEditList = Array.from(document.querySelectorAll('.popup__input_profile-info'));
   const currentUserData = userData;
   const greeting = `Привет, ${currentUserData.name}!`;
-  const children = ''
 
   function handleValidateForm(form) {
     const validationPopupProfile = new FormValidator(listValidation, form);
