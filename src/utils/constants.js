@@ -5,11 +5,11 @@ import explosionOfReality from '../images/Баския_взрыв_реально
 import runningIsFreedom from '../images/Бег_это_свобода.jpg';
 import booksellers from '../images/Книготорговцы.jpg';
 import nightGermany from '../images/Когда_я_думаю_о_Германии_ночью.jpg';
-import storyGimmeDanger from '../images/Gimme_Danger_история_Игги_и_The Stooges.jpg';
+import storyGimmeDanger from '../images/Gimme_Danger_история_Игги_и_The_Stooges.jpg';
 import girlJanice from '../images/Дженис_маленькая_девочка_грустит.jpg';
 import readyBeforeJumping from '../images/Соберись_перед_прыжком.jpg';
-import dogСalledMoney  from '../images/Пи_Джей_Харви_A dog called money.jpg';
-import onWavesArt from '../images/По волнам_искусство_звука_в_кино.jpg';
+import dogСalledMoney  from '../images/Пи_Джей_Харви_A_dog_called_money.jpg';
+import onWavesArt from '../images/По_волнам_искусство_звука_в_кино.jpg';
 import rudboy from '../images/Рудбой.jpg';
 import skateKitchen from '../images/Скейт_кухня.jpg';
 import warOfArts from '../images/Война_искусств.jpg';
