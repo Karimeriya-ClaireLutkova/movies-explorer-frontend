@@ -16,7 +16,7 @@
   margin: 66px 270px 101px 0;
 }
 
-.section__subline {
+.subline {
   font-size: 18px;
   font-weight: 500;
   line-height: 1.11;
@@ -24,15 +24,15 @@
   margin: 0;
 }
 
-.section__subline_type_about-me {
+.subline_about-me {
   margin: 18px 0 26px;
 }
 
-.section__subtitle_type_about-me {
+.subtitle_about-me {
   text-align: start;
 }
 
-.section__paragraph_type_about-me {
+.paragraph_about-me {
   max-width: 600px;
   line-height: 1.57;
   letter-spacing: normal;
@@ -72,22 +72,22 @@
     padding: 90px 50px 0;
   }
 
-  .section__subline {
+  .subline {
     font-size: 12px;
     line-height: 1.5;
   }
 
-  .section__subline_type_about-me {
+  .subline_about-me {
     margin: 16px 16px 20px 0;
   }
 
-  .section__subtitle_type_about-me {
+  .subtitle_about-me {
     font-size: 40px;
     line-height: 1;
     letter-spacing: -1.6px;
   }
 
-  .section__paragraph_type_about-me {
+  .paragraph_about-me {
     max-width: 364px;
     line-height: 1.5;
     margin: 0 0 87px;
@@ -126,23 +126,23 @@
     order: 1;
   }
 
-  .section__subline {
+  .subline {
     font-size: 11px;
     line-height: 1.45;
   }
 
-  .section__subline_type_about-me { 
+  .subline_about-me { 
     margin: 0 0 20px 0;
   }
 
-  .section__subtitle_type_about-me {
+  .subtitle_about-me {
     font-size: 30px;
     line-height: 1.2;
     letter-spacing: -1.2px;
     margin: 40px 0 20px;
   }
 
-  .section__paragraph_type_about-me {
+  .paragraph_about-me {
     max-width: 292px;
     line-height: 1.45;
     margin: 0 0 40px;
