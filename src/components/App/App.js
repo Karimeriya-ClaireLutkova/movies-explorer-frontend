@@ -87,26 +87,26 @@ function App() {
 
   function handleActiveMenu() {
     const navigationSection = document.querySelector(".navigate-autorized");
-    const navigationContainer = document.querySelector(".navigate-autorized__container");
+    const navigationContainer = document.querySelector(".navigate-container");
     const page = document.querySelector(".page");
-    if (navigationSection.className === "navigate-autorized" && navigationContainer.className === "navigate-autorized__container" && page.className === "page") {
+    if (navigationSection.className === "navigate-autorized" && navigationContainer.className === "navigate-container" && page.className === "page") {
       navigationSection.className += " navigate-autorized_responsive";
       navigationContainer.className += " navigate-autorized_responsive-active";
       page.className += " page_disable-scroll";
     } else {
       navigationSection.className = "navigate-autorized";
-      navigationContainer.className = "navigate-autorized__container";
+      navigationContainer.className = "navigate-container";
       page.className = "page";
     }
   }
 
   function handleCloseNavigationBar() {
     const navigationSection = document.querySelector(".navigate-autorized");
-    const navigationContainer = document.querySelector(".navigate-autorized__container");
+    const navigationContainer = document.querySelector(".navigate-container");
     const page = document.querySelector(".page");
-    if (navigationSection.className === "navigate-autorized navigate-autorized_responsive" && navigationContainer.className === "navigate-autorized__container navigate-autorized_responsive-active" && page.className === "page page_disable-scroll") {
+    if (navigationSection.className === "navigate-autorized navigate-autorized_responsive" && navigationContainer.className === "navigate-container navigate-autorized_responsive-active" && page.className === "page page_disable-scroll") {
       navigationSection.className = "navigate-autorized";
-      navigationContainer.className = "navigate-autorized__container";
+      navigationContainer.className = "navigate-container";
       page.className = "page";
     }
   }

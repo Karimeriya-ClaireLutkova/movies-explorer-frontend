@@ -76,9 +76,7 @@
   .elements__container_saved-movies {
     margin: 70px 30px 150px;
   }
-}
-
-  
+}  
 
 @media (max-width: 765px) {
   .elements__container {

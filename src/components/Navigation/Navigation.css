@@ -88,9 +88,8 @@
   background: rgba(255, 255, 255, 0);
   background-image: url("../../images/button_close.svg");
   background-position: 50% 50%;
-  margin: 26px 26px 111px auto;
-  box-sizing: border-box;
-  display: none;
+  margin: 22px 22px 105px auto;
+  display: none;  
 }
 
 .navigate-autorized__button_account {
@@ -191,9 +190,14 @@
     background-color: #202020;
     top: 0;
     right: 0;
+    bottom: 0;
   }
 
-  .navigate-autorized__container-logo_header {
+  .navigate-autorized__button_account_header {
+    background: #202020;
+  }
+
+  .navigate-autorized__logo_header {
     background-color: #313131;
   }
 
@@ -225,7 +229,7 @@
 
   .navigate-autorized_responsive .navigate-autorized__button_account {
     padding: 0;
-    margin: 50vh 210px 90px;
+    margin: 621px 210px 90px;
     display: flex;
   }
 
@@ -261,7 +265,6 @@
 
   .navigate-autorized_responsive .navigate-autorized__button_close {
     margin: 18px 18px 105px 275px;
-    display: block;
   }
 
   .navigate-autorized__list {
