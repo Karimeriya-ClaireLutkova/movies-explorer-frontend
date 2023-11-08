@@ -5,7 +5,7 @@ function AboutProject() {
 
   return (
     <section className="about-project" aria-label="Две колонки">
-      <h2 className="section__title section__title_type_about-project">О проекте</h2>
+      <h2 className="title title_about-project">О проекте</h2>
       <div className="about-project__container">
         <article className="stages">
           <h3 className="about-project__brief">Дипломный проект включал 5 этапов</h3>
@@ -16,12 +16,12 @@ function AboutProject() {
           <p className="about-project__paragraph">У каждого этапа был мягкий и жёсткий дедлайн, которые нужно было соблюдать, чтобы успешно защититься.</p>
         </article>
         <article className="distribution">
-            <h3 className="about-project__brief about-project__brief_type_decrease">1 неделя</h3>
-            <p className="about-project__paragraph about-project__paragraph_type_distribution">Back-end</p>
-            <h3 className="about-project__brief about-project__brief_type_increase">4 недели</h3>
-            <p className="about-project__paragraph about-project__paragraph_type_distribution">Front-end</p>
-        </article>       
-      </div>     
+            <h3 className="about-project__brief about-project__brief_decrease">1 неделя</h3>
+            <p className="about-project__paragraph about-project__paragraph_distribution">Back-end</p>
+            <h3 className="about-project__brief about-project__brief_increase">4 недели</h3>
+            <p className="about-project__paragraph about-project__paragraph_distribution">Front-end</p>
+        </article>
+      </div>
     </section>
   )
 }
