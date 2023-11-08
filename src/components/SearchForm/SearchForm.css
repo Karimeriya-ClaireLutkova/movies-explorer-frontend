@@ -78,6 +78,11 @@
   box-sizing: border-box;
 }
 
+.search-form__button:hover {
+  cursor:pointer;
+  opacity: 0.8;
+}
+
 .search-form__filter {
   padding: 28px 30px 27px 29px;
   display: flex;
