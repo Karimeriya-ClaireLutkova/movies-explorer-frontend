@@ -27,8 +27,8 @@
   font-size: 13px;
   font-weight: 500;
   line-height: 1.23;
-  margin: 0 20px auto 0;
-  padding: 4px 0 0;
+  margin: 4px 20px auto 0;
+  padding: 0;
 }
 
 .element__button {
@@ -95,7 +95,7 @@
   }
 
   .element__description {
-    margin: 0 0 29px;
+    margin: 0 0 25px;
   }
 
   .element__title {
@@ -130,7 +130,6 @@
     font-size: 12px;
     min-height: 15px;
     line-height: 1.25;
-    padding: 4px 0;
   }
 
   .element__duration {

@@ -14,6 +14,10 @@
   box-sizing: border-box;
 }
 
+.elements__container_saved-movies {
+  margin: 70px 70px 240px;
+}
+
 .elements-adding {
   display: flex;
   justify-content: center;
@@ -70,12 +74,21 @@
   }
 }
 
+.elements__container_saved-movies {
+  margin: 70px 30px 150px;
+}
+
 @media (max-width: 765px) {
   .elements__container {
     max-width: 320px;
     grid-template-columns: 300px;
     row-gap: 34px;
     margin: 39px auto 10px;
+    padding: 0 10px 0px;
+  }
+
+  .elements__container_saved-movies {
+    margin: 40px auto 150px;
     padding: 0 10px 0px;
   }
 
