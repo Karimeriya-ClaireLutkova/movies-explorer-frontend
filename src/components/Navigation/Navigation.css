@@ -88,7 +88,7 @@
   background: rgba(255, 255, 255, 0);
   background-image: url("../../images/button_close.svg");
   background-position: 50% 50%;
-  margin: 22px 22px 105px auto;
+  margin: 26px 26px 111px auto;
   display: none;  
 }
 
@@ -175,7 +175,7 @@
     margin: 0 90px;
   }
 
-  .navigate-autorized__container {
+  .navigate-container {
     width: 44px;
     margin: 0;
   }
@@ -190,7 +190,6 @@
     background-color: #202020;
     top: 0;
     right: 0;
-    bottom: 0;
   }
 
   .navigate-autorized__button_account_header {
@@ -228,8 +227,7 @@
   }
 
   .navigate-autorized_responsive .navigate-autorized__button_account {
-    padding: 0;
-    margin: 621px 210px 90px;
+    margin: 617px 210px 90px;
     display: flex;
   }
 
@@ -282,7 +280,7 @@
 
   .navigate-autorized_responsive .navigate-autorized__button_account {
     margin-top: 434px;
-    margin: 435px 110px 46px;
+    margin: 438px 110px 46px;
   }
 
   .navigate-access {
