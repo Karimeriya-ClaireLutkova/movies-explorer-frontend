@@ -11,7 +11,7 @@ function Navigation({account, loggedIn, onAuthorization, onNavigation, onActiveM
   return (
     <>
       {loggedIn ? (
-        <div className="navigate-autorized__container">
+        <div className="navigate-container">
           <nav className="navigate-autorized" id="navBar">
             <button onClick={onActiveMenu} className="navigate-autorized__dropdown">
               <img className="navigate-autorized__icon" alt="Три черты выпадающего списка навигации" src={dropdownNavBar} />
