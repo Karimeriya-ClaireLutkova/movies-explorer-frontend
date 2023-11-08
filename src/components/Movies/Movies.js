@@ -6,7 +6,7 @@ import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import { SCREEN_MIN, SCREEN_MEDIUM, SCREEN_BIG } from '../../utils/constants';
 import './Movies.css';
 
-function Movies({ movies, userData, onMovieLike, account, loggedIn, onAuthorization, onNavigation, onActiveMenu}) {
+function Movies({ movies, userData, onMovieLike, loggedIn, onAuthorization, onNavigation, onActiveMenu}) {
   const [windowDimensions, setWindowDimensions] = React.useState(getWindowDimensions());
   const [isCounterMovies, setCounterMovies] = React.useState();
   const isInitialCounter = 0;
@@ -94,7 +94,7 @@ function Movies({ movies, userData, onMovieLike, account, loggedIn, onAuthorizat
 
   return (
     <>
-      <Header id="2" account={account} loggedIn={loggedIn} onAuthorization={onAuthorization} onNavigation={onNavigation} onActiveMenu={onActiveMenu} />
+      <Header id="2" loggedIn={loggedIn} onAuthorization={onAuthorization} onNavigation={onNavigation} onActiveMenu={onActiveMenu} />
       <main>
         <div className="movies">
           <SearchForm id="1" onUpdateMoviesList={handleUpdateMoviesList} />

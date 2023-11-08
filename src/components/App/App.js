@@ -18,7 +18,7 @@ function App() {
   const [movies, setMovies] = React.useState([]);
   const [userData, setUserData] = React.useState({ name: '', email: '', _id: ''});
   const [loggedIn, setLoggedIn] = React.useState(false);
-  const [account, setAccount] = React.useState('Аккаунт');
+  const [registrationInfo, setRegistrationInfo] = React.useState({infoStatus: "", message:""});
   const [moviesSaved, setMoviesSaved] = React.useState([]);
   const navigate = useNavigate();
   const { pathname } = useLocation();
@@ -60,14 +60,39 @@ function App() {
     setUserData({ name: item.name, email: item.email });
     handleCloseRegistration();
   }
+  
+  function handleLoginSubmit(userEmail, password) {
+    authorization(userEmail, password)
+      .then((data) => {
+        localStorage.setItem('jwt', data.token);
+        setLoggedIn(true);
+        navigate('/movies', { replace: true });
+      })
+      .catch(err => console.log(err));
+  }
 
-  function handleСheckAuthorization(item) {
+  /*function handleСheckAuthorization(item) {
     localStorage.setItem('jwt', JWT);
     const jwt = localStorage.getItem('jwt');
     setUserData({ name: "Виталий", email: item.email, jwt: jwt});
     navigate('/movies', { replace: true });
-    setAccount('Аккаунт');
-    setLoggedIn(true);  
+    
+    setLoggedIn(true);
+  }*/
+
+  function handleRegisterSubmit(userEmail, password) {
+    register(userEmail, password)
+      .then((data) => {
+        if (data) {
+          setRegistrationInfo({infoStatus: true, message:"Вы успешно зарегистрировались!"});
+        }
+      })
+      .catch(() => {
+        setRegistrationInfo({infoStatus: false, message:"Что-то пошло не так! Попробуйте ещё раз."});
+      })
+      .finally(() => {
+        setInfoTooltipOpen(true);
+      })
   }
 
   function handleMovieLike(movie, userData) {
@@ -96,7 +121,6 @@ function App() {
 
   function handleProfileNav() {
     navigate('/profile', {replace: true});
-    setAccount('Аккаунт');
     setLoggedIn(true);
     handleCloseNavigationBar();
   }
@@ -138,8 +162,7 @@ function App() {
   function signOut() {
     localStorage.removeItem('jwt');
     setLoggedIn(false);
-    setAccount('');
-    setUserData({ name: '', email: ''});
+    setUserData({ name: '', email: '', _id: ''});
     navigate('/'); 
   }
 
@@ -148,7 +171,6 @@ function App() {
       <Routes>
         <Route path="/" element={
           <Main loggedIn={loggedIn}
-                account={account}
                 onAuthorization={handleProfileNav}
                 onNavigation={handleCloseNavigationBar}
                 onActiveMenu={handleActiveMenu}
@@ -161,7 +183,6 @@ function App() {
                  userData={userData}
                  onMovieLike={handleMovieLike}
                  loggedIn={loggedIn}
-                 account={account}
                  onAuthorization={handleProfileNav}
                  onNavigation={handleCloseNavigationBar}
                  onActiveMenu={handleActiveMenu}
@@ -170,11 +191,10 @@ function App() {
         </Route>
         <Route path="saved-movies" element={
           <ProtectedRoute component={SavedMovies}
-                       movies={moviesSaved}
+                       movies={movies}
                        userData={userData}
                        onMovieDelete={handleMovieDelete}
                        loggedIn={loggedIn}
-                       account={account}
                        onAuthorization={handleProfileNav}
                        onNavigation={handleCloseNavigationBar}
                        onActiveMenu={handleActiveMenu}                 
@@ -187,7 +207,6 @@ function App() {
                    userData={userData}
                    onSubmit={handleСheckAuthorization}
                    onSignOut={signOut}
-                   account={account}
                    onAuthorization={handleProfileNav}
                    onUpdateUser={handleUpdateUser}
                    onNavigation={handleCloseNavigationBar}
@@ -200,7 +219,7 @@ function App() {
         }>
         </Route>
         <Route path="sign-in" element={
-          <Login onSubmit={handleСheckAuthorization} />
+          <Login onSubmit={handleLoginSubmit} />
         }>
         </Route>
         <Route path="*" element={

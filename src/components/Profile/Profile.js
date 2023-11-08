@@ -5,7 +5,7 @@ import PopupWithForm from '../PopupWithForm/PopupWithForm';
 import FormValidator from '../FormValidator/FormValidator';
 import './Profile.css';
 
-export default function Profile({onSignOut, onUpdateUser, account, loggedIn, onAuthorization, userData, onNavigation, onActiveMenu}) {
+export default function Profile({onSignOut, onUpdateUser, loggedIn, onAuthorization, userData, onNavigation, onActiveMenu}) {
   const [name, setName] = React.useState('');
   const [email, setEmail] = React.useState('');
   const [isActive, setActive] = React.useState(false);
@@ -47,7 +47,7 @@ export default function Profile({onSignOut, onUpdateUser, account, loggedIn, onA
 
   return (
     <>
-      <Header id="4" account={account} loggedIn={loggedIn} onAuthorization={onAuthorization} onNavigation={onNavigation} onActiveMenu={onActiveMenu} />
+      <Header id="4" loggedIn={loggedIn} onAuthorization={onAuthorization} onNavigation={onNavigation} onActiveMenu={onActiveMenu} />
       <main>
         <PopupWithForm id="1" name="profile-info" title={greeting}
                        onSubmit={handleSubmit}

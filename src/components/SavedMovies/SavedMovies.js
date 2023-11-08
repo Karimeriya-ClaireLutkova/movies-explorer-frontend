@@ -4,12 +4,12 @@ import SearchForm from '../SearchForm/SearchForm';
 import Preloader from '../Preloader/Preloader';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 
-function SavedMovies({ movies, userData, onMovieDelete, account, loggedIn, onAuthorization, onNavigation, onActiveMenu}) {
+function SavedMovies({ movies, userData, onMovieDelete, loggedIn, onAuthorization, onNavigation, onActiveMenu}) {
   const loading = false;
 
   return (
     <>
-      <Header id="3" account={account} loggedIn={loggedIn} onAuthorization={onAuthorization} onNavigation={onNavigation} onActiveMenu={onActiveMenu} />
+      <Header id="3" loggedIn={loggedIn} onAuthorization={onAuthorization} onNavigation={onNavigation} onActiveMenu={onActiveMenu} />
       <main>
         <div className="movies">
           <SearchForm id="2" />

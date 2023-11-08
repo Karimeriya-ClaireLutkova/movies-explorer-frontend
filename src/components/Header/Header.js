@@ -3,7 +3,7 @@ import logoHeader from '../../images/logo_header.svg';
 import './Header.css';
 import Navigation from '../Navigation/Navigation';
 
-function Header({account, loggedIn, onAuthorization, onNavigation, onActiveMenu}) {
+function Header({ loggedIn, onAuthorization, onNavigation, onActiveMenu}) {
   const { pathname } = useLocation();
   const className = `header ${((pathname === '/') ? "header_type_main" : "") || ((pathname === '/sign-up' || pathname === '/sign-in') ? "header_type_entry" : "")}`;
   return (
@@ -12,8 +12,7 @@ function Header({account, loggedIn, onAuthorization, onNavigation, onActiveMenu}
         <img className="header__logo" alt="Логотип Movies Explorer" src={logoHeader} />
       </Link>
       { (pathname === '/' || pathname === '/movies' || pathname === '/saved-movies' ||  pathname === '/profile') &&
-        <Navigation account={account}
-                    loggedIn={loggedIn}
+        <Navigation loggedIn={loggedIn}
                     onAuthorization={onAuthorization}
                     onNavigation={onNavigation}
                     onActiveMenu={onActiveMenu} />
