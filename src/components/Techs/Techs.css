@@ -10,7 +10,7 @@
   margin: 90px 225px 0;
 }
 
-.section__subtitle {
+.subtitle {
   max-width: 600px;
   text-align: center;
   font-size: 50px;
@@ -21,15 +21,15 @@
   padding: 0;
 }
 
-.section__title_type_techs {
+.title_techs {
   margin: 0;
 }
 
-.section__subtitle_type_techs {
+.subtitle_techs {
   margin: 0 45px 26px;
 }
 
-.section__paragraph {
+.paragraph {
   max-width: 460px;
   text-align: center;
   font-size: 14px;
@@ -40,7 +40,7 @@
   padding: 0;
 }
 
-.section__paragraph_type_techs {
+.paragraph_techs {
   margin: 0 115px 100px;
 }
 
@@ -72,18 +72,18 @@
     margin: 80px 0 0;
   }
 
-  .section__subtitle_type_techs {
+  .subtitle_techs {
     padding: 0 34px 0;
     margin: 0 auto 22px;
   }
 
-  .section__paragraph {
+  .paragraph {
     font-size: 12px;
     line-height: 1.5;
     letter-spacing: -0.48px;
   }
 
-  .section__paragraph_type_techs {
+  .paragraph_techs {
     padding: 0 104px 0;
     margin: 0 auto 83px;
   }
@@ -122,33 +122,33 @@
     margin: 60px auto 0;
   }
 
-  .section__subtitle {
+  .subtitle {
     max-width: 292px;
     font-size: 30px;
     letter-spacing: -1.2px;
     line-height: 1.2;
   }
 
-  .section__title_type_techs {
+  .title_techs {
     margin: 0 18px 0;
     max-width: 100%;
     padding: 0 0 28px;
   }
 
-  .section__subtitle_type_techs {
+  .subtitle_techs {
     max-width: 292px;
     padding: 0;
     margin: 0 auto 24px;
   }
 
-  .section__paragraph {
+  .paragraph {
     max-width: 292px;
     font-size: 11px;
     line-height: 1.45;
     letter-spacing: -0.44px;
   }
 
-  .section__paragraph_type_techs {
+  .paragraph_techs {
     margin: 0 auto 50px;
     max-width: 320px;
     padding: 0;
