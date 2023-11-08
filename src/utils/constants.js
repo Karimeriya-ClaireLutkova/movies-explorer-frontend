@@ -23,7 +23,7 @@ export const JWT = '36a96b968f20dc9d9e7a0e5b769eec6a63355c740e9a65fff921c89000d3
 export const listValidation = ({
   formSelector: '.popup__form',
   inputSelector: '.popup__input',
-  submitButtonSelector: '.popup__button',
+  submitButtonSelector: '.popup__button_save',
   inactiveButtonClass: 'popup__button_inactive',
   inputErrorClass: 'popup__input_error',
   errorClass: 'popup__input-error_active',

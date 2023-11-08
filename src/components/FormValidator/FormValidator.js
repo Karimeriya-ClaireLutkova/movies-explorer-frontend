@@ -45,7 +45,7 @@ export default class FormValidator {
     const fieldElement = inputElement.parentElement;
     errorElement.textContent = errorMessage;
     this._increaseFormView(fieldElement);
-    if (fieldElement.classList.contains('profile-info__container')) {
+    if (fieldElement.classList.contains('popup__data-input')) {
       errorElement.classList.add(this._errorClassProfile)
     } else {
       errorElement.classList.add(this._errorClass)
@@ -56,7 +56,7 @@ export default class FormValidator {
     const errorElement = this._formElement.querySelector(`.${inputElement.id}-error`);
     inputElement.classList.remove(this._inputErrorClass);
     const fieldElement = inputElement.parentElement;
-    if (fieldElement.classList.contains('profile-info__container')) {
+    if (fieldElement.classList.contains('ppopup__data-input')) {
       errorElement.classList.remove(this._errorClassProfile)
     } else {
       errorElement.classList.remove(this._errorClass)
@@ -81,6 +81,7 @@ export default class FormValidator {
 
   _toggleButtonState() {
     if (this._hasInvalidInput(this._inputList)) {
+      console.log(this._buttonElement);
       this._buttonElement.setAttribute('disabled', '');
       this._buttonElement.classList.add(this._inactiveButtonClass);
     } else {
