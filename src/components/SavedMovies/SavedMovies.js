@@ -11,14 +11,14 @@ function SavedMovies({ movies, userData, onMovieDelete, account, loggedIn, onAut
     <>
       <Header id="3" account={account} loggedIn={loggedIn} onAuthorization={onAuthorization} onNavigation={onNavigation} onActiveMenu={onActiveMenu} />
       <main>
-        <section className="movies">
+        <div className="movies">
           <SearchForm id="2" />
           {loading ? (
             <Preloader />
           ) : (
             <MoviesCardList id="2" cardsMovies={movies} userData={userData} onMovieDelete={onMovieDelete} buttonInactive="" />
           )}
-        </section> 
+        </div> 
       </main>
     </>
   )

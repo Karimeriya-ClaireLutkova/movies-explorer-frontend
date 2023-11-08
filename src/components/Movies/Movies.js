@@ -96,14 +96,14 @@ function Movies({ movies, userData, onMovieLike, account, loggedIn, onAuthorizat
     <>
       <Header id="2" account={account} loggedIn={loggedIn} onAuthorization={onAuthorization} onNavigation={onNavigation} onActiveMenu={onActiveMenu} />
       <main>
-        <section className="movies">
+        <div className="movies">
           <SearchForm id="1" onUpdateMoviesList={handleUpdateMoviesList} />
           {isLoading ? (
             <Preloader />
           ) : (
             <MoviesCardList id="1" cardsMovies={isInitialMovies} buttonInactive={isButtonInactive} userData={userData} onMovieLike={onMovieLike} onChangeDescription={handleChangeDescription} />
           )}
-        </section>
+        </div>
       </main>
     </> 
   )
