@@ -76,6 +76,10 @@
   box-sizing: border-box;
   background-repeat: no-repeat;
   border: none;
+}
+
+.popup__button:hover {
+  opacity: 0.8;
   cursor: pointer;
 }
 
@@ -92,11 +96,6 @@
   margin: 197px 0 16px;
   padding: 0;
   background: #4285F4;
-}
-
-.popup__button_save:hover {
-  opacity: 0.8;
-  cursor: pointer;
 }
 
 .popup__button_inactive {

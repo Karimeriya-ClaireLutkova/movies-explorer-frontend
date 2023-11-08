@@ -46,6 +46,8 @@
 @media (max-width: 600px) {
   .header {
     padding: 15px 14px 16px;
+    max-width: 320px;
+    margin: 0 auto;
   }
 
   .header_type_entry {
