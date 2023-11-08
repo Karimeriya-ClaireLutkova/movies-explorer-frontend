@@ -1,4 +1,4 @@
-.profile-info__editing {
+.popup-editing {
   display: flex;
   flex-direction: column;
   width: calc(100% - 70px*2);
@@ -12,15 +12,23 @@
   margin: 0;
 }
 
+.popup-editing_hide {
+  display: none;
+}
+
+.popup-editing_show {
+  display: flex;
+}
+
 @media (max-width: 800px) {
-  .profile-info__editing {
+  .popup-editing {
     width: calc(100% - 30px*2);
     margin: 0 30px 269px;
   }
 }
 
 @media (max-width: 600px) {
-  .profile-info__editing {
+  .popup-editing {
     width: calc(100% - 2*10px);
     margin: 0 10px 40px;
   }

@@ -12,6 +12,7 @@ export default function Profile({onSignOut, onUpdateUser, account, loggedIn, onA
   const inputEditList = Array.from(document.querySelectorAll('.popup__input_profile-info'));
   const currentUserData = userData;
   const greeting = `Привет, ${currentUserData.name}!`;
+  const children = ''
 
   function handleValidateForm(form) {
     const validationPopupProfile = new FormValidator(listValidation, form);
@@ -55,25 +56,29 @@ export default function Profile({onSignOut, onUpdateUser, account, loggedIn, onA
                        onValidateForm={handleValidateForm}
                        isActive={isActive}
                        >
+        <>
           <div className="popup__field popup__field_profile-info">
             <p className="popup__input-text popup__input-text_profile">Имя</p>
-            <div className='profile-info__container'>
+            <div className="popup__data-input">
               <input id="profile-name-input" type="text" className="popup__input popup__input_profile-info" name="name" placeholder="Имя" value={name} onChange={handleChangeName} disabled required  />
               <span className="profile-name-input-error popup__input-error"></span>
-            </div>           
+            </div>
           </div>
           <div className="popup__field popup__field_profile-info popup__field_not-underlined">
             <p className="popup__input-text popup__input-text_profile">E-mail</p>
-            <div className="profile-info__container">
+            <div className="popup__data-input">
               <input id="profile-email-input" type="email" className="popup__input popup__input_profile-info" name="email" placeholder="Email" pattern="^([^ ]+@[^ ]+\.[a-z]{2,6}|)$" value={email} onChange={handleChangeEmail} disabled required  />
               <span className="profile-email-input-error popup__input-error"></span>
-            </div>           
+            </div>
           </div>
+        </>
+        <>
+          <div className={`popup-editing ${isActive ? "popup-editing_hide" : "popup-editing_show"}`}>
+            <button type="button" className={`popup__button popup__button_profile-info ${isActive ? "popup__button_hide" : "popup__button_show"}`} onClick={handleEditProfile}>Редактировать</button>
+            <button type="button" className={`popup__button popup__button_profile-info popup__button_signOut ${isActive ? "popup__button_hide" : "popup__button_show"}`} onClick={onSignOut}>Выйти из аккаунта</button>
+          </div>
+        </>
         </PopupWithForm>
-        <div className="profile-info__editing">
-          <button type="button" className={`popup__button popup__button_profile-info ${isActive ? "popup__button_hide" : "popup__button_show"}`} onClick={handleEditProfile}>Редактировать</button>
-          <button type="button" className={`popup__button popup__button_profile-info popup__button_signOut ${isActive ? "popup__button_hide" : "popup__button_show"}`} onClick={onSignOut}>Выйти из аккаунта</button>
-        </div>
       </main>
    </>
   )
