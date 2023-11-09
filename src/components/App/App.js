@@ -34,7 +34,6 @@ function App() {
               const data = res;
               setUserData({_id: data._id, email: data.email});
               setLoggedIn(true);
-              navigate('/movies', { replace: true });
             })
             .catch((err) => {
               console.log(err);
@@ -56,7 +55,6 @@ function App() {
   React.useEffect(() => {
     if(loggedIn) {
       moviesApi.getMovies().then((data) => {
-        console.log(data);
         setMovies(data);
       })
       .catch((err) => {
