@@ -133,7 +133,7 @@ function App() {
     const page = document.querySelector(".page");
     if (navigationSection.className === "navigate-autorized" && navigationContainer.className === "navigate-container" && page.className === "page") {
       navigationSection.className += " navigate-autorized_responsive";
-      navigationContainer.className += " navigate-autorized_responsive-active";
+      navigationContainer.className += " navigate-container_responsive-active";
       page.className += " page_disable-scroll";
     } else {
       navigationSection.className = "navigate-autorized";
@@ -146,7 +146,7 @@ function App() {
     const navigationSection = document.querySelector(".navigate-autorized");
     const navigationContainer = document.querySelector(".navigate-container");
     const page = document.querySelector(".page");
-    if (navigationSection.className === "navigate-autorized navigate-autorized_responsive" && navigationContainer.className === "navigate-container navigate-autorized_responsive-active" && page.className === "page page_disable-scroll") {
+    if (navigationSection.className === "navigate-autorized navigate-autorized_responsive" && navigationContainer.className === "navigate-container navigate-container_responsive-active" && page.className === "page page_disable-scroll") {
       navigationSection.className = "navigate-autorized";
       navigationContainer.className = "navigate-container";
       page.className = "page";
