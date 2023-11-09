@@ -43,17 +43,28 @@ function App() {
       }
     };
     tokenCheck();
-    Promise.all([mainApi.getUserInfo(), mainApi.getMovies(), moviesApi.getMovies()])
-    .then(([user, moviesSaved, movies]) => {
+    Promise.all([mainApi.getUserInfo(), mainApi.getMovies()])
+    .then(([user, moviesSaved]) => {
       setCurrentUser(user);
-      console.log(movies);
       setMoviesSaved(moviesSaved);
-      setMovies(movies);
     })
     .catch((err) => {
       console.log(err)
     });  
-  }, [navigate, loggedIn]); 
+  }, [navigate, loggedIn]);
+
+  React.useEffect(() => {
+    if(loggedIn) {
+      moviesApi.getMovies().then((data) => {
+        console.log(data);
+        setMovies(data);
+      })
+      .catch((err) => {
+        console.log(err)
+      });
+    }
+  }, [loggedIn]);
+   
 
   function handleCloseForm() {
     navigate("/movies", {replace: true});

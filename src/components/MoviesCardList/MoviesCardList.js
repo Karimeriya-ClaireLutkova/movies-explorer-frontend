@@ -15,7 +15,7 @@ function MoviesCardList({ cardsMovies, userData, onMovieLike, onMovieDelete, onC
     <section className="elements" aria-label="Список фильмов">
       <div className={`elements__container ${ pathname === '/saved-movies' ? "elements__container_saved-movies" : ""}`}>
         {cardsMovies.map((movie, i) => (
-          <MoviesCard key={movie.movieId} userData={userData} movie={movie} onMovieLike={onMovieLike} onMovieDelete={onMovieDelete} />
+          <MoviesCard key={movie.id} userData={userData} movie={movie} onMovieLike={onMovieLike} onMovieDelete={onMovieDelete} />
         ))}
       </div>
       { pathname === '/movies' &&
