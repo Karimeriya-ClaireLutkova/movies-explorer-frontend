@@ -20,6 +20,13 @@ export default function Profile({onSignOut, onUpdateUser, loggedIn, onAuthorizat
   }
 
   React.useEffect(() => {
+    const { name, email } = values;
+    if (name.values !== nameFirst && email.values !== emailFirst) {
+      
+    }    
+  }, [currentUser, loggedIn]);
+
+  React.useEffect(() => {
     if (loggedIn) {
       setNameFirst(currentUser.name);
       setEmailFirst(currentUser.email);
