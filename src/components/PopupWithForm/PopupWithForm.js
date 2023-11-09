@@ -3,18 +3,10 @@ import { Link, useLocation } from 'react-router-dom';
 import './PopupWithForm.css';
 
 function PopupWithForm(props) {
-  const {name, title, onSubmit, children, buttonText, onValidateForm, isActive} = props;
+  const {name, title, onSubmit, children, buttonText, isActive} = props;
   const { pathname } = useLocation();
   const className = `popup popup_${name} popup_opened`;
   const classNameButton = `popup__button popup__button_save popup__button_${name}`;
-
-  React.useEffect(() => {
-    const form = document.querySelector('[class = "popup__form"]');
-    const handleValidateForm = (form) => {
-      onValidateForm(form);
-    };
-    handleValidateForm(form);
-  }, [onValidateForm]);
 
   return (
     <div className = {className}>

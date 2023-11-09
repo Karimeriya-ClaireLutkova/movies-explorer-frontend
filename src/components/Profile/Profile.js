@@ -1,23 +1,18 @@
 import React from 'react';
-import {listValidation} from '../../utils/constants';
 import Header from '../Header/Header';
 import PopupWithForm from '../PopupWithForm/PopupWithForm';
-import FormValidator from '../FormValidator/FormValidator';
 import { CurrentUserContext } from '../contexts/CurrentUserContext.js';
+import useFormValidator from '../../hooks/useFormValidator';
 import './Profile.css';
 
 export default function Profile({onSignOut, onUpdateUser, loggedIn, onAuthorization, onNavigation, onActiveMenu}) {
-  const [name, setName] = React.useState('');
-  const [email, setEmail] = React.useState('');
+  const [nameFirst, setNameFirst] = React.useState('');
+  const [emailFirst, setEmailFirst] = React.useState('');
   const [isActive, setActive] = React.useState(false);
+  const { values, errors, isValid, handleChange, resetForm  } = useFormValidator();
   const inputEditList = Array.from(document.querySelectorAll('.popup__input_profile-info'));
   const currentUser = React.useContext(CurrentUserContext);
-  const greeting = `Привет, ${name}!`;
-
-  function handleValidateForm(form) {
-    const validationPopupProfile = new FormValidator(listValidation, form);
-    validationPopupProfile.enableValidation();
-  }
+  let greeting = `Привет, ${currentUser.name}!`;
 
   function handleEditProfile() {
     setActive(true);
@@ -26,26 +21,20 @@ export default function Profile({onSignOut, onUpdateUser, loggedIn, onAuthorizat
 
   React.useEffect(() => {
     if (loggedIn) {
-      setName(currentUser.name);
-      setEmail(currentUser.email);
+      setNameFirst(currentUser.name);
+      setEmailFirst(currentUser.email);
     }    
   }, [currentUser, loggedIn]);
-
-  function handleChangeName(evt) {
-    setName(evt.target.value);
-  }
-
-  function handleChangeEmail(evt) {
-    setEmail(evt.target.value);
-  }
 
   function handleSubmit(evt) {
     evt.preventDefault();
 
+    const { name, email } = values;
     onUpdateUser({
       name: name,
       email: email,
     });
+    resetForm();
   }
 
   return (
@@ -55,21 +44,20 @@ export default function Profile({onSignOut, onUpdateUser, loggedIn, onAuthorizat
         <PopupWithForm id="1" name="profile-info" title={greeting}
                        onSubmit={handleSubmit}
                        buttonText={"Сохранить"}
-                       onValidateForm={handleValidateForm}
                        isActive={isActive}
                        >
         <>
           <div className="popup__field popup__field_profile-info">
             <p className="popup__input-text popup__input-text_profile">Имя</p>
             <div className="popup__data-input">
-              <input id="profile-name-input" type="text" className="popup__input popup__input_profile-info" name="name" placeholder="Имя" value={name} onChange={handleChangeName} disabled required  />
+              <input id="profile-name-input" type="text" className="popup__input popup__input_profile-info" name="name" placeholder="Имя" value={name} onChange={handleChange} disabled required  />
               <span className="profile-name-input-error popup__input-error"></span>
             </div>
           </div>
           <div className="popup__field popup__field_profile-info popup__field_not-underlined">
             <p className="popup__input-text popup__input-text_profile">E-mail</p>
             <div className="popup__data-input">
-              <input id="profile-email-input" type="email" className="popup__input popup__input_profile-info" name="email" placeholder="Email" pattern="^([^ ]+@[^ ]+\.[a-z]{2,6}|)$" value={email} onChange={handleChangeEmail} disabled required  />
+              <input id="profile-email-input" type="email" className="popup__input popup__input_profile-info" name="email" placeholder="Email" pattern="^([^ ]+@[^ ]+\.[a-z]{2,6}|)$" value={email} onChange={handleChange} disabled required  />
               <span className="profile-email-input-error popup__input-error"></span>
             </div>
           </div>

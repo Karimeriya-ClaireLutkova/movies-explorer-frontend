@@ -10,6 +10,7 @@ import Register from '../Register/Register';
 import Login from '../Login/Login';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import mainApi from '../../utils/MainApi.js';
+import moviesApi from '../../utils/MoviesApi.js';
 import { CurrentUserContext } from '../contexts/CurrentUserContext.js';
 import { register, authorization, getContent } from '../../utils/Auth.js';
 
@@ -19,8 +20,7 @@ function App() {
   const [userData, setUserData] = React.useState({ name: '', email: '', _id: ''});
   const [loggedIn, setLoggedIn] = React.useState(false);
   const [registrationInfo, setRegistrationInfo] = React.useState({infoStatus: "", message:""});
-  /*const [moviesSaved, setMoviesSaved] = React.useState([]);*/
-  const [moviesAll, setMoviesAll] = React.useState([]);
+  const [moviesSaved, setMoviesSaved] = React.useState([]);
   const navigate = useNavigate();
   const { pathname } = useLocation();
 
@@ -43,10 +43,11 @@ function App() {
       }
     };
     tokenCheck();
-    Promise.all([mainApi.getUserInfo(), mainApi.getMovies()])
-    .then(([user, movies]) => {
+    Promise.all([mainApi.getUserInfo(), mainApi.getMovies(), moviesApi.getMovies()])
+    .then(([user, moviesSaved, movies]) => {
       setCurrentUser(user);
-      setMovies(movies.reverse());
+      setMoviesSaved(moviesSaved);
+      setMovies(movies);
     })
     .catch((err) => {
       console.log(err)
@@ -93,26 +94,26 @@ function App() {
   }
 
   function handleMovieLike(movie, userData) {
-    const movieInitial = initialMovies.find(i => i.movieId === movie.movieId);
+    const movieInitial = movies.find(i => i.movieId === movie.movieId);
     let cards;
     if (movieInitial.owner.jwt === undefined || movieInitial.owner.jwt === '') {
-      cards = initialMovies.map(item => item.movieId === movieInitial.movieId ? {...item, owner: {jwt: userData.jwt}} : item);
-      setInitialMovies(cards);
+      cards = movies.map(item => item.movieId === movieInitial.movieId ? {...item, owner: {jwt: userData.jwt}} : item);
+      setMovies(movies);
       setMoviesSaved([movie, ...moviesSaved]); 
     } else {
-      cards = initialMovies.map(item => item.movieId === movieInitial.movieId ? {...item, owner: {jwt: ''}} : item);
+      cards = movies.map(item => item.movieId === movieInitial.movieId ? {...item, owner: {jwt: ''}} : item);
       const movieNewList = moviesSaved.filter((item) => item.movieId !== movie.movieId);
-      setInitialMovies(cards);
+      setMovies(cards);
       setMoviesSaved(movieNewList);
     }
   }
 
   function handleMovieDelete(movie) {
-    const movieInitial = initialMovies.find(i => i.movieId === movie.movieId);
+    const movieInitial = movies.find(i => i.movieId === movie.movieId);
     let cards;
-    cards = initialMovies.map(item => item.movieId === movieInitial.movieId ? {...item, owner: {jwt: ''}} : item);
+    cards = movies.map(item => item.movieId === movieInitial.movieId ? {...item, owner: {jwt: ''}} : item);
     const movieNewList = moviesSaved.filter((item) => item.movieId !== movie.movieId);
-    setInitialMovies(cards);
+    setMovies(cards);
     setMoviesSaved(movieNewList);
   }
 
@@ -168,11 +169,11 @@ function App() {
                 onNavigation={handleCloseNavigationBar}
                 onActiveMenu={handleActiveMenu}
           />
-        }>  
+        }>
         </Route>
         <Route path="movies" element={
           <ProtectedRoute component={Movies}
-                 movies={initialMovies}
+                 movies={movies}
                  userData={userData}
                  onMovieLike={handleMovieLike}
                  loggedIn={loggedIn}
