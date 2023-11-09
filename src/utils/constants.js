@@ -14,3 +14,5 @@ export const listValidation = ({
   fieldSelector: '.popup__field',
   errorSelector: '.popup__input-error'
 });
+
+export const urlBeginning = ' https://api.nomoreparties.co';

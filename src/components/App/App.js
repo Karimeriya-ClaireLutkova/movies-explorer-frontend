@@ -11,7 +11,7 @@ import Login from '../Login/Login';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import mainApi from '../../utils/MainApi.js';
 import moviesApi from '../../utils/MoviesApi.js';
-import { CurrentUserContext } from '../contexts/CurrentUserContext.js';
+import { CurrentUserContext } from '../../contexts/CurrentUserContext.js';
 import { register, authorization, getContent } from '../../utils/Auth.js';
 
 function App() {
@@ -46,6 +46,7 @@ function App() {
     Promise.all([mainApi.getUserInfo(), mainApi.getMovies(), moviesApi.getMovies()])
     .then(([user, moviesSaved, movies]) => {
       setCurrentUser(user);
+      console.log(movies);
       setMoviesSaved(moviesSaved);
       setMovies(movies);
     })
@@ -54,7 +55,7 @@ function App() {
     });  
   }, [navigate, loggedIn]); 
 
-  function handleCloseRegistration() {
+  function handleCloseForm() {
     navigate("/movies", {replace: true});
   }
 
@@ -65,7 +66,7 @@ function App() {
           setRegistrationInfo({infoStatus: "", message:""});
           localStorage.setItem('jwt', data.token);
           setLoggedIn(true);
-          handleCloseRegistration();
+          handleCloseForm();
         }
       })
       .catch((err) => {
@@ -76,9 +77,10 @@ function App() {
   function handleLoginSubmit(userEmail, password) {
     authorization(userEmail, password)
       .then((data) => {
+        console.log(data);
         localStorage.setItem('jwt', data.token);
         setLoggedIn(true);
-        handleCloseRegistration();
+        handleCloseForm();
       })
       .catch(err => console.log(err));
   }
@@ -96,12 +98,12 @@ function App() {
   function handleMovieLike(movie, userData) {
     const movieInitial = movies.find(i => i.movieId === movie.movieId);
     let cards;
-    if (movieInitial.owner.jwt === undefined || movieInitial.owner.jwt === '') {
-      cards = movies.map(item => item.movieId === movieInitial.movieId ? {...item, owner: {jwt: userData.jwt}} : item);
+    if (movieInitial.owner === '') {
+      cards = movies.map(item => item.movieId === movieInitial.movieId ? {...item, owner: userData._id} : item);
       setMovies(movies);
       setMoviesSaved([movie, ...moviesSaved]); 
     } else {
-      cards = movies.map(item => item.movieId === movieInitial.movieId ? {...item, owner: {jwt: ''}} : item);
+      cards = movies.map(item => item.movieId === movieInitial.movieId ? {...item, owner: ''} : item);
       const movieNewList = moviesSaved.filter((item) => item.movieId !== movie.movieId);
       setMovies(cards);
       setMoviesSaved(movieNewList);
@@ -111,7 +113,7 @@ function App() {
   function handleMovieDelete(movie) {
     const movieInitial = movies.find(i => i.movieId === movie.movieId);
     let cards;
-    cards = movies.map(item => item.movieId === movieInitial.movieId ? {...item, owner: {jwt: ''}} : item);
+    cards = movies.map(item => item.movieId === movieInitial.movieId ? {...item, owner: ''} : item);
     const movieNewList = moviesSaved.filter((item) => item.movieId !== movie.movieId);
     setMovies(cards);
     setMoviesSaved(movieNewList);

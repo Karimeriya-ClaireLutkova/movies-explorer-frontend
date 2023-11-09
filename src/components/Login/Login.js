@@ -24,7 +24,7 @@ export default function Login ({onSubmit}) {
 
   function handleSubmit(evt) {
     evt.preventDefault();
-    onSubmit({userEmail: userEmail, password: password});
+    onSubmit(userEmail, password);
     setUserEmail('');
     setPassword('');
   }

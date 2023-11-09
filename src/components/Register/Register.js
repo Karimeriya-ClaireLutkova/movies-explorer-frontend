@@ -29,7 +29,7 @@ export default function Register({onSubmit}) {
 
   function handleSubmit(evt) {
     evt.preventDefault();
-    onSubmit({name: name, userEmail: userEmail, password: password});
+    onSubmit(name, userEmail, password);
     setUserEmail('');
     setPassword('');
     setName('');
