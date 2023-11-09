@@ -3,15 +3,16 @@ import {listValidation} from '../../utils/constants';
 import Header from '../Header/Header';
 import PopupWithForm from '../PopupWithForm/PopupWithForm';
 import FormValidator from '../FormValidator/FormValidator';
+import { CurrentUserContext } from '../contexts/CurrentUserContext.js';
 import './Profile.css';
 
-export default function Profile({onSignOut, onUpdateUser, loggedIn, onAuthorization, userData, onNavigation, onActiveMenu}) {
+export default function Profile({onSignOut, onUpdateUser, loggedIn, onAuthorization, onNavigation, onActiveMenu}) {
   const [name, setName] = React.useState('');
   const [email, setEmail] = React.useState('');
   const [isActive, setActive] = React.useState(false);
   const inputEditList = Array.from(document.querySelectorAll('.popup__input_profile-info'));
-  const currentUserData = userData;
-  const greeting = `Привет, ${currentUserData.name}!`;
+  const currentUser = React.useContext(CurrentUserContext);
+  const greeting = `Привет, ${name}!`;
 
   function handleValidateForm(form) {
     const validationPopupProfile = new FormValidator(listValidation, form);
@@ -24,9 +25,11 @@ export default function Profile({onSignOut, onUpdateUser, loggedIn, onAuthorizat
   }
 
   React.useEffect(() => {
-    setName(currentUserData.name);
-    setEmail(currentUserData.email);
-  }, [currentUserData]);
+    if (loggedIn) {
+      setName(currentUser.name);
+      setEmail(currentUser.email);
+    }    
+  }, [currentUser, loggedIn]);
 
   function handleChangeName(evt) {
     setName(evt.target.value);

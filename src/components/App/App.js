@@ -19,7 +19,8 @@ function App() {
   const [userData, setUserData] = React.useState({ name: '', email: '', _id: ''});
   const [loggedIn, setLoggedIn] = React.useState(false);
   const [registrationInfo, setRegistrationInfo] = React.useState({infoStatus: "", message:""});
-  const [moviesSaved, setMoviesSaved] = React.useState([]);
+  /*const [moviesSaved, setMoviesSaved] = React.useState([]);*/
+  const [moviesAll, setMoviesAll] = React.useState([]);
   const navigate = useNavigate();
   const { pathname } = useLocation();
 
@@ -53,12 +54,22 @@ function App() {
   }, [navigate, loggedIn]); 
 
   function handleCloseRegistration() {
-    navigate("/sign-in", {replace: true});
+    navigate("/movies", {replace: true});
   }
 
-  function handleRegisterSubmit(item) {
-    setUserData({ name: item.name, email: item.email });
-    handleCloseRegistration();
+  function handleRegisterSubmit(name, userEmail, password) {
+    register(name, userEmail, password)
+      .then((data) => {
+        if (data) {
+          setRegistrationInfo({infoStatus: "", message:""});
+          localStorage.setItem('jwt', data.token);
+          setLoggedIn(true);
+          handleCloseRegistration();
+        }
+      })
+      .catch((err) => {
+        setRegistrationInfo({infoStatus: false, message: err.message});
+      })
   }
   
   function handleLoginSubmit(userEmail, password) {
@@ -66,33 +77,19 @@ function App() {
       .then((data) => {
         localStorage.setItem('jwt', data.token);
         setLoggedIn(true);
-        navigate('/movies', { replace: true });
+        handleCloseRegistration();
       })
       .catch(err => console.log(err));
   }
 
-  /*function handleСheckAuthorization(item) {
-    localStorage.setItem('jwt', JWT);
-    const jwt = localStorage.getItem('jwt');
-    setUserData({ name: "Виталий", email: item.email, jwt: jwt});
-    navigate('/movies', { replace: true });
-    
-    setLoggedIn(true);
-  }*/
-
-  function handleRegisterSubmit(userEmail, password) {
-    register(userEmail, password)
-      .then((data) => {
-        if (data) {
-          setRegistrationInfo({infoStatus: true, message:"Вы успешно зарегистрировались!"});
-        }
+  function handleUpdateUser(item) {
+    mainApi.editProfileInfo(item.name, item.userEmail)
+      .then((result) => {
+        setCurrentUser(result);
       })
-      .catch(() => {
-        setRegistrationInfo({infoStatus: false, message:"Что-то пошло не так! Попробуйте ещё раз."});
-      })
-      .finally(() => {
-        setInfoTooltipOpen(true);
-      })
+      .catch((err) => {
+        console.error(err)
+      });
   }
 
   function handleMovieLike(movie, userData) {
@@ -155,10 +152,6 @@ function App() {
     }
   }
 
-  function handleUpdateUser(item) {
-    setUserData({name: item.name, email: item.email});
-  }
-
   function signOut() {
     localStorage.removeItem('jwt');
     setLoggedIn(false);
@@ -204,8 +197,6 @@ function App() {
         <Route path="profile" element={
           <ProtectedRoute component={Profile}
                    loggedIn={loggedIn}
-                   userData={userData}
-                   onSubmit={handleСheckAuthorization}
                    onSignOut={signOut}
                    onAuthorization={handleProfileNav}
                    onUpdateUser={handleUpdateUser}
