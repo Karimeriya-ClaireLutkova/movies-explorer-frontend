@@ -1,0 +1,9 @@
+.movies {
+  display: flex;
+  flex-direction: column;
+}
+
+.movies__container {
+  display: flex;
+  justify-content: center;
+}
