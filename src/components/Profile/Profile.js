@@ -61,15 +61,15 @@ export default function Profile({onSignOut, onUpdateUser, loggedIn, onAuthorizat
           <div className={`popup__field popup__field_profile-info ${errors.name ? "popup__field_error" : ""}`}>
             <p className="popup__input-text popup__input-text_profile">Имя</p>
             <div className="popup__data-input">
-              <input id="profile-name-input" type="text" className="popup__input popup__input_profile-info" name="name" placeholder="Имя" value={isName} onChange={handleChangeInput} autoComplete="off" disabled required  />
-              <span className="profile-name-input-error popup__input-error"></span>
+              <input id="profile-name-input" type="text" className={`popup__input popup__input_profile-info ${errors.name ? "popup__input_error" :""}`} name="name" placeholder="Имя" value={isName} onChange={handleChangeInput} autoComplete="off" disabled required  />
+              <span className={`profile-name-input-error popup__input-error ${errors.name ? "popup__input-error_active_profile" : ""}`}>{errors.name}</span>
             </div>
           </div>
           <div className={`popup__field popup__field_profile-info popup__field_not-underlined ${errors.email ? "popup__field_error" : ""}`}>
             <p className="popup__input-text popup__input-text_profile">E-mail</p>
             <div className="popup__data-input">
-              <input id="profile-email-input" type="email" className="popup__input popup__input_profile-info" name="email" pattern="^([^ ]+@[^ ]+\.[a-z]{2,6}|)$" placeholder="Email" value={isEmail} onChange={handleChangeInput} autoComplete="off" disabled required  />
-              <span className="profile-email-input-error popup__input-error"></span>
+              <input id="profile-email-input" type="email" className={`popup__input popup__input_profile-info ${errors.email ? "popup__input_error" :""}`} name="email" pattern="^([^ ]+@[^ ]+\.[a-z]{2,6}|)$" placeholder="Email" value={isEmail} onChange={handleChangeInput} autoComplete="off" disabled required  />
+              <span className={`profile-email-input-error popup__input-error ${errors.email ? "popup__input-error_active_profile" : ""}`}>{errors.email}</span>
             </div>
           </div>
         </>

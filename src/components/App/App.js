@@ -118,6 +118,7 @@ function App() {
     setLoad(true);
     mainApi.editProfileInfo(item.name, item.email)
       .then((result) => {
+        setUserData({name: result.name, email: result.email, _id: result._id});
         setLoad(true);
         mainApi.getUserInfo()
           .then((user) => {
