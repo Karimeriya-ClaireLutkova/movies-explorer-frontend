@@ -34,13 +34,11 @@ export default function useFormValidator() {
   function checkFieldsForm(name, value) {
     if(name === "email") {
       if(!validator.isEmail(value)) {
-        setErrors({...errors, [name]: "Неверный формат email."})
-        setValidNew(false)
-        console.log(validator.isEmail(value));
-        console.log(value);
+        setErrors({...errors, [name]: "Неверный формат email."});
+        setValidNew(false);
       } else if(validator.isEmail(value)) {
         if(isCurrentEmail === value) {
-          setErrors({...errors, [name]: "Введите email, отличающийся от изначального."})
+          setErrors({...errors, [name]: "Введите email, отличающийся от изначального."});
           setValidNew(false);
         } else if(isCurrentEmail !== value) {
           setValidNew(true);
@@ -53,7 +51,7 @@ export default function useFormValidator() {
         setValidNew(false);
       } else if(new RegExp(/^[a-zA-Zа-яёА-ЯЁ-]+$/).test(value)) {
         if(isCurrentName === value) {
-          setErrors({...errors, [name]: "Введите имя, отличающееся от изначального."})
+          setErrors({...errors, [name]: "Введите имя, отличающееся от изначального."});
           setValidNew(false);
         } else if(isCurrentName !== value) {
           setValidNew(true);
