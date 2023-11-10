@@ -7,8 +7,12 @@ import MoviesCardList from '../MoviesCardList/MoviesCardList';
 function SavedMovies({ movies, userData, onMovieDelete, loggedIn, onAuthorization, onNavigation, onActiveMenu}) {
   const loading = false;
 
-  function handleActiveFilter() {
-
+  function handleActiveFilter(isActive) {
+    if (isActive) {
+      console.log('Короткометражки');
+    } else {
+      console.log('Провал');
+    }
   }
 
   function handleUpdateMoviesList() {
