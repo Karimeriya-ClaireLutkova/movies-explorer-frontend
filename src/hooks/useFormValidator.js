@@ -13,7 +13,22 @@ export default function useFormValidator(item) {
     setValues({...values, [name]: value});
     setErrors({...errors, [name]: target.validationMessage });
     setIsValid(target.closest("form").checkValidity());
+    checkFieldsForm(name, value);
   };
+
+  function checkFieldsForm(name, value) {
+    if(name === "email") {
+      if(!validator.isEmail(value)) {
+        setErrors({...errors, [name]: "Неверный формат email"})
+        setIsValid(false)
+      }
+    } else if(name === "name") {
+      if(!new RegExp(/^[a-zA-Zа-яёА-ЯЁ/-]+$/).test(value)) {
+        setErrors({...errors, [name]: "Используйте только латиницу или кириллицу, дефис"})
+        setIsValid(false)
+      }
+    }
+  }
 
   const resetForm = React.useCallback(
     (newValues = {}, newErrors = {}, newIsValid = false) => {
@@ -26,4 +41,3 @@ export default function useFormValidator(item) {
 
   return { values, handleChange, errors, isValid, resetForm };
 };
-  

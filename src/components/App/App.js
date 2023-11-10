@@ -182,7 +182,7 @@ function App() {
           />
         }>
         </Route>
-        <Route path="movies" element={
+        <Route path="/movies" element={
           <ProtectedRoute component={Movies}
                  movies={movies}
                  userData={userData}
@@ -194,7 +194,7 @@ function App() {
           />
         }>
         </Route>
-        <Route path="saved-movies" element={
+        <Route path="/saved-movies" element={
           <ProtectedRoute component={SavedMovies}
                        movies={movies}
                        userData={userData}
@@ -206,7 +206,7 @@ function App() {
           />
         }>
         </Route>
-        <Route path="profile" element={
+        <Route path="/profile" element={
           <ProtectedRoute component={Profile}
                    loggedIn={loggedIn}
                    onSignOut={signOut}
@@ -217,11 +217,11 @@ function App() {
           />
         }>
         </Route>
-        <Route path="sign-up" element={
+        <Route path="/sign-up" element={
           <Register onSubmit={handleRegisterSubmit} />
         }>
         </Route>
-        <Route path="sign-in" element={
+        <Route path="/sign-in" element={
           <Login onSubmit={handleLoginSubmit} />
         }>
         </Route>
