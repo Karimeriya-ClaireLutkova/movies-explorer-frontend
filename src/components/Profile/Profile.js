@@ -6,46 +6,40 @@ import useFormValidator from '../../hooks/useFormValidator';
 import './Profile.css';
 
 export default function Profile({onSignOut, onUpdateUser, loggedIn, onAuthorization, onNavigation, onActiveMenu}) {
-  const [nameFirst, setNameFirst] = React.useState('');
-  const [emailFirst, setEmailFirst] = React.useState('');
-  const [isActive, setActive] = React.useState(false);
-  const { values, errors, isValid, handleChange, resetForm  } = useFormValidator();
-  const inputEditList = Array.from(document.querySelectorAll('.popup__input_profile-info'));
-  const buttonSave = document.querySelector('.popup__button_show_profile-info');
   const currentUser = React.useContext(CurrentUserContext);
-  let greeting = `Привет, ${nameFirst}!`;
+  const [isActive, setActive] = React.useState(false);
+  const [isName, setName] = React.useState('');
+  const [isEmail, setEmail] = React.useState('');
+  const { errors, isValid, handleChange, resetForm  } = useFormValidator();
+  console.log(errors);
+  let greeting = `Привет, ${currentUser.name}!`;
 
   function handleEditProfile() {
-    setActive(true);
+    const inputEditList = Array.from(document.querySelectorAll('.popup__input_profile-info'));
     inputEditList.map(item => item.removeAttribute('disabled'));
+    setActive(true);
   }
 
   React.useEffect(() => {
-    const { name, email } = values;
-    const deactivateButton = () => {
-      if (name.values === nameFirst && email.values === emailFirst) {
-        buttonSave.classList.add('.popup__button_inactive');
-      } else {
-        buttonSave.classList.remove('.popup__button_inactive');
-      }
-    };
-    deactivateButton();    
-  }, [emailFirst, nameFirst, values, buttonSave.classList]);
+    setName(currentUser.name);
+    setEmail(currentUser.email);
+  }, [currentUser]);
 
-  React.useEffect(() => {
-    if (loggedIn) {
-      setNameFirst(currentUser.name);
-      setEmailFirst(currentUser.email);
-    }    
-  }, [currentUser, loggedIn]);
+  function handleChangeInput(evt) {
+    handleChange(evt, currentUser);    
+    if(evt.target.name === 'name') {
+      setName(evt.target.value);
+    } else if(evt.target.name === 'email') {
+      setEmail(evt.target.value);
+    }
+  }  
 
   function handleSubmit(evt) {
     evt.preventDefault();
 
-    const { name, email } = values;
     onUpdateUser({
-      name: name,
-      email: email,
+      name: isName,
+      email: isEmail,
     });
     resetForm();
   }
@@ -58,19 +52,20 @@ export default function Profile({onSignOut, onUpdateUser, loggedIn, onAuthorizat
                        onSubmit={handleSubmit}
                        buttonText={"Сохранить"}
                        isActive={isActive}
+                       isValid={isValid}
                        >
         <>
-          <div className="popup__field popup__field_profile-info">
+          <div className={`popup__field popup__field_profile-info ${!isValid ? "popup__field_error" : ""}`}>
             <p className="popup__input-text popup__input-text_profile">Имя</p>
             <div className="popup__data-input">
-              <input id="profile-name-input" type="text" className="popup__input popup__input_profile-info" name="name" placeholder="Имя" value={nameFirst} onChange={handleChange} disabled required  />
+              <input id="profile-name-input" type="text" className="popup__input popup__input_profile-info" name="name" placeholder="Имя" value={isName} onChange={handleChangeInput} autoComplete="off" disabled required  />
               <span className="profile-name-input-error popup__input-error"></span>
             </div>
           </div>
           <div className="popup__field popup__field_profile-info popup__field_not-underlined">
             <p className="popup__input-text popup__input-text_profile">E-mail</p>
             <div className="popup__data-input">
-              <input id="profile-email-input" type="email" className="popup__input popup__input_profile-info" name="email" placeholder="Email" value={emailFirst} onChange={handleChange} disabled required  />
+              <input id="profile-email-input" type="email" className="popup__input popup__input_profile-info" name="email" pattern="^([^ ]+@[^ ]+\.[a-z]{2,6}|)$" placeholder="Email" value={isEmail} onChange={handleChangeInput} autoComplete="off" disabled required  />
               <span className="profile-email-input-error popup__input-error"></span>
             </div>
           </div>

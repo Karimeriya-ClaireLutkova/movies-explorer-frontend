@@ -3,7 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import './PopupWithForm.css';
 
 function PopupWithForm(props) {
-  const {name, title, onSubmit, children, buttonText, isActive} = props;
+  const {name, title, onSubmit, children, buttonText, isActive, isValid} = props;
   const { pathname } = useLocation();
   const className = `popup popup_${name} popup_opened`;
   const classNameButton = `popup__button popup__button_save popup__button_${name}`;
@@ -17,7 +17,7 @@ function PopupWithForm(props) {
             {children}
           </div>
           { pathname === '/profile' ? (
-            <button type="submit" className={`popup__button popup__button_save ${isActive ? `popup__button_show popup__button_show_${name}` : "popup__button_hide"}`}>{buttonText}</button>
+            <button type="submit" className={`popup__button popup__button_save ${isActive ? `popup__button_show popup__button_show_${name}` : "popup__button_hide"} ${!isValid ? "popup__button_inactive" : ""}`}>{buttonText}</button>
           ) : (
             <button type="submit" className={classNameButton}>{buttonText}</button>
           )}
