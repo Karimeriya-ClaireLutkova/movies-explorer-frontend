@@ -118,7 +118,17 @@ function App() {
     setLoad(true);
     mainApi.editProfileInfo(item.name, item.email)
       .then((result) => {
-        setCurrentUser(result);
+        setLoad(true);
+        mainApi.getUserInfo()
+          .then((user) => {
+            setCurrentUser(user);
+          })
+          .catch((err) => {
+            console.log(err)
+          })
+          .finally(() => {
+            setLoad(false);
+          });
       })
       .catch((err) => {
         console.log(err);

@@ -11,7 +11,7 @@ export default function Profile({onSignOut, onUpdateUser, loggedIn, onAuthorizat
   const [isName, setName] = React.useState('');
   const [isEmail, setEmail] = React.useState('');
   const { errors, isValid, handleChange, resetForm  } = useFormValidator();
-  let greeting = `Привет, ${isName}!`;
+  const greeting = `Привет, ${currentUser.name}!`;
 
   function handleEditProfile() {
     const inputEditList = Array.from(document.querySelectorAll('.popup__input_profile-info'));
@@ -20,9 +20,11 @@ export default function Profile({onSignOut, onUpdateUser, loggedIn, onAuthorizat
   }
 
   React.useEffect(() => {
-    setName(currentUser.name);
-    setEmail(currentUser.email);
-  }, [currentUser,]);
+    if(isLoad === false) {
+      setName(currentUser.name);
+      setEmail(currentUser.email);
+    }
+  }, [currentUser, isLoad]);
 
   function handleChangeInput(evt) {
     handleChange(evt, currentUser);    
