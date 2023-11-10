@@ -5,14 +5,13 @@ import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import useFormValidator from '../../hooks/useFormValidator';
 import './Profile.css';
 
-export default function Profile({onSignOut, onUpdateUser, loggedIn, onAuthorization, onNavigation, onActiveMenu}) {
+export default function Profile({onSignOut, onUpdateUser, loggedIn, onAuthorization, onNavigation, onActiveMenu, isErrorMessage, isLoad}) {
   const currentUser = React.useContext(CurrentUserContext);
   const [isActive, setActive] = React.useState(false);
   const [isName, setName] = React.useState('');
   const [isEmail, setEmail] = React.useState('');
   const { errors, isValid, handleChange, resetForm  } = useFormValidator();
-  console.log(errors);
-  let greeting = `Привет, ${currentUser.name}!`;
+  let greeting = `Привет, ${isName}!`;
 
   function handleEditProfile() {
     const inputEditList = Array.from(document.querySelectorAll('.popup__input_profile-info'));
@@ -23,7 +22,7 @@ export default function Profile({onSignOut, onUpdateUser, loggedIn, onAuthorizat
   React.useEffect(() => {
     setName(currentUser.name);
     setEmail(currentUser.email);
-  }, [currentUser]);
+  }, [currentUser,]);
 
   function handleChangeInput(evt) {
     handleChange(evt, currentUser);    
@@ -36,7 +35,6 @@ export default function Profile({onSignOut, onUpdateUser, loggedIn, onAuthorizat
 
   function handleSubmit(evt) {
     evt.preventDefault();
-
     onUpdateUser({
       name: isName,
       email: isEmail,
@@ -53,16 +51,19 @@ export default function Profile({onSignOut, onUpdateUser, loggedIn, onAuthorizat
                        buttonText={"Сохранить"}
                        isActive={isActive}
                        isValid={isValid}
+                       errorServer={isErrorMessage}
+                       isLoad={isLoad}
+                       textLoad={"Сохранение..."}
                        >
         <>
-          <div className={`popup__field popup__field_profile-info ${!isValid ? "popup__field_error" : ""}`}>
+          <div className={`popup__field popup__field_profile-info ${errors.name ? "popup__field_error" : ""}`}>
             <p className="popup__input-text popup__input-text_profile">Имя</p>
             <div className="popup__data-input">
               <input id="profile-name-input" type="text" className="popup__input popup__input_profile-info" name="name" placeholder="Имя" value={isName} onChange={handleChangeInput} autoComplete="off" disabled required  />
               <span className="profile-name-input-error popup__input-error"></span>
             </div>
           </div>
-          <div className="popup__field popup__field_profile-info popup__field_not-underlined">
+          <div className={`popup__field popup__field_profile-info popup__field_not-underlined ${errors.email ? "popup__field_error" : ""}`}>
             <p className="popup__input-text popup__input-text_profile">E-mail</p>
             <div className="popup__data-input">
               <input id="profile-email-input" type="email" className="popup__input popup__input_profile-info" name="email" pattern="^([^ ]+@[^ ]+\.[a-z]{2,6}|)$" placeholder="Email" value={isEmail} onChange={handleChangeInput} autoComplete="off" disabled required  />

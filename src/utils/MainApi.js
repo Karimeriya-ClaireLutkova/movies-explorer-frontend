@@ -19,8 +19,7 @@ class MainApi {
         ...this._headers,
         'authorization': `Bearer ${localStorage.getItem('jwt')}`,
       },
-      body: JSON.stringify({
-        name, email}),
+      body: JSON.stringify({name, email}),
     })
     .then((res) => this._checkResponseRequest(res))
   }

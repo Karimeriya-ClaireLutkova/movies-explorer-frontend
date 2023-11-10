@@ -11,10 +11,8 @@ export default function useFormValidator() {
 
   React.useEffect(() => {
     if(isValid === true && isValidNew === true) {
-      console.log(isValid, isValidNew);
       setIsValid(true);
     } else {
-      console.log(isValid, isValidNew);
       setIsValid(false);
     }
   }, [isValid, isValidNew]);

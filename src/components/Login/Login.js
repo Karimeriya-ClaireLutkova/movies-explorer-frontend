@@ -4,7 +4,7 @@ import Header from '../Header/Header';
 import PopupWithForm from '../PopupWithForm/PopupWithForm';
 import FormValidator from '../FormValidator/FormValidator';
 
-export default function Login ({onSubmit}) {
+export default function Login ({ onSubmit, isLoad, textLoad }) {
   const [userEmail, setUserEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
 
@@ -36,7 +36,9 @@ export default function Login ({onSubmit}) {
         <PopupWithForm id="3" name="login-user" title="Рады видеть!"
                        onSubmit={handleSubmit}
                        buttonText={"Войти"}
-                       onValidateForm={handleValidateForm}>
+                       onValidateForm={handleValidateForm}
+                       isLoad={isLoad}
+                       textLoad={"Вход..."}>
           <div className="popup__field">
             <p className="popup__input-text">E-mail</p>
             <input id="user-email-input" type="email" className="popup__input popup__input_entry" pattern="^([^ ]+@[^ ]+\.[a-z]{2,6}|)$" name="email" value={userEmail} placeholder="Email" onChange={handleChangeEmail} required  />

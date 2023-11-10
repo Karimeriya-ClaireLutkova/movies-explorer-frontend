@@ -4,7 +4,7 @@ import Header from '../Header/Header';
 import PopupWithForm from '../PopupWithForm/PopupWithForm';
 import FormValidator from '../FormValidator/FormValidator';
 
-export default function Register({onSubmit}) {
+export default function Register({ onSubmit, isLoad, textLoad }) {
   const [name, setName] = React.useState('');
   const [userEmail, setUserEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
@@ -42,7 +42,9 @@ export default function Register({onSubmit}) {
         <PopupWithForm id="2" name="registration-user" title="Добро пожаловать!"
                        onSubmit={handleSubmit}
                        buttonText={"Зарегистрироваться"}
-                       onValidateForm={handleValidateForm}>
+                       onValidateForm={handleValidateForm}
+                       isLoad={isLoad}
+                       textLoad={"Регистрация..."}>
           <div className="popup__field">
             <p className="popup__input-text">Имя</p>
             <input id="user-name-input" type="text" className="popup__input popup__input_entry" name="name" placeholder="Имя" value={name} onChange={handleChangeName} required  />

@@ -16,11 +16,13 @@ import { register, authorization, getContent } from '../../utils/Auth.js';
 
 function App() {
   const [currentUser, setCurrentUser] = React.useState({});
+  const [isLoad, setLoad] = React.useState(false);
   const [movies, setMovies] = React.useState([]);
   const [userData, setUserData] = React.useState({ name: '', email: '', _id: ''});
   const [loggedIn, setLoggedIn] = React.useState(false);
   const [registrationInfo, setRegistrationInfo] = React.useState({infoStatus: "", message:""});
   const [moviesSaved, setMoviesSaved] = React.useState([]);
+  const [isErrorMessage, setErrorMessage] = React.useState('');
   const navigate = useNavigate();
   const { pathname } = useLocation();
 
@@ -28,7 +30,8 @@ function App() {
     const tokenCheck = () => {
       if (localStorage.getItem('jwt')) {
         const jwt = localStorage.getItem('jwt');
-        if (jwt) { 
+        if (jwt) {
+          setLoad(true);
           getContent(jwt)
             .then((res) => {
               const data = res;
@@ -38,10 +41,14 @@ function App() {
             .catch((err) => {
               console.log(err);
             })
+            .finally(() => {
+              setLoad(false);
+            })
         }
       }
     };
     tokenCheck();
+    setLoad(true);
     Promise.all([mainApi.getUserInfo(), mainApi.getMovies()])
     .then(([user, moviesSaved]) => {
       setCurrentUser(user);
@@ -49,16 +56,23 @@ function App() {
     })
     .catch((err) => {
       console.log(err)
-    });  
+    })
+    .finally(() => {
+      setLoad(false);
+    });
   }, [loggedIn]);
 
   React.useEffect(() => {
     if(loggedIn) {
+      setLoad(true);
       moviesApi.getMovies().then((data) => {
         setMovies(data);
       })
       .catch((err) => {
         console.log(err)
+      })
+      .finally(() => {
+        setLoad(false);
       });
     }
   }, [loggedIn]);
@@ -69,38 +83,49 @@ function App() {
   }
 
   function handleRegisterSubmit(name, userEmail, password) {
+    const passwordUser = password;
+    setLoad(true);
     register(name, userEmail, password)
       .then((data) => {
         if (data) {
           setRegistrationInfo({infoStatus: "", message:""});
-          localStorage.setItem('jwt', data.token);
-          setLoggedIn(true);
-          handleCloseForm();
+          handleLoginSubmit(userEmail, passwordUser);
         }
       })
       .catch((err) => {
         setRegistrationInfo({infoStatus: false, message: err.message});
       })
+      .finally(() => {
+        setLoad(false);
+      })      
   }
   
   function handleLoginSubmit(userEmail, password) {
+    setLoad(true);
     authorization(userEmail, password)
       .then((data) => {
-        console.log(data);
         localStorage.setItem('jwt', data.token);
         setLoggedIn(true);
         handleCloseForm();
       })
-      .catch(err => console.log(err));
+      .catch(err => console.log(err))
+      .finally(() => {
+        setLoad(false);
+      });
   }
 
   function handleUpdateUser(item) {
-    mainApi.editProfileInfo(item.name, item.userEmail)
+    setLoad(true);
+    mainApi.editProfileInfo(item.name, item.email)
       .then((result) => {
         setCurrentUser(result);
       })
       .catch((err) => {
-        console.error(err)
+        console.log(err);
+        setErrorMessage(err.message);
+      })
+      .finally(() => {
+        setLoad(false);
       });
   }
 
@@ -179,6 +204,7 @@ function App() {
                 onAuthorization={handleProfileNav}
                 onNavigation={handleCloseNavigationBar}
                 onActiveMenu={handleActiveMenu}
+                isLoad={isLoad}
           />
         }>
         </Route>
@@ -191,6 +217,7 @@ function App() {
                  onAuthorization={handleProfileNav}
                  onNavigation={handleCloseNavigationBar}
                  onActiveMenu={handleActiveMenu}
+                 isLoad={isLoad}
           />
         }>
         </Route>
@@ -202,7 +229,8 @@ function App() {
                        loggedIn={loggedIn}
                        onAuthorization={handleProfileNav}
                        onNavigation={handleCloseNavigationBar}
-                       onActiveMenu={handleActiveMenu}                 
+                       onActiveMenu={handleActiveMenu}
+                       isLoad={isLoad}                
           />
         }>
         </Route>
@@ -214,6 +242,8 @@ function App() {
                    onUpdateUser={handleUpdateUser}
                    onNavigation={handleCloseNavigationBar}
                    onActiveMenu={handleActiveMenu}
+                   isErrorMessage={isErrorMessage}
+                   isLoad={isLoad}
           />
         }>
         </Route>
