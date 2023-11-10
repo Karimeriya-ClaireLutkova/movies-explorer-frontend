@@ -7,12 +7,20 @@ import MoviesCardList from '../MoviesCardList/MoviesCardList';
 function SavedMovies({ movies, userData, onMovieDelete, loggedIn, onAuthorization, onNavigation, onActiveMenu}) {
   const loading = false;
 
+  function handleActiveFilter() {
+
+  }
+
+  function handleUpdateMoviesList() {
+
+  }
+
   return (
     <>
       <Header id="3" loggedIn={loggedIn} onAuthorization={onAuthorization} onNavigation={onNavigation} onActiveMenu={onActiveMenu} />
       <main>
         <div className="movies">
-          <SearchForm id="2" />
+          <SearchForm id="2" onUpdateMoviesList={handleUpdateMoviesList} onActiveFilter={handleActiveFilter} />
           {loading ? (
             <Preloader />
           ) : (

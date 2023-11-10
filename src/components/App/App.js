@@ -50,7 +50,7 @@ function App() {
     .catch((err) => {
       console.log(err)
     });  
-  }, [navigate, loggedIn]);
+  }, [loggedIn]);
 
   React.useEffect(() => {
     if(loggedIn) {

@@ -1,9 +1,9 @@
 import React from 'react';
 import Header from '../Header/Header';
-import SearchForm from '../SearchForm/SearchForm';
 import Preloader from '../Preloader/Preloader';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import { SCREEN_MIN, SCREEN_MEDIUM, SCREEN_BIG } from '../../utils/constants';
+import SearchForm from '../SearchForm/SearchForm';
 import './Movies.css';
 
 function Movies({ movies, userData, onMovieLike, loggedIn, onAuthorization, onNavigation, onActiveMenu}) {
@@ -64,6 +64,14 @@ function Movies({ movies, userData, onMovieLike, loggedIn, onAuthorization, onNa
     setButtonInactive(true);
   }
 
+  function handleActiveFilter(isActive) {
+    if (isActive) {
+      console.log('Короткометражки');
+    } else {
+      console.log('Провал');
+    }
+  }
+
   React.useEffect(() => {
     function handleResize() {
       setWindowDimensions(getWindowDimensions());
@@ -97,7 +105,7 @@ function Movies({ movies, userData, onMovieLike, loggedIn, onAuthorization, onNa
       <Header id="2" loggedIn={loggedIn} onAuthorization={onAuthorization} onNavigation={onNavigation} onActiveMenu={onActiveMenu} />
       <main>
         <div className="movies">
-          <SearchForm id="1" onUpdateMoviesList={handleUpdateMoviesList} />
+          <SearchForm id="1" onUpdateMoviesList={handleUpdateMoviesList} onActiveFilter={handleActiveFilter} />
           {isLoading ? (
             <Preloader />
           ) : (
