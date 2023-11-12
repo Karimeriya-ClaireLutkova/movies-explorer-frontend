@@ -6,7 +6,7 @@ function PopupWithForm(props) {
   const {name, title, onSubmit, children, buttonText, isActive, isValid, errorServer, isLoad, textLoad } = props;
   const { pathname } = useLocation();
   const className = `popup popup_${name} popup_opened`;
-  const classNameButton = `popup__button popup__button_save popup__button_${name}`;
+  const classNameButton = `popup__button popup__button_save popup__button_${name} ${!isValid ? "popup__button_inactive" : ""}`;
   const [isActiveError, setActiveError] = React.useState(false);
 
   React.useEffect(() => {

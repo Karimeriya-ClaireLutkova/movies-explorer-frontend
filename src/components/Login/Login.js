@@ -20,14 +20,12 @@ export default function Login ({ onSubmit, isLoad, isError, onСlearError}) {
     onСlearError();
     resetError();   
     handleChange(evt);
-    console.log(evt);
-    console.log(errors);
     if(evt.target.name === 'email') {
       setUserEmail(evt.target.value);
     } else if(evt.target.name === 'password') {
       setPassword(evt.target.value);
     }
-  }  
+  }
 
   function handleSubmit(evt) {
     evt.preventDefault();

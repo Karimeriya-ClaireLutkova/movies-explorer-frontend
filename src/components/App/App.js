@@ -89,7 +89,7 @@ function App() {
         }
       })
       .catch((err) => {
-        setRegistrationInfo({infoStatus: false, message: err.message});
+        setError(err);
       })
       .finally(() => {
         setLoad(false);
