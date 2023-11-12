@@ -46,7 +46,6 @@
 }
 
 .popup__form {
-  width: 100%;
   position: relative;
   color: #000;
   margin: 0;
@@ -240,6 +239,10 @@
   display: inline-block;
   min-height: 24px;
   opacity: 1;
+  transform: translate(0, -86px);
+}
+
+.popup__error_active_profile {
   transform: translate(0, -146px);
 }
 
@@ -400,7 +403,7 @@
     margin: 0 0 232px;
   }
 
-  .popup__error_active {
+  .popup__error_active_profile {
     transform: translate(0, -346px);
   }
 
@@ -462,8 +465,8 @@
   .popup__error {
     max-width: 260px;    
   }
-
-  .popup__error_active {
+  
+  .popup__error_active_profile {
     transform: translate(0, -116px);
   }
 

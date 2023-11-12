@@ -26,11 +26,16 @@ function PopupWithForm(props) {
             {children}
           </div>
           { pathname === '/profile' ? (
-            <button id="profile-button-submit" type="submit" className={`popup__button popup__button_save ${isActive ? `popup__button_show popup__button_show_${name}` : "popup__button_hide"} ${!isValid ? "popup__button_inactive" : ""}`}>{isLoad ? textLoad: buttonText}</button>
+            <>
+              <button id="profile-button-submit" type="submit" className={`popup__button popup__button_save ${isActive ? `popup__button_show popup__button_show_${name}` : "popup__button_hide"} ${!isValid ? "popup__button_inactive" : ""}`}>{isLoad ? textLoad: buttonText}</button>
+              <p className={`popup__error ${isActiveError ? "popup__error_active popup__error_active_profile" : ""}`}>{errorServer}</p>
+           </>
           ) : (
+            <>
             <button type="submit" className={classNameButton}>{isLoad ? textLoad : buttonText}</button>
+            <p className={`popup__error ${isActiveError ? "popup__error_active" : ""}`}>{errorServer}</p>
+            </>
           )}
-          <p className={`popup__error ${isActiveError ? "popup__error_active" : ""}`}>{errorServer}</p>
         </form>
         { pathname === '/sign-up' &&
           <div className={`popup__redirection popup__redirection_${name}`}>
