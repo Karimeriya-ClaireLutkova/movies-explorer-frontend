@@ -22,7 +22,7 @@ function App() {
   const [loggedIn, setLoggedIn] = React.useState(false);
   const [registrationInfo, setRegistrationInfo] = React.useState({infoStatus: "", message:""});
   const [moviesSaved, setMoviesSaved] = React.useState([]);
-  const [isErrorMessage, setErrorMessage] = React.useState('');
+  const [isError, setError] = React.useState('');
   const navigate = useNavigate();
   const { pathname } = useLocation();
 
@@ -75,6 +75,11 @@ function App() {
         setLoad(false);
       });
     }
+  }, [loggedIn]);
+   
+  
+  React.useEffect(() => {
+    
   }, [loggedIn]);
    
 
@@ -132,8 +137,7 @@ function App() {
           });
       })
       .catch((err) => {
-        console.log(err);
-        setErrorMessage(err.message);
+        setError(err)
       })
       .finally(() => {
         setLoad(false);
@@ -207,6 +211,10 @@ function App() {
     navigate('/'); 
   }
 
+  function handleСlearError() {
+    setError('');
+  }
+
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <Routes>
@@ -253,8 +261,9 @@ function App() {
                    onUpdateUser={handleUpdateUser}
                    onNavigation={handleCloseNavigationBar}
                    onActiveMenu={handleActiveMenu}
-                   isErrorMessage={isErrorMessage}
+                   isError={isError}
                    isLoad={isLoad}
+                   onСlearError={handleСlearError}
           />
         }>
         </Route>

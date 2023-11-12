@@ -2,6 +2,14 @@ export const SCREEN_MIN = 768;
 export const SCREEN_MEDIUM = 1023;
 export const SCREEN_BIG = 1280;
 
+export const conflictError = "Пользователь с таким email уже существует.";
+export const forbiddenError = "Нет прав на удаление фильма.";
+export const notFoundError = "Запрашиваемый пользователь не найден.";
+export const validationError = "Переданы некорректные данные при обновлении профиля.";
+export const unauthorizedError = "Неправильные почта или пароль";
+export const serverError = 'На сервере произошла ошибка.';
+
+
 export const listValidation = ({
   formSelector: '.popup__form',
   inputSelector: '.popup__input',

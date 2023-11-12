@@ -3,21 +3,29 @@ import Header from '../Header/Header';
 import PopupWithForm from '../PopupWithForm/PopupWithForm';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import useFormValidator from '../../hooks/useFormValidator';
+import useErrorsServer from '../../hooks/useErrorsServer';
 import './Profile.css';
 
-export default function Profile({onSignOut, onUpdateUser, loggedIn, onAuthorization, onNavigation, onActiveMenu, isErrorMessage, isLoad}) {
+export default function Profile({onSignOut, onUpdateUser, loggedIn, onAuthorization, onNavigation, onActiveMenu, isError, isLoad, onСlearError}) {
   const currentUser = React.useContext(CurrentUserContext);
   const [isActive, setActive] = React.useState(false);
   const [isName, setName] = React.useState('');
   const [isEmail, setEmail] = React.useState('');
-  const { errors, isValid, handleChange, resetForm  } = useFormValidator();
+  const [isErrorServer, setErrorServer] = React.useState('');
+  const { errors, isValid, handleChange, resetForm } = useFormValidator();
+  const { messageError, handleErrorsStatus, resetError } = useErrorsServer();
   const greeting = `Привет, ${currentUser.name}!`;
-
+  
   function handleEditProfile() {
     const inputEditList = Array.from(document.querySelectorAll('.popup__input_profile-info'));
     inputEditList.map(item => item.removeAttribute('disabled'));
     setActive(true);
   }
+
+  React.useEffect(() => {
+    setErrorServer(isError);
+    handleErrorsStatus(isErrorServer);
+  }, [handleErrorsStatus, isError, isErrorServer]);
 
   React.useEffect(() => {
     if(isLoad === false) {
@@ -27,6 +35,8 @@ export default function Profile({onSignOut, onUpdateUser, loggedIn, onAuthorizat
   }, [currentUser, isLoad]);
 
   function handleChangeInput(evt) {
+    onСlearError();
+    resetError();      
     handleChange(evt, currentUser);    
     if(evt.target.name === 'name') {
       setName(evt.target.value);
@@ -53,7 +63,7 @@ export default function Profile({onSignOut, onUpdateUser, loggedIn, onAuthorizat
                        buttonText={"Сохранить"}
                        isActive={isActive}
                        isValid={isValid}
-                       errorServer={isErrorMessage}
+                       errorServer={messageError}
                        isLoad={isLoad}
                        textLoad={"Сохранение..."}
                        >

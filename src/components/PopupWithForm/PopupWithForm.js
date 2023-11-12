@@ -7,7 +7,15 @@ function PopupWithForm(props) {
   const { pathname } = useLocation();
   const className = `popup popup_${name} popup_opened`;
   const classNameButton = `popup__button popup__button_save popup__button_${name}`;
-  const isActiveError = (errorServer !== '');
+  const [isActiveError, setActiveError] = React.useState(false);
+
+  React.useEffect(() => {
+    if(errorServer !== '') {
+      setActiveError(true);
+    } else {
+      setActiveError(false);
+    }
+  }, [errorServer, setActiveError]);
 
   return (
     <div className = {className}>
@@ -17,12 +25,12 @@ function PopupWithForm(props) {
           <div className="popup__form-info">
             {children}
           </div>
-          <p className={`popup__error ${isActiveError ? "popup__error_active" : ""}`}>{errorServer}</p>
           { pathname === '/profile' ? (
-            <button type="submit" className={`popup__button popup__button_save ${isActive ? `popup__button_show popup__button_show_${name}` : "popup__button_hide"} ${!isValid ? "popup__button_inactive" : ""}`}>{isLoad ? textLoad: buttonText}</button>
+            <button id="profile-button-submit" type="submit" className={`popup__button popup__button_save ${isActive ? `popup__button_show popup__button_show_${name}` : "popup__button_hide"} ${!isValid ? "popup__button_inactive" : ""}`}>{isLoad ? textLoad: buttonText}</button>
           ) : (
             <button type="submit" className={classNameButton}>{isLoad ? textLoad : buttonText}</button>
           )}
+          <p className={`popup__error ${isActiveError ? "popup__error_active" : ""}`}>{errorServer}</p>
         </form>
         { pathname === '/sign-up' &&
           <div className={`popup__redirection popup__redirection_${name}`}>

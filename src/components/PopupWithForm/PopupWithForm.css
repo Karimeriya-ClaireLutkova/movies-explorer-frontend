@@ -240,6 +240,7 @@
   display: inline-block;
   min-height: 24px;
   opacity: 1;
+  transform: translate(0, -146px);
 }
 
 .popup_profile-info {
@@ -395,6 +396,10 @@
     margin: 0 0 232px;
   }
 
+  .popup__error_active {
+    transform: translate(0, -346px);
+  }
+
   .popup_profile-info {
     width: calc(100% - 2*30px);
     margin: 0 30px 0;
@@ -451,7 +456,11 @@
   }
 
   .popup__error {
-    max-width: 260px;
+    max-width: 260px;    
+  }
+
+  .popup__error_active {
+    transform: translate(0, -116px);
   }
 
   .popup__redirection {
