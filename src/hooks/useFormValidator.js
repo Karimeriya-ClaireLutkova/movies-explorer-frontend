@@ -21,8 +21,10 @@ export default function useFormValidator() {
     const target = event.target;
     const name = target.name;
     const value = target.value;
-    setCurrentName(currentUser.name);
-    setCurrentEmail(currentUser.email);
+    if(currentUser !== undefined) {
+      setCurrentName(currentUser.name);
+      setCurrentEmail(currentUser.email);
+    }  
     setValues({...values, [name]: value});
     setErrors({...errors, [name]: target.validationMessage });
     setIsValid(target.closest("form").checkValidity());
@@ -64,7 +66,15 @@ export default function useFormValidator() {
             setValidNew(true);
           }
         }
-      }      
+      }
+    }
+    if(name === "password") {
+      if(value.length === 0) {
+        setErrors({...errors, [name]: "Поле Пароль не может быть пустым."});
+        setValidNew(false);
+      } else {
+        setValidNew(true);
+      }
     }
   }
 

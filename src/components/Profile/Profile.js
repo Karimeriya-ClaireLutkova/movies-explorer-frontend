@@ -65,8 +65,7 @@ export default function Profile({onSignOut, onUpdateUser, loggedIn, onAuthorizat
                        isValid={isValid}
                        errorServer={messageError}
                        isLoad={isLoad}
-                       textLoad={"Сохранение..."}
-                       >
+                       textLoad={"Сохранение..."}>
         <>
           <div className="popup__field popup__field_profile-info">
             <p className="popup__input-text popup__input-text_profile">Имя</p>

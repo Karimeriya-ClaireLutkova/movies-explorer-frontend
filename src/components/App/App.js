@@ -47,33 +47,24 @@ function App() {
         }
       }
     };
-    tokenCheck();
-    setLoad(true);
-    Promise.all([mainApi.getUserInfo(), mainApi.getMovies()])
-    .then(([user, moviesSaved]) => {
-      setCurrentUser(user);
-      setMoviesSaved(moviesSaved);
-    })
-    .catch((err) => {
-      console.log(err)
-    })
-    .finally(() => {
-      setLoad(false);
-    });
-  }, [loggedIn]);
+    tokenCheck();    
+  }, []);
 
   React.useEffect(() => {
     if(loggedIn) {
       setLoad(true);
-      moviesApi.getMovies().then((data) => {
-        setMovies(data);
-      })
-      .catch((err) => {
-        console.log(err)
-      })
-      .finally(() => {
-        setLoad(false);
-      });
+      Promise.all([mainApi.getUserInfo(), mainApi.getMovies(), moviesApi.getMovies()])
+        .then(([user, moviesSaved, movie]) => {
+          setCurrentUser(user);
+          setMoviesSaved(moviesSaved);
+          setMovies(movie);
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+        .finally(() => {
+          setLoad(false);
+        });
     }
   }, [loggedIn]);
    
@@ -113,9 +104,11 @@ function App() {
         setLoggedIn(true);
         handleCloseForm();
       })
-      .catch(err => console.log(err))
+      .catch((err) => {
+        setError(err)
+      })
       .finally(() => {
-        setLoad(false);
+        setLoad(false)
       });
   }
 
@@ -272,7 +265,9 @@ function App() {
         }>
         </Route>
         <Route path="/sign-in" element={
-          <Login onSubmit={handleLoginSubmit} />
+          <Login onSubmit={handleLoginSubmit}
+                 isError={isError}
+                 onСlearError={handleСlearError} />
         }>
         </Route>
         <Route path="*" element={

@@ -387,6 +387,10 @@
   padding: 0;
 }
 
+.popup__field_error {
+  padding: 0;
+}
+
 .popup__redirection_login-user {
   padding: 0 55px 0 56px;
 }
