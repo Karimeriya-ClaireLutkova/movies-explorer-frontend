@@ -2,30 +2,17 @@ import React from 'react';
 import {listValidation} from '../../utils/constants';
 import Header from '../Header/Header';
 import PopupWithForm from '../PopupWithForm/PopupWithForm';
-import FormValidator from '../FormValidator/FormValidator';
+import useFormValidator from '../../hooks/useFormValidator';
+import useErrorsServer from '../../hooks/useErrorsServer';
 
-export default function Register({ onSubmit, isLoad, textLoad }) {
+export default function Register({ onSubmit, isLoad, isError, onСlearError }) {
   const [name, setName] = React.useState('');
   const [userEmail, setUserEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
+  const [isErrorServer, setErrorServer] = React.useState('');
+  const { errors, isValid, handleChange, resetForm } = useFormValidator();
+  const { messageError, handleErrorsStatus, resetError } = useErrorsServer();
 
-  function handleValidateForm(form) {
-    const validationPopupRegister = new FormValidator(listValidation, form);
-    validationPopupRegister.checkButtonSubmit();
-    validationPopupRegister.enableValidation();
-  }
-
-  function handleChangeName(evt) {
-    setName(evt.target.value);
-  }
-
-  function handleChangeEmail(evt) {
-    setUserEmail(evt.target.value);
-  }
-
-  function handleChangePassword(evt) {
-    setPassword(evt.target.value);
-  }
 
   function handleSubmit(evt) {
     evt.preventDefault();
@@ -42,7 +29,6 @@ export default function Register({ onSubmit, isLoad, textLoad }) {
         <PopupWithForm id="2" name="registration-user" title="Добро пожаловать!"
                        onSubmit={handleSubmit}
                        buttonText={"Зарегистрироваться"}
-                       onValidateForm={handleValidateForm}
                        isLoad={isLoad}
                        textLoad={"Регистрация..."}>
           <div className="popup__field">

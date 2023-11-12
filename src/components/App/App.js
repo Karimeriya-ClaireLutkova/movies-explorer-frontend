@@ -261,7 +261,9 @@ function App() {
         }>
         </Route>
         <Route path="/sign-up" element={
-          <Register onSubmit={handleRegisterSubmit} />
+          <Register onSubmit={handleRegisterSubmit}
+                    isError={isError} 
+                    onСlearError={handleСlearError} />
         }>
         </Route>
         <Route path="/sign-in" element={
