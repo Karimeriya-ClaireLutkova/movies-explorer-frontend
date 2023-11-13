@@ -141,20 +141,29 @@ function Movies({ userData, onMovieLike, loggedIn, onAuthorization, onNavigation
     if(isInitialMovies.length > 0 && isMoviesListNew.length > 0 && isMoviesListNew.length > item.length) {
       let currentMovies = item;
       const countPrimier = item.length;
+      console.log(countPrimier)
+      const width = document.documentElement.clientWidth;
       let counterNew;
-      if(countPrimier % 2 === 0) {
-        counterNew = (countPrimier) + 4;
-      } else if (countPrimier % 2 !== 0) {
-        counterNew = (countPrimier) + 2;
+      if (width < SCREEN_MIN) {
+        counterNew = countPrimier + 2;
+      } else if (SCREEN_MIN <= width && width < SCREEN_MEDIUM) {
+        counterNew = countPrimier + 2;
+      } else if (SCREEN_MEDIUM <= width && width < SCREEN_BIG) {
+        counterNew = countPrimier + 3;
+      } else if (SCREEN_BIG <= width) {
+        counterNew = countPrimier + 4;
       }
+      console.log(counterNew);
       let cardsMoviesNew = [];
       cardsMoviesNew = isMoviesListNew.slice(countPrimier, counterNew);
       const initialCardsMovies = currentMovies.concat(cardsMoviesNew);
       if(initialCardsMovies.length < isMoviesListNew.length) {
+        console.log(initialCardsMovies.length < isMoviesListNew.length)
         setInitialMovies(initialCardsMovies);
         setCounterMoviesNew(initialCardsMovies.length);
         setButtonInactive(false);   
       } else {
+        console.log(initialCardsMovies);
         setInitialMovies(isMoviesListNew);
         setButtonInactive(true);
       }
