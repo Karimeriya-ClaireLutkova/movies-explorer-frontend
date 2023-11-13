@@ -9,6 +9,7 @@ import Profile from '../Profile/Profile';
 import Register from '../Register/Register';
 import Login from '../Login/Login';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
+import { urlBeginning } from '../../utils/constants';
 import mainApi from '../../utils/MainApi.js';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext.js';
 import { register, authorization, getContent } from '../../utils/Auth.js';
@@ -16,7 +17,6 @@ import { register, authorization, getContent } from '../../utils/Auth.js';
 function App() {
   const [currentUser, setCurrentUser] = React.useState({});
   const [isLoad, setLoad] = React.useState(false);
-  const [userData, setUserData] = React.useState({ name: '', email: '', _id: ''});
   const [loggedIn, setLoggedIn] = React.useState(false);
   const [registrationInfo, setRegistrationInfo] = React.useState({infoStatus: "", message:""});
   const [moviesSaved, setMoviesSaved] = React.useState([]);
@@ -32,8 +32,7 @@ function App() {
           setLoad(true);
           getContent(jwt)
             .then((res) => {
-              const data = res;
-              setUserData({_id: data._id, email: data.email});
+              setCurrentUser(res);
               setLoggedIn(true);
             })
             .catch((err) => {
@@ -64,12 +63,6 @@ function App() {
         });
     }
   }, [loggedIn]);
-   
-  
-  React.useEffect(() => {
-    
-  }, [loggedIn]);
-   
 
   function handleCloseForm() {
     navigate("/movies", {replace: true});
@@ -81,7 +74,6 @@ function App() {
     register(name, userEmail, password)
       .then((data) => {
         if (data) {
-          setRegistrationInfo({infoStatus: "", message:""});
           handleLoginSubmit(userEmail, passwordUser);
         }
       })
@@ -112,9 +104,7 @@ function App() {
   function handleUpdateUser(item) {
     setLoad(true);
     mainApi.editProfileInfo(item.name, item.email)
-      .then((result) => {
-        setUserData({name: result.name, email: result.email, _id: result._id});
-        setLoad(true);
+      .then(() => {
         mainApi.getUserInfo()
           .then((user) => {
             setCurrentUser(user);
@@ -139,30 +129,67 @@ function App() {
     const checkLanguageEn = new RegExp(/^[a-zA-Z]+$/).test(item);
     return {checkLanguageRu, checkLanguageEn}
   }
-   /*
-  function handleMovieLike(movie, userData) {
-    const movieInitial = movies.find(i => i.movieId === movie.movieId);
-    let cards;
-    if (movieInitial.owner === '') {
-      cards = movies.map(item => item.movieId === movieInitial.movieId ? {...item, owner: userData._id} : item);
-      setMovies(movies);
-      setMoviesSaved([movie, ...moviesSaved]); 
+  
+  function handleMovieLike(movie) {
+    const movieInitial = moviesSaved.find(i => i._id === movie._id);
+    console.log(movieInitial);
+    if (movieInitial === undefined) {
+      setLoad(true);
+      const movieNew = {
+        country: movie.country,
+        director: movie.director,
+        duration: movie.duration,
+        year: movie.year,
+        description: movie.description,
+        nameRU: movie.nameRU,
+        nameEN: movie.nameEN,
+        image: `${urlBeginning}${movie.image.url}`,
+        trailerLink: movie.trailerLink,
+        thumbnail: `${urlBeginning}${movie.image.formats.thumbnail.url}`,
+        movieId: movie.id,
+      };
+      mainApi.addMovie(movieNew)
+        .then((newMovie) => {
+          console.log(newMovie);
+          setMoviesSaved([newMovie, ...moviesSaved]);
+        })
+        .catch((err) => {
+          console.error(err)
+        })
+        .finally(() => {
+          setLoad(false);
+        });
     } else {
-      cards = movies.map(item => item.movieId === movieInitial.movieId ? {...item, owner: ''} : item);
-      const movieNewList = moviesSaved.filter((item) => item.movieId !== movie.movieId);
-      setMovies(cards);
-      setMoviesSaved(movieNewList);
+      setLoad(true);
+      mainApi.deleteMovie(movie) 
+        .then((newMovie) => {
+          console.log(newMovie);
+          const movieNewList = moviesSaved.filter((item) => item._id !== newMovie._id);
+          setMoviesSaved(movieNewList);
+        })
+        .catch((err) => {
+          console.error(err)
+        })
+        .finally(() => {
+          setLoad(false);
+        });
     }
   }
 
   function handleMovieDelete(movie) {
-    const movieInitial = movies.find(i => i.movieId === movie.movieId);
-    let cards;
-    cards = movies.map(item => item.movieId === movieInitial.movieId ? {...item, owner: ''} : item);
-    const movieNewList = moviesSaved.filter((item) => item.movieId !== movie.movieId);
-    setMovies(cards);
-    setMoviesSaved(movieNewList);
-  }*/
+    setLoad(true);
+    mainApi.deleteMovie(movie) 
+      .then((newMovie) => {
+        const movieNewList = moviesSaved.filter((item) => item.movieId !== newMovie.movieId);
+        setMoviesSaved(movieNewList);
+      })
+      .catch((err) => {
+        console.error(err)
+      })
+      .finally(() => {
+        setLoad(false);
+      });
+  }
 
   function handleProfileNav() {
     navigate('/profile', {replace: true});
@@ -203,7 +230,7 @@ function App() {
   function signOut() {
     localStorage.removeItem('jwt');
     setLoggedIn(false);
-    setUserData({ name: '', email: '', _id: ''});
+    setCurrentUser({});
     navigate('/'); 
   }
 
@@ -225,8 +252,7 @@ function App() {
         </Route>
         <Route path="/movies" element={
           <ProtectedRoute component={Movies}
-                 userData={userData}
-                 /*onMovieLike={handleMovieLike}*/
+                 onMovieLike={handleMovieLike}
                  loggedIn={loggedIn}
                  onAuthorization={handleProfileNav}
                  onNavigation={handleCloseNavigationBar}
@@ -238,8 +264,8 @@ function App() {
         </Route>
         <Route path="/saved-movies" element={
           <ProtectedRoute component={SavedMovies}
-                       userData={userData}
-                       /*onMovieDelete={handleMovieDelete}*/
+                       moviesSaved={moviesSaved}
+                       onMovieDelete={handleMovieDelete}
                        loggedIn={loggedIn}
                        onAuthorization={handleProfileNav}
                        onNavigation={handleCloseNavigationBar}

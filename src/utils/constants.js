@@ -11,4 +11,4 @@ export const validationError = "Переданы некорректные дан
 export const unauthorizedError = "Неправильные почта или пароль.";
 export const serverError = 'На сервере произошла ошибка.';
 
-export const urlBeginning = ' https://api.nomoreparties.co';
+export const urlBeginning = 'https://api.nomoreparties.co';

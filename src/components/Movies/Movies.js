@@ -7,12 +7,12 @@ import SearchForm from '../SearchForm/SearchForm';
 import moviesApi from '../../utils/MoviesApi.js';
 import './Movies.css';
 
-function Movies({ userData, onMovieLike, loggedIn, onAuthorization, onNavigation, onActiveMenu, isLoad, onInputLanguage }) {
+function Movies({ onMovieLike, loggedIn, onAuthorization, onNavigation, onActiveMenu, isLoad, onInputLanguage }) {
   const [windowDimensions, setWindowDimensions] = React.useState(getWindowDimensions());
   const [moviesAll, setMoviesAll] = React.useState([]);
   const [isLoader, setLoader] = React.useState(false);
   const [isCounterMovies, setCounterMovies] = React.useState();
-  const isInitialCounter = 0
+  const isInitialCounter = 0;
   const [isActiveFilter, setActiveFilter] = React.useState(false);
   const [isCounterMoviesNew, setCounterMoviesNew] = React.useState();
   const [isInitialMovies, setInitialMovies] = React.useState([]);
@@ -178,7 +178,7 @@ function Movies({ userData, onMovieLike, loggedIn, onAuthorization, onNavigation
           {isLoader ? (
             <Preloader />
           ) : (
-            <MoviesCardList id="1" cardsMovies={isInitialMovies} buttonInactive={isButtonInactive} userData={userData} onMovieLike={onMovieLike} onChangeDescription={handleChangeDescription} />
+            <MoviesCardList id="1" cardsMovies={isInitialMovies} buttonInactive={isButtonInactive} onMovieLike={onMovieLike} onChangeDescription={handleChangeDescription} />
           )}
         </div>
       </main>
