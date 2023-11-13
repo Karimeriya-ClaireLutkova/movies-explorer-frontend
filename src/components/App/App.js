@@ -131,8 +131,7 @@ function App() {
   }
   
   function handleMovieLike(movie) {
-    const movieInitial = moviesSaved.find(i => i._id === movie._id);
-    console.log(movieInitial);
+    const movieInitial = moviesSaved.find(i => i._id === movie.id);
     if (movieInitial === undefined) {
       setLoad(true);
       const movieNew = {
@@ -150,7 +149,6 @@ function App() {
       };
       mainApi.addMovie(movieNew)
         .then((newMovie) => {
-          console.log(newMovie);
           setMoviesSaved([newMovie, ...moviesSaved]);
         })
         .catch((err) => {
@@ -161,9 +159,8 @@ function App() {
         });
     } else {
       setLoad(true);
-      mainApi.deleteMovie(movie) 
+      mainApi.deleteMovie(movie._id) 
         .then((newMovie) => {
-          console.log(newMovie);
           const movieNewList = moviesSaved.filter((item) => item._id !== newMovie._id);
           setMoviesSaved(movieNewList);
         })
@@ -178,9 +175,9 @@ function App() {
 
   function handleMovieDelete(movie) {
     setLoad(true);
-    mainApi.deleteMovie(movie) 
+    mainApi.deleteMovie(movie._id) 
       .then((newMovie) => {
-        const movieNewList = moviesSaved.filter((item) => item.movieId !== newMovie.movieId);
+        const movieNewList = moviesSaved.filter((item) => item._id !== newMovie._id);
         setMoviesSaved(movieNewList);
       })
       .catch((err) => {
