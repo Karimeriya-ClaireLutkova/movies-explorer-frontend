@@ -32,34 +32,34 @@ export default function useFormValidator() {
   };
 
   function checkFieldsForm(name, value) {
-    if(name === "email") {
-      if(value.length === 0) {
+    if (name === "email") {
+      if (value.length === 0) {
         setErrors({...errors, [name]: "Поле email не может быть пустым."});
         setValidNew(false);
-      } else if(value.length > 0) {
-        if(!validator.isEmail(value)) {
+      } else if (value.length > 0) {
+        if (!validator.isEmail(value)) {
           setErrors({...errors, [name]: "Неверный формат Email."});
           setValidNew(false);
-        } else if(validator.isEmail(value)) {
-          if(isCurrentEmail === value) {
+        } else if (validator.isEmail(value)) {
+          if (isCurrentEmail === value) {
             setErrors({...errors, [name]: "Введите email, отличающийся от изначального."});
             setValidNew(false);
-          } else if(isCurrentEmail !== value) {
+          } else if (isCurrentEmail !== value) {
             setValidNew(true);
           }
         }
       }      
     }
-    if(name === "name") {
-      if(value.length === 0) {
+    if (name === "name") {
+      if (value.length === 0) {
         setErrors({...errors, [name]: "Поле Имя не может быть пустым."});
         setValidNew(false);
-      } else if(value.length > 0) {
-        if(!new RegExp(/^[a-zA-Zа-яёА-ЯЁ-]+$/).test(value)) {
+      } else if (value.length > 0) {
+        if (!new RegExp(/^[a-zA-Zа-яёА-ЯЁ-]+$/).test(value)) {
           setErrors({...errors, [name]: "Используйте только латиницу или кириллицу, дефис."});
           setValidNew(false);
-        } else if(new RegExp(/^[a-zA-Zа-яёА-ЯЁ-]+$/).test(value)) {
-          if(isCurrentName === value) {
+        } else if (new RegExp(/^[a-zA-Zа-яёА-ЯЁ-]+$/).test(value)) {
+          if (isCurrentName === value) {
             setErrors({...errors, [name]: "Введите имя, отличающееся от изначального."});
             setValidNew(false);
           } else if(isCurrentName !== value) {
@@ -68,9 +68,17 @@ export default function useFormValidator() {
         }
       }
     }
-    if(name === "password") {
-      if(value.length === 0) {
+    if (name === "password") {
+      if (value.length === 0) {
         setErrors({...errors, [name]: "Поле Пароль не может быть пустым."});
+        setValidNew(false);
+      } else {
+        setValidNew(true);
+      }
+    }
+    if(name === "film") {
+      if (value.length === 0) {
+        setErrors({...errors, [name]: "Поле Фильм не может быть пустым."}); 
         setValidNew(false);
       } else {
         setValidNew(true);

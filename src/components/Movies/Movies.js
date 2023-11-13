@@ -86,7 +86,7 @@ function Movies({ userData, onMovieLike, loggedIn, onAuthorization, onNavigation
     }
   }, [isMoviesListNew, isCounterMovies, isCounterMoviesNew])
 
-  function handleMoviesFilter(item) {
+  function handleMoviesFilter(item, isActiveFilter) {
     let movieListScreachNew;
     if (isActiveFilter) {
       movieListScreachNew = item.filter(movie => 
@@ -112,6 +112,9 @@ function Movies({ userData, onMovieLike, loggedIn, onAuthorization, onNavigation
 
   function handleActiveFilter(isActive) {
     setActiveFilter(isActive);
+    let movies;
+    movies = handleMoviesFilter(isMoviesListNew, isActive);
+    setInitialMovies(handleDisplayPart(movies));
   }
 
   function handleUpdateMoviesList(item) {
@@ -130,7 +133,7 @@ function Movies({ userData, onMovieLike, loggedIn, onAuthorization, onNavigation
         return (nameEn.includes(item.name))
       })
     }
-    const movieListScreachNew = handleMoviesFilter(movieListScreach);
+    const movieListScreachNew = handleMoviesFilter(movieListScreach, isActiveFilter);
     setMoviesListNew(movieListScreachNew);
     const initialCardsMovies = handleDisplayPart(movieListScreachNew);
     setInitialMovies(initialCardsMovies);
@@ -141,7 +144,6 @@ function Movies({ userData, onMovieLike, loggedIn, onAuthorization, onNavigation
     if(isInitialMovies.length > 0 && isMoviesListNew.length > 0 && isMoviesListNew.length > item.length) {
       let currentMovies = item;
       const countPrimier = item.length;
-      console.log(countPrimier)
       const width = document.documentElement.clientWidth;
       let counterNew;
       if (width < SCREEN_MIN) {
@@ -153,17 +155,14 @@ function Movies({ userData, onMovieLike, loggedIn, onAuthorization, onNavigation
       } else if (SCREEN_BIG <= width) {
         counterNew = countPrimier + 4;
       }
-      console.log(counterNew);
       let cardsMoviesNew = [];
       cardsMoviesNew = isMoviesListNew.slice(countPrimier, counterNew);
       const initialCardsMovies = currentMovies.concat(cardsMoviesNew);
       if(initialCardsMovies.length < isMoviesListNew.length) {
-        console.log(initialCardsMovies.length < isMoviesListNew.length)
         setInitialMovies(initialCardsMovies);
         setCounterMoviesNew(initialCardsMovies.length);
         setButtonInactive(false);   
       } else {
-        console.log(initialCardsMovies);
         setInitialMovies(isMoviesListNew);
         setButtonInactive(true);
       }
