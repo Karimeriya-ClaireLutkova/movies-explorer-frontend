@@ -12,7 +12,7 @@ function Movies({ userData, onMovieLike, loggedIn, onAuthorization, onNavigation
   const [moviesAll, setMoviesAll] = React.useState([]);
   const [isLoader, setLoader] = React.useState(false);
   const [isCounterMovies, setCounterMovies] = React.useState();
-  const [isInitialCounter, setInitialCounter] = React.useState(0);
+  const isInitialCounter = 0
   const [isActiveFilter, setActiveFilter] = React.useState(false);
   const [isCounterMoviesNew, setCounterMoviesNew] = React.useState();
   const [isInitialMovies, setInitialMovies] = React.useState([]);
@@ -36,6 +36,7 @@ function Movies({ userData, onMovieLike, loggedIn, onAuthorization, onNavigation
 
   function getWindowDimensions() {
     const width = document.documentElement.clientWidth;
+
     return {
       width
     };
@@ -70,7 +71,20 @@ function Movies({ userData, onMovieLike, loggedIn, onAuthorization, onNavigation
   React.useEffect(() => {
     setLoader(isLoad)
   }, [isLoad])
- 
+
+  React.useEffect(() => {
+    if(isCounterMoviesNew === undefined) {
+      let initialCardsMovies = [];
+      if(isMoviesListNew.length > 0) {
+        initialCardsMovies = isMoviesListNew.slice(isInitialCounter, isCounterMovies);
+        setInitialMovies(initialCardsMovies);
+      }      
+    } else {
+      let initialCardsMovies = [];
+      initialCardsMovies = isMoviesListNew.slice(isInitialCounter, isCounterMoviesNew);
+      setInitialMovies(initialCardsMovies);
+    }
+  }, [isMoviesListNew, isCounterMovies, isCounterMoviesNew])
 
   function handleMoviesFilter(item) {
     let movieListScreachNew;
@@ -86,7 +100,6 @@ function Movies({ userData, onMovieLike, loggedIn, onAuthorization, onNavigation
 
   function handleDisplayPart(item) {
     let initialCardsMovies = [];
-    console.log(item, isCounterMovies);
     if (item.length > isCounterMovies) {
       initialCardsMovies = item.slice(isInitialCounter, isCounterMovies);
       setButtonInactive(false);
