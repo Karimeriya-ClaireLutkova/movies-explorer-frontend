@@ -78,7 +78,7 @@ export default function useFormValidator() {
     }
     if(name === "film") {
       if (value.length === 0) {
-        setErrors({...errors, [name]: "Поле Фильм не может быть пустым."}); 
+        setErrors({...errors, [name]: "Нужно ввести ключевое слово."}); 
         setValidNew(false);
       } else {
         setValidNew(true);

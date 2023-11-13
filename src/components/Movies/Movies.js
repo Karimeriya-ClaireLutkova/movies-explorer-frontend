@@ -18,6 +18,7 @@ function Movies({ onMovieLike, loggedIn, onAuthorization, onNavigation, onActive
   const [isInitialMovies, setInitialMovies] = React.useState([]);
   const [isMoviesListNew, setMoviesListNew] = React.useState([]);
   const [isButtonInactive, setButtonInactive] = React.useState(true);
+  const [isNotFoundMovies, setNotFoundMovies] = React.useState(false);
 
   function handleCounterWidth(item) {
     let count;
@@ -95,6 +96,7 @@ function Movies({ onMovieLike, loggedIn, onAuthorization, onNavigation, onActive
     } else {
       movieListScreachNew = item;
     }
+
     return movieListScreachNew;
   }
 
@@ -109,7 +111,7 @@ function Movies({ onMovieLike, loggedIn, onAuthorization, onNavigation, onActive
     }
     return initialCardsMovies;
   }
-
+  
   function handleActiveFilter(isActive) {
     setActiveFilter(isActive);
     let movies;
@@ -119,6 +121,7 @@ function Movies({ onMovieLike, loggedIn, onAuthorization, onNavigation, onActive
 
   function handleUpdateMoviesList(item) {
     setMoviesListNew([]);
+    setNotFoundMovies(false);
     setLoader(true);
     const {checkLanguageRu, checkLanguageEn} = onInputLanguage(item.name);
     let movieListScreach;
@@ -126,14 +129,23 @@ function Movies({ onMovieLike, loggedIn, onAuthorization, onNavigation, onActive
       movieListScreach = moviesAll.filter(movie => {
         const nameRu = movie.nameRU.toLowerCase();
         return (nameRu.includes(item.name))
-      })
-    } else if(checkLanguageEn) {
+      });
+      if (movieListScreach.length === 0) {
+        setNotFoundMovies(true);
+      }
+    } else if (checkLanguageEn) {
       movieListScreach = moviesAll.filter(movie => {
         const nameEn = movie.nameEN.toLowerCase();
         return (nameEn.includes(item.name))
-      })
+      });
+      if (movieListScreach.length === 0) {
+        setNotFoundMovies(true);
+      }
     }
     const movieListScreachNew = handleMoviesFilter(movieListScreach, isActiveFilter);
+    if (movieListScreachNew.length === 0) {
+      setNotFoundMovies(true);
+    }
     setMoviesListNew(movieListScreachNew);
     const initialCardsMovies = handleDisplayPart(movieListScreachNew);
     setInitialMovies(initialCardsMovies);
@@ -178,7 +190,7 @@ function Movies({ onMovieLike, loggedIn, onAuthorization, onNavigation, onActive
           {isLoader ? (
             <Preloader />
           ) : (
-            <MoviesCardList id="1" cardsMovies={isInitialMovies} buttonInactive={isButtonInactive} onMovieLike={onMovieLike} onChangeDescription={handleChangeDescription} />
+            <MoviesCardList id="1" cardsMovies={isInitialMovies} buttonInactive={isButtonInactive} onMovieLike={onMovieLike} onChangeDescription={handleChangeDescription} isNotFoundMovies={isNotFoundMovies}/>
           )}
         </div>
       </main>

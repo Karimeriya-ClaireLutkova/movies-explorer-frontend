@@ -1,10 +1,12 @@
 import React from 'react';
 import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
 import useFormValidator from '../../hooks/useFormValidator';
+import { useLocation } from 'react-router-dom';
 import './SearchForm.css';
 
-function SearchForm({onUpdateMoviesList, onActiveFilter, id, isActiveFilterMovies}) {
+function SearchForm({onUpdateMoviesList, onActiveFilter, isActiveFilterMovies}) {
   const [name, setName] = React.useState('');
+  const { pathname } = useLocation();
   const { errors, isValid, handleChange, resetForm } = useFormValidator();
 
   function handleSearchMovies(evt) {
@@ -34,7 +36,11 @@ function SearchForm({onUpdateMoviesList, onActiveFilter, id, isActiveFilterMovie
           <button type="submit" className={`search-form__button ${!isValid ? "search-form__button_inactive" : ""}`}>Найти</button>
         </div>
         <div className="search-form__filter">
-            <FilterCheckbox id={id} onActiveFilter={onActiveFilter} isActiveFilterMovies={isActiveFilterMovies} />
+          { pathname === "/movies" ? (
+            <FilterCheckbox id="1" onActiveFilter={onActiveFilter} isActiveFilterMovies={isActiveFilterMovies} />
+          ) : ( 
+            <FilterCheckbox id="2" onActiveFilter={onActiveFilter} isActiveFilterMovies={isActiveFilterMovies} />
+          )}
         </div>
       </form>
     </section>

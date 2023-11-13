@@ -24,7 +24,9 @@ function SavedMovies({ onMovieDelete, isLoad, loggedIn, onAuthorization, onNavig
     setActiveFilter(isActive);
     let movies;
     movies = handleMoviesFilter(moviesSavedList, isActive);
-    setMoviesListNew(movies);
+    if (movies.length > 0) {
+      setMoviesListNew(movies);
+    }    
   }
 
   function handleMoviesFilter(item, isActiveFilter) {
@@ -34,7 +36,7 @@ function SavedMovies({ onMovieDelete, isLoad, loggedIn, onAuthorization, onNavig
         movie.duration <= filtersShortFilm
       )
     } else {
-      movieListScreachNew = item;
+      movieListScreachNew = [];
     }
     return movieListScreachNew;
   }

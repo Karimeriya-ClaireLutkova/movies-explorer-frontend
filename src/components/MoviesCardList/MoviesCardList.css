@@ -18,6 +18,23 @@
   margin: 70px 70px 240px;
 }
 
+.elements__container-info {
+  display: none;
+}
+
+.elements__container-info_active {
+  display: flex;
+}
+
+.elements__text {
+  color: #FFF;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1.11;
+  margin: 0;
+  padding: 0;
+}
+
 .elements-adding {
   display: flex;
   justify-content: center;
@@ -47,7 +64,7 @@
 .elements-adding__button_type_inactive {
   cursor: default;
   pointer-events: none;
-  opacity: 0;
+  display: none;
 }
 
 @media (max-width: 1279px) {
