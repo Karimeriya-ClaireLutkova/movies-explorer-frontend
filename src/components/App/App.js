@@ -131,7 +131,8 @@ function App() {
   }
   
   function handleMovieLike(movie) {
-    const movieInitial = moviesSaved.find(i => i._id === movie.id);
+    console.log(movie.id);
+    const movieInitial = moviesSaved.find(i => i.movieId === movie.id);
     if (movieInitial === undefined) {
       setLoad(true);
       const movieNew = {
@@ -159,7 +160,7 @@ function App() {
         });
     } else {
       setLoad(true);
-      mainApi.deleteMovie(movie._id) 
+      mainApi.deleteMovie(movieInitial._id) 
         .then((newMovie) => {
           const movieNewList = moviesSaved.filter((item) => item._id !== newMovie._id);
           setMoviesSaved(movieNewList);

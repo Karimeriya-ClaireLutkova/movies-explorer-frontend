@@ -11,7 +11,6 @@ function SavedMovies({ onMovieDelete, isLoad, loggedIn, onAuthorization, onNavig
   const [moviesListNew, setMoviesListNew] = React.useState(moviesSaved);
   const [isNotFoundMovies, setNotFoundMovies] = React.useState(false);
   const [moviesList, setMoviesList] = React.useState([]);
-  const [searchText, setSearchText] = React.useState('');
 
   React.useEffect(() => {
     setLoading(isLoad)
@@ -29,11 +28,9 @@ function SavedMovies({ onMovieDelete, isLoad, loggedIn, onAuthorization, onNavig
       setMoviesListNew(movies);
       setMoviesList(moviesListNew);
     } else {
-      if (searchText.length > 0) {
+      if (moviesListNew.length > 0) {
         setMoviesListNew(moviesList);
-      } else {
-        setMoviesListNew(moviesList);
-      }
+      }      
     }
     setLoading(false);
   }
@@ -56,11 +53,9 @@ function SavedMovies({ onMovieDelete, isLoad, loggedIn, onAuthorization, onNavig
   }
 
   function handleUpdateMoviesList(item) {
-    setMoviesListNew([]);
     setNotFoundMovies(false);
     setLoading(true);
     if (isActiveFilter) {
-      setSearchText(item.name);
       const {checkLanguageRu, checkLanguageEn} = onInputLanguage(item.name);
       let movieListScreach;
       if (checkLanguageRu) {
@@ -70,6 +65,7 @@ function SavedMovies({ onMovieDelete, isLoad, loggedIn, onAuthorization, onNavig
         });
         if (movieListScreach.length === 0) {
           setNotFoundMovies(true);
+          setMoviesListNew(moviesSaved);
         };
       } else if(checkLanguageEn) {
         movieListScreach = moviesListNew.filter(movie => {
@@ -78,6 +74,7 @@ function SavedMovies({ onMovieDelete, isLoad, loggedIn, onAuthorization, onNavig
         });
         if (movieListScreach.length === 0) {
           setNotFoundMovies(true);
+          setMoviesListNew(moviesSaved);
         };
       }
       setMoviesListNew(movieListScreach);
@@ -91,6 +88,7 @@ function SavedMovies({ onMovieDelete, isLoad, loggedIn, onAuthorization, onNavig
         });
         if (movieListScreach.length === 0) {
           setNotFoundMovies(true);
+          setMoviesListNew(moviesSaved);
         };
       } else if(checkLanguageEn) {
         movieListScreach = moviesListNew.filter(movie => {
@@ -99,6 +97,7 @@ function SavedMovies({ onMovieDelete, isLoad, loggedIn, onAuthorization, onNavig
         });
         if (movieListScreach.length === 0) {
           setNotFoundMovies(true);
+          setMoviesListNew(moviesSaved);
         };
       }
       setMoviesListNew(movieListScreach);
