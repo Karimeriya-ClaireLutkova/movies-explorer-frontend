@@ -12,33 +12,12 @@ function Movies({ userData, onMovieLike, loggedIn, onAuthorization, onNavigation
   const [moviesAll, setMoviesAll] = React.useState([]);
   const [isLoader, setLoader] = React.useState(false);
   const [isCounterMovies, setCounterMovies] = React.useState();
-  const isInitialCounter = 0;
+  const [isInitialCounter, setInitialCounter] = React.useState(0);
   const [isActiveFilter, setActiveFilter] = React.useState(false);
   const [isCounterMoviesNew, setCounterMoviesNew] = React.useState();
   const [isInitialMovies, setInitialMovies] = React.useState([]);
+  const [isMoviesListNew, setMoviesListNew] = React.useState([]);
   const [isButtonInactive, setButtonInactive] = React.useState(true);
-
-  React.useEffect(() => {
-    moviesApi.getMovies()
-      .then((movies) => {
-        setMoviesAll(movies)
-      })
-      .catch((err) => {
-        console.log(err)
-      })
-  }, [])
-
-  React.useEffect(() => {
-    setLoader(isLoad)
-  }, [isLoad])
-
-  React.useEffect(() => {
-    function runOnlyPageLoad() {
-      const counterCurrent = handleCounterWidth(windowDimensions);
-      setCounterMovies(counterCurrent);
-    }
-    runOnlyPageLoad();
-  }, [windowDimensions])
 
   function handleCounterWidth(item) {
     let count;
@@ -70,6 +49,29 @@ function Movies({ userData, onMovieLike, loggedIn, onAuthorization, onNavigation
     return () => window.removeEventListener("resize", handleResize);
   }, [windowDimensions]);
 
+  React.useEffect(() => {
+    function runOnlyPageLoad() {
+      const counterCurrent = handleCounterWidth(windowDimensions);
+      setCounterMovies(counterCurrent);
+    }
+    runOnlyPageLoad();
+  }, [windowDimensions])
+
+  React.useEffect(() => {
+    moviesApi.getMovies()
+      .then((movies) => {
+        setMoviesAll(movies)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }, [])
+
+  React.useEffect(() => {
+    setLoader(isLoad)
+  }, [isLoad])
+ 
+
   function handleMoviesFilter(item) {
     let movieListScreachNew;
     if (isActiveFilter) {
@@ -78,16 +80,19 @@ function Movies({ userData, onMovieLike, loggedIn, onAuthorization, onNavigation
       )
     } else {
       movieListScreachNew = item;
-    }   
+    }
     return movieListScreachNew;
   }
 
   function handleDisplayPart(item) {
     let initialCardsMovies = [];
+    console.log(item, isCounterMovies);
     if (item.length > isCounterMovies) {
       initialCardsMovies = item.slice(isInitialCounter, isCounterMovies);
+      setButtonInactive(false);
     } else {
       initialCardsMovies = item;
+      setButtonInactive(true);
     }
     return initialCardsMovies;
   }
@@ -97,6 +102,7 @@ function Movies({ userData, onMovieLike, loggedIn, onAuthorization, onNavigation
   }
 
   function handleUpdateMoviesList(item) {
+    setMoviesListNew([]);
     setLoader(true);
     const {checkLanguageRu, checkLanguageEn} = onInputLanguage(item.name);
     let movieListScreach;
@@ -112,25 +118,34 @@ function Movies({ userData, onMovieLike, loggedIn, onAuthorization, onNavigation
       })
     }
     const movieListScreachNew = handleMoviesFilter(movieListScreach);
+    setMoviesListNew(movieListScreachNew);
     const initialCardsMovies = handleDisplayPart(movieListScreachNew);
     setInitialMovies(initialCardsMovies);
     setLoader(false);
   }
  
   function handleChangeDescription(item) {
-    if(isInitialMovies.length > 0) {
+    if(isInitialMovies.length > 0 && isMoviesListNew.length > 0 && isMoviesListNew.length > item.length) {
       let currentMovies = item;
       const countPrimier = item.length;
-      const counterNew = (countPrimier) + 4;
+      console.log(isInitialMovies, item, countPrimier, isMoviesListNew)
+      let counterNew;
+      if(countPrimier % 2 === 0) {
+        counterNew = (countPrimier) + 4;
+        console.log(counterNew);
+      } else if (countPrimier % 2 > 1) {
+        counterNew = (countPrimier) + 2;
+        console.log(counterNew);
+      }
       let cardsMoviesNew = [];
-      cardsMoviesNew = isInitialMovies.slice(countPrimier, counterNew);
+      cardsMoviesNew = isMoviesListNew.slice(countPrimier, counterNew);
       const initialCardsMovies = currentMovies.concat(cardsMoviesNew);
-      if(initialCardsMovies.length < isInitialMovies.length) {
+      if(initialCardsMovies.length < isMoviesListNew.length) {
         setInitialMovies(initialCardsMovies);
         setCounterMoviesNew(initialCardsMovies.length);
         setButtonInactive(false);   
       } else {
-        setInitialMovies(item);
+        setInitialMovies(initialCardsMovies);
         setButtonInactive(true);
       }
     }
