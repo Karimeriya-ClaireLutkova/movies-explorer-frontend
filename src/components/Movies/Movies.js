@@ -128,14 +128,11 @@ function Movies({ userData, onMovieLike, loggedIn, onAuthorization, onNavigation
     if(isInitialMovies.length > 0 && isMoviesListNew.length > 0 && isMoviesListNew.length > item.length) {
       let currentMovies = item;
       const countPrimier = item.length;
-      console.log(isInitialMovies, item, countPrimier, isMoviesListNew)
       let counterNew;
       if(countPrimier % 2 === 0) {
         counterNew = (countPrimier) + 4;
-        console.log(counterNew);
-      } else if (countPrimier % 2 > 1) {
+      } else if (countPrimier % 2 !== 0) {
         counterNew = (countPrimier) + 2;
-        console.log(counterNew);
       }
       let cardsMoviesNew = [];
       cardsMoviesNew = isMoviesListNew.slice(countPrimier, counterNew);
@@ -145,7 +142,7 @@ function Movies({ userData, onMovieLike, loggedIn, onAuthorization, onNavigation
         setCounterMoviesNew(initialCardsMovies.length);
         setButtonInactive(false);   
       } else {
-        setInitialMovies(initialCardsMovies);
+        setInitialMovies(isMoviesListNew);
         setButtonInactive(true);
       }
     }
