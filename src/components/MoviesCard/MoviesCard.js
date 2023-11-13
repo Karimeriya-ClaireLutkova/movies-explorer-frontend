@@ -9,6 +9,10 @@ function MoviesCard({userData, movie, onMovieLike, onMovieDelete}) {
   const cardLikeButtonClassName = `element__button element__button_like ${isOwner ? "element__button_like_active" : ""}`;
   const {url} = movie.image;
   const urlFull = `${urlBeginning}${url}`;
+  const duration = movie.duration;
+  const hour = Math.floor((duration / 60));
+  const minutes = duration % 60;
+  const newDuration = `${hour}ч ${minutes}м`;
 
   React.useEffect(() => {
     if( movie.owner === '') {
@@ -40,7 +44,7 @@ function MoviesCard({userData, movie, onMovieLike, onMovieDelete}) {
           }
         </div>
       </div>
-      <div className="element__duration">{movie.duration}</div>
+      <div className="element__duration">{newDuration}</div>
     </div>
   )
 }

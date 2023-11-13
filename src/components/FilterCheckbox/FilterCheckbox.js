@@ -1,8 +1,12 @@
 import React from 'react';
 import './FilterCheckbox.css';
 
-function FilterCheckbox({onActiveFilter}) {
+function FilterCheckbox({onActiveFilter, isActiveFilterMovies}) {
   const [isActiveFilter, setActiveFilter] = React.useState(false);
+
+  React.useEffect(() => {
+    setActiveFilter(isActiveFilterMovies)
+  }, [isActiveFilterMovies])
 
   function handleActiveFilter() {
     const status = !isActiveFilter;

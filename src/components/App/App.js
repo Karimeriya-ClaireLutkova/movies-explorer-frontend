@@ -10,14 +10,12 @@ import Register from '../Register/Register';
 import Login from '../Login/Login';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import mainApi from '../../utils/MainApi.js';
-import moviesApi from '../../utils/MoviesApi.js';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext.js';
 import { register, authorization, getContent } from '../../utils/Auth.js';
 
 function App() {
   const [currentUser, setCurrentUser] = React.useState({});
   const [isLoad, setLoad] = React.useState(false);
-  const [movies, setMovies] = React.useState([]);
   const [userData, setUserData] = React.useState({ name: '', email: '', _id: ''});
   const [loggedIn, setLoggedIn] = React.useState(false);
   const [registrationInfo, setRegistrationInfo] = React.useState({infoStatus: "", message:""});
@@ -53,11 +51,10 @@ function App() {
   React.useEffect(() => {
     if(loggedIn) {
       setLoad(true);
-      Promise.all([mainApi.getUserInfo(), mainApi.getMovies(), moviesApi.getMovies()])
-        .then(([user, moviesSaved, movie]) => {
+      Promise.all([mainApi.getUserInfo(), mainApi.getMovies()])
+        .then(([user, moviesSaved]) => {
           setCurrentUser(user);
           setMoviesSaved(moviesSaved);
-          setMovies(movie);
         })
         .catch((err) => {
           console.log(err)
@@ -137,6 +134,12 @@ function App() {
       });
   }
 
+  function handleInputLanguage(item) {
+    const checkLanguageRu = new RegExp(/^[а-яёА-ЯЁ]+$/).test(item);
+    const checkLanguageEn = new RegExp(/^[a-zA-Z]+$/).test(item);
+    return {checkLanguageRu, checkLanguageEn}
+  }
+   /*
   function handleMovieLike(movie, userData) {
     const movieInitial = movies.find(i => i.movieId === movie.movieId);
     let cards;
@@ -159,7 +162,7 @@ function App() {
     const movieNewList = moviesSaved.filter((item) => item.movieId !== movie.movieId);
     setMovies(cards);
     setMoviesSaved(movieNewList);
-  }
+  }*/
 
   function handleProfileNav() {
     navigate('/profile', {replace: true});
@@ -222,27 +225,27 @@ function App() {
         </Route>
         <Route path="/movies" element={
           <ProtectedRoute component={Movies}
-                 movies={movies}
                  userData={userData}
-                 onMovieLike={handleMovieLike}
+                 /*onMovieLike={handleMovieLike}*/
                  loggedIn={loggedIn}
                  onAuthorization={handleProfileNav}
                  onNavigation={handleCloseNavigationBar}
                  onActiveMenu={handleActiveMenu}
                  isLoad={isLoad}
+                 onInputLanguage={handleInputLanguage}
           />
         }>
         </Route>
         <Route path="/saved-movies" element={
           <ProtectedRoute component={SavedMovies}
-                       movies={movies}
                        userData={userData}
-                       onMovieDelete={handleMovieDelete}
+                       /*onMovieDelete={handleMovieDelete}*/
                        loggedIn={loggedIn}
                        onAuthorization={handleProfileNav}
                        onNavigation={handleCloseNavigationBar}
                        onActiveMenu={handleActiveMenu}
-                       isLoad={isLoad}                
+                       isLoad={isLoad}
+                       onInputLanguage={handleInputLanguage}               
           />
         }>
         </Route>

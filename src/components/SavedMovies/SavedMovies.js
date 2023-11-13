@@ -4,7 +4,7 @@ import SearchForm from '../SearchForm/SearchForm';
 import Preloader from '../Preloader/Preloader';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 
-function SavedMovies({ movies, userData, onMovieDelete, loggedIn, onAuthorization, onNavigation, onActiveMenu}) {
+function SavedMovies({ movies, userData, onMovieDelete, loggedIn, onAuthorization, onNavigation, onActiveMenu, onInputLanguage}) {
   const loading = false;
 
   function handleActiveFilter(isActive) {

@@ -2,7 +2,7 @@ import React from 'react';
 import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
 import './SearchForm.css';
 
-function SearchForm({onUpdateMoviesList, onActiveFilter, id}) {
+function SearchForm({onUpdateMoviesList, onActiveFilter, id, isActiveFilterMovies}) {
   const [name, setName] = React.useState('');
 
   function handleSearchMovies(evt) {
@@ -11,15 +11,14 @@ function SearchForm({onUpdateMoviesList, onActiveFilter, id}) {
 
   function handleSubmit(evt) {
     evt.preventDefault();
-
     onUpdateMoviesList({
-      name: name
+      name: name,
     });
   }
 
   return (
     <section className="search">
-      <form className="search-form" onSubmit={handleSubmit} >
+      <form className="search-form" onSubmit={handleSubmit} noValidate>
         <div className="search-form__container">
           <div className="search-form__field">
             <div className="search-form__icon"></div>
@@ -29,7 +28,7 @@ function SearchForm({onUpdateMoviesList, onActiveFilter, id}) {
           <button type="submit" className="search-form__button">Найти</button>
         </div>
         <div className="search-form__filter">
-            <FilterCheckbox id={id} onActiveFilter={onActiveFilter}/>
+            <FilterCheckbox id={id} onActiveFilter={onActiveFilter} isActiveFilterMovies={isActiveFilterMovies} />
         </div>
       </form>
     </section>

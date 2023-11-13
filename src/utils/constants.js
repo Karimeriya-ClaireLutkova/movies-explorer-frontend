@@ -2,6 +2,8 @@ export const SCREEN_MIN = 768;
 export const SCREEN_MEDIUM = 1023;
 export const SCREEN_BIG = 1280;
 
+export const filtersShortFilm = 40;
+
 export const conflictError = "Пользователь с таким email уже существует.";
 export const forbiddenError = "Нет прав на удаление фильма.";
 export const notFoundError = "Запрашиваемый пользователь не найден.";
