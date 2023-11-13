@@ -6,59 +6,103 @@ import {filtersShortFilm } from '../../utils/constants';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 
 function SavedMovies({ onMovieDelete, isLoad, loggedIn, onAuthorization, onNavigation, onActiveMenu, moviesSaved, onInputLanguage}) {
-  const [moviesSavedList, setMoviesSavedList] = React.useState([]);
   const [loading, setLoading] = React.useState(false);
   const [isActiveFilter, setActiveFilter] = React.useState(false);
-  const [moviesListNew, setMoviesListNew] = React.useState([]);
+  const [moviesListNew, setMoviesListNew] = React.useState(moviesSaved);
+  const [isNotFoundMovies, setNotFoundMovies] = React.useState(false);
+  const [moviesList, setMoviesList] = React.useState([]);
+  const [searchText, setSearchText] = React.useState('');
 
   React.useEffect(() => {
     setLoading(isLoad)
   }, [isLoad])
 
   React.useEffect(() => {
-    setMoviesSavedList(moviesSaved);
     setMoviesListNew(moviesSaved);
-  }, [moviesSaved, moviesListNew])
+  }, [moviesSaved])
 
   function handleActiveFilter(isActive) {
     setActiveFilter(isActive);
     let movies;
-    movies = handleMoviesFilter(moviesSavedList, isActive);
-    if (movies.length > 0) {
+    if (isActive) {
+      movies = handleMoviesFilter(moviesListNew, isActive);
       setMoviesListNew(movies);
-    }    
+      setMoviesList(moviesListNew);
+    } else {
+      if (searchText.length > 0) {
+        setMoviesListNew(moviesList);
+      } else {
+        setMoviesListNew(moviesList);
+      }
+    }
+    setLoading(false);
   }
 
   function handleMoviesFilter(item, isActiveFilter) {
+    setLoading(true);
     let movieListScreachNew;
     if (isActiveFilter) {
       movieListScreachNew = item.filter(movie => 
         movie.duration <= filtersShortFilm
-      )
+      );
+      if (movieListScreachNew.length === 0) {
+        setNotFoundMovies(true);
+      }
     } else {
-      movieListScreachNew = [];
+      movieListScreachNew = item;
     }
+
     return movieListScreachNew;
   }
 
   function handleUpdateMoviesList(item) {
     setMoviesListNew([]);
+    setNotFoundMovies(false);
     setLoading(true);
-    const {checkLanguageRu, checkLanguageEn} = onInputLanguage(item.name);
-    let movieListScreach;
-    if (checkLanguageRu) {
-      movieListScreach = moviesSavedList.filter(movie => {
-        const nameRu = movie.nameRU.toLowerCase();
-        return (nameRu.includes(item.name))
-      })
-    } else if(checkLanguageEn) {
-      movieListScreach = moviesSavedList.filter(movie => {
-        const nameEn = movie.nameEN.toLowerCase();
-        return (nameEn.includes(item.name))
-      })
+    if (isActiveFilter) {
+      setSearchText(item.name);
+      const {checkLanguageRu, checkLanguageEn} = onInputLanguage(item.name);
+      let movieListScreach;
+      if (checkLanguageRu) {
+        movieListScreach = moviesListNew.filter(movie => {
+          const nameRu = movie.nameRU.toLowerCase();
+          return (nameRu.includes(item.name))
+        });
+        if (movieListScreach.length === 0) {
+          setNotFoundMovies(true);
+        };
+      } else if(checkLanguageEn) {
+        movieListScreach = moviesListNew.filter(movie => {
+          const nameEn = movie.nameEN.toLowerCase();
+          return (nameEn.includes(item.name))
+        });
+        if (movieListScreach.length === 0) {
+          setNotFoundMovies(true);
+        };
+      }
+      setMoviesListNew(movieListScreach);
+    } else {
+      const {checkLanguageRu, checkLanguageEn} = onInputLanguage(item.name);
+      let movieListScreach;
+      if (checkLanguageRu) {
+        movieListScreach = moviesListNew.filter(movie => {
+          const nameRu = movie.nameRU.toLowerCase();
+          return (nameRu.includes(item.name))
+        });
+        if (movieListScreach.length === 0) {
+          setNotFoundMovies(true);
+        };
+      } else if(checkLanguageEn) {
+        movieListScreach = moviesListNew.filter(movie => {
+          const nameEn = movie.nameEN.toLowerCase();
+          return (nameEn.includes(item.name))
+        });
+        if (movieListScreach.length === 0) {
+          setNotFoundMovies(true);
+        };
+      }
+      setMoviesListNew(movieListScreach);
     }
-    const movieListScreachNew = handleMoviesFilter(movieListScreach, isActiveFilter);
-    setMoviesListNew(movieListScreachNew);
     setLoading(false);
   }
 
@@ -71,7 +115,7 @@ function SavedMovies({ onMovieDelete, isLoad, loggedIn, onAuthorization, onNavig
           {loading ? (
             <Preloader />
           ) : (
-            <MoviesCardList id="2" cardsMovies={moviesListNew} onMovieDelete={onMovieDelete} buttonInactive="" />
+            <MoviesCardList id="2" cardsMovies={moviesListNew} onMovieDelete={onMovieDelete} buttonInactive="" isNotFoundMovies={isNotFoundMovies} />
           )}
         </div> 
       </main>
