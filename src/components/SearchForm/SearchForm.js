@@ -20,7 +20,7 @@ function SearchForm({onUpdateMoviesList, onActiveFilter, isActiveFilterMovies}) 
     evt.preventDefault();
     onUpdateMoviesList({
       name: name,
-    });
+    }, isValid);
     resetForm();
   }
 

@@ -21,6 +21,7 @@ function SavedMovies({ onMovieDelete, isLoad, loggedIn, onAuthorization, onNavig
   }, [moviesSaved])
 
   function handleActiveFilter(isActive) {
+    setNotFoundMovies(false);
     setActiveFilter(isActive);
     let movies;
     if (isActive) {
@@ -37,6 +38,7 @@ function SavedMovies({ onMovieDelete, isLoad, loggedIn, onAuthorization, onNavig
 
   function handleMoviesFilter(item, isActiveFilter) {
     setLoading(true);
+    setNotFoundMovies(false);
     let movieListScreachNew;
     if (isActiveFilter) {
       movieListScreachNew = item.filter(movie => 
@@ -52,8 +54,7 @@ function SavedMovies({ onMovieDelete, isLoad, loggedIn, onAuthorization, onNavig
     return movieListScreachNew;
   }
 
-  function handleUpdateMoviesList(item) {
-    setNotFoundMovies(false);
+  function handleUpdateMoviesList(item, isValid) {
     setLoading(true);
     if (isActiveFilter) {
       const {checkLanguageRu, checkLanguageEn} = onInputLanguage(item.name);
@@ -64,8 +65,7 @@ function SavedMovies({ onMovieDelete, isLoad, loggedIn, onAuthorization, onNavig
           return (nameRu.includes(item.name))
         });
         if (movieListScreach.length === 0) {
-          setNotFoundMovies(true);
-          setMoviesListNew(moviesSaved);
+          setNotFoundMovies(true);          
         };
       } else if(checkLanguageEn) {
         movieListScreach = moviesListNew.filter(movie => {
@@ -74,7 +74,6 @@ function SavedMovies({ onMovieDelete, isLoad, loggedIn, onAuthorization, onNavig
         });
         if (movieListScreach.length === 0) {
           setNotFoundMovies(true);
-          setMoviesListNew(moviesSaved);
         };
       }
       setMoviesListNew(movieListScreach);
@@ -88,7 +87,6 @@ function SavedMovies({ onMovieDelete, isLoad, loggedIn, onAuthorization, onNavig
         });
         if (movieListScreach.length === 0) {
           setNotFoundMovies(true);
-          setMoviesListNew(moviesSaved);
         };
       } else if(checkLanguageEn) {
         movieListScreach = moviesListNew.filter(movie => {
@@ -96,11 +94,14 @@ function SavedMovies({ onMovieDelete, isLoad, loggedIn, onAuthorization, onNavig
           return (nameEn.includes(item.name))
         });
         if (movieListScreach.length === 0) {
-          setNotFoundMovies(true);
-          setMoviesListNew(moviesSaved);
+          setNotFoundMovies(true);          
         };
       }
       setMoviesListNew(movieListScreach);
+    }
+    if (isValid === true && isNotFoundMovies === true) {
+      setNotFoundMovies(false);
+      setMoviesListNew(moviesSaved);
     }
     setLoading(false);
   }
