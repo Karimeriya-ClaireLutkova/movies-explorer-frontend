@@ -52,11 +52,10 @@ function App() {
   React.useEffect(() => {
     if(loggedIn) {
       setLoad(true);
-      Promise.all([mainApi.getUserInfo(), mainApi.getMovies(), moviesApi.getMovies()])
-        .then(([user, moviesSaved, movies]) => {
+      Promise.all([mainApi.getUserInfo()])
+        .then(([user, moviesSaved]) => {
           setCurrentUser(user);
           setMoviesSaved(moviesSaved);
-          setMoviesAll(movies);
         })
         .catch((err) => {
           console.log(err)
@@ -66,6 +65,20 @@ function App() {
         });
     }
   }, [loggedIn]);
+
+  function handleMoviesAll() {
+    setLoad(true);
+    moviesApi.getMovies()
+      .then((movies) => {
+        setMoviesAll(movies);
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+      .finally(() => {
+        setLoad(false);
+      });
+  }
 
   function handleCloseForm() {
     navigate("/movies", {replace: true});
@@ -248,6 +261,7 @@ function App() {
         <Route path="/movies" element={
           <ProtectedRoute component={Movies}
                  onMovieLike={handleMovieLike}
+                 onMoviesAll={handleMoviesAll}
                  moviesSaved={moviesSaved}
                  moviesAll={moviesAll}
                  loggedIn={loggedIn}
