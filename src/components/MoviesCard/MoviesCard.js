@@ -1,14 +1,12 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
 import { urlBeginning } from '../../utils/constants';
-import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import './MoviesCard.css';
 
 function MoviesCard({ movie, onMovieLike, onMovieDelete}) {
-  const currentUser = React.useContext(CurrentUserContext);
   const { pathname } = useLocation();
-  const [isOwner, setOwner] = React.useState(false);
-  const cardLikeButtonClassName = `element__button element__button_like ${isOwner ? "element__button_like_active" : ""}`;
+  const [isLike, setLike] = React.useState(false);
+  const cardLikeButtonClassName = `element__button element__button_like ${isLike ? "element__button_like_active" : ""}`;
   const {url} = movie.image;
   const urlFull = `${urlBeginning}${url}`;
   const duration = movie.duration;
@@ -17,14 +15,19 @@ function MoviesCard({ movie, onMovieLike, onMovieDelete}) {
   const newDuration = `${hour}ч ${minutes}м`;
 
   React.useEffect(() => {
-    if( movie.owner === '') {
-      setOwner(false);
-    } else if(movie.owner === currentUser._id) {
-      setOwner(true);
+    if (movie.owner === '' || movie.owner === undefined) {
+      setLike(false);
+    } else {
+      setLike(true);
     }
-  }, [currentUser._id, movie, movie.owner])
+  }, [movie.owner, movie]);
 
   function handleLikeClick() {
+    if (movie.owner === '' || movie.owner === undefined) {
+      setLike(true);
+    } else {
+      setLike(false);
+    }
     onMovieLike(movie);
   }
 

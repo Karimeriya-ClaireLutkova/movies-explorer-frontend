@@ -11,6 +11,7 @@ import Login from '../Login/Login';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import { urlBeginning } from '../../utils/constants';
 import mainApi from '../../utils/MainApi.js';
+import moviesApi from '../../utils/MoviesApi.js';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext.js';
 import { register, authorization, getContent } from '../../utils/Auth.js';
 
@@ -20,6 +21,7 @@ function App() {
   const [loggedIn, setLoggedIn] = React.useState(false);
   const [registrationInfo, setRegistrationInfo] = React.useState({infoStatus: "", message:""});
   const [moviesSaved, setMoviesSaved] = React.useState([]);
+  const [moviesAll, setMoviesAll] = React.useState([]);
   const [isError, setError] = React.useState('');
   const navigate = useNavigate();
   const { pathname } = useLocation();
@@ -50,10 +52,11 @@ function App() {
   React.useEffect(() => {
     if(loggedIn) {
       setLoad(true);
-      Promise.all([mainApi.getUserInfo(), mainApi.getMovies()])
-        .then(([user, moviesSaved]) => {
+      Promise.all([mainApi.getUserInfo(), mainApi.getMovies(), moviesApi.getMovies()])
+        .then(([user, moviesSaved, movies]) => {
           setCurrentUser(user);
           setMoviesSaved(moviesSaved);
+          setMoviesAll(movies);
         })
         .catch((err) => {
           console.log(err)
@@ -110,19 +113,32 @@ function App() {
             setCurrentUser(user);
           })
           .catch((err) => {
-            console.log(err)
+            console.log(err);
           })
           .finally(() => {
             setLoad(false);
           });
       })
       .catch((err) => {
-        setError(err)
+        setError(err);
       })
       .finally(() => {
         setLoad(false);
       });
   }
+  
+ /* React.useEffect(() => {
+    moviesApi.getMovies()
+      .then((movies) => {
+        setMoviesAll(movies);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => {
+        setLoad(false);
+      })
+  }, []) */
 
   function handleInputLanguage(item) {
     const checkLanguageRu = new RegExp(/^[а-яёА-ЯЁ]+$/).test(item);
@@ -131,10 +147,9 @@ function App() {
   }
   
   function handleMovieLike(movie) {
-    console.log(movie.id);
     const movieInitial = moviesSaved.find(i => i.movieId === movie.id);
+    let cards;
     if (movieInitial === undefined) {
-      setLoad(true);
       const movieNew = {
         country: movie.country,
         director: movie.director,
@@ -150,43 +165,38 @@ function App() {
       };
       mainApi.addMovie(movieNew)
         .then((newMovie) => {
+          cards = moviesAll.map(item => item.id === newMovie.movieId ? {...item, owner: newMovie.owner} : item);
+          setMoviesAll(cards);
           setMoviesSaved([newMovie, ...moviesSaved]);
         })
         .catch((err) => {
           console.error(err)
         })
-        .finally(() => {
-          setLoad(false);
-        });
     } else {
-      setLoad(true);
       mainApi.deleteMovie(movieInitial._id) 
         .then((newMovie) => {
+          cards = moviesAll.map(item => item.id === newMovie.movieId ? {...item, owner: ''} : item);
+          setMoviesAll(cards);
           const movieNewList = moviesSaved.filter((item) => item._id !== newMovie._id);
           setMoviesSaved(movieNewList);
         })
         .catch((err) => {
           console.error(err)
         })
-        .finally(() => {
-          setLoad(false);
-        });
     }
   }
 
   function handleMovieDelete(movie) {
-    setLoad(true);
     mainApi.deleteMovie(movie._id) 
       .then((newMovie) => {
+        const cards = moviesAll.map(item => item.id === newMovie.movieId ? {...item, owner: ''} : item);
+        setMoviesAll(cards);
         const movieNewList = moviesSaved.filter((item) => item._id !== newMovie._id);
         setMoviesSaved(movieNewList);
       })
       .catch((err) => {
         console.error(err)
       })
-      .finally(() => {
-        setLoad(false);
-      });
   }
 
   function handleProfileNav() {
@@ -251,6 +261,8 @@ function App() {
         <Route path="/movies" element={
           <ProtectedRoute component={Movies}
                  onMovieLike={handleMovieLike}
+                 moviesSaved={moviesSaved}
+                 moviesAll={moviesAll}
                  loggedIn={loggedIn}
                  onAuthorization={handleProfileNav}
                  onNavigation={handleCloseNavigationBar}
