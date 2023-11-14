@@ -126,19 +126,6 @@ function App() {
         setLoad(false);
       });
   }
-  
- /* React.useEffect(() => {
-    moviesApi.getMovies()
-      .then((movies) => {
-        setMoviesAll(movies);
-      })
-      .catch((err) => {
-        console.log(err);
-      })
-      .finally(() => {
-        setLoad(false);
-      })
-  }, []) */
 
   function handleInputLanguage(item) {
     const checkLanguageRu = new RegExp(/^[а-яёА-ЯЁ]+$/).test(item);
