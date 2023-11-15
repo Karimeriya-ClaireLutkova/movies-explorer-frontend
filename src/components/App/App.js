@@ -19,10 +19,10 @@ function App() {
   const [currentUser, setCurrentUser] = React.useState({});
   const [isLoad, setLoad] = React.useState(false);
   const [loggedIn, setLoggedIn] = React.useState(false);
-  const [registrationInfo, setRegistrationInfo] = React.useState({infoStatus: "", message:""});
+  const [isErrorActive, setErrorActive] = React.useState(false);
   const [moviesSaved, setMoviesSaved] = React.useState([]);
   const [moviesAll, setMoviesAll] = React.useState([]);
-  const [isError, setError] = React.useState('');
+  const [error, setError] = React.useState('');
   const navigate = useNavigate();
   const { pathname } = useLocation();
 
@@ -52,7 +52,7 @@ function App() {
   React.useEffect(() => {
     if(loggedIn) {
       setLoad(true);
-      Promise.all([mainApi.getUserInfo()])
+      Promise.all([mainApi.getUserInfo(), moviesApi.getMovies()])
         .then(([user, moviesSaved]) => {
           setCurrentUser(user);
           setMoviesSaved(moviesSaved);
@@ -73,7 +73,7 @@ function App() {
         setMoviesAll(movies);
       })
       .catch((err) => {
-        console.log(err)
+        setErrorActive(true);
       })
       .finally(() => {
         setLoad(false);
@@ -171,7 +171,7 @@ function App() {
         })
         .catch((err) => {
           console.error(err)
-        })
+        });
     } else {
       mainApi.deleteMovie(movieInitial._id) 
         .then((newMovie) => {
@@ -244,6 +244,7 @@ function App() {
 
   function handleСlearError() {
     setError('');
+    setErrorActive('');
   }
 
   return (
@@ -262,13 +263,14 @@ function App() {
           <ProtectedRoute component={Movies}
                  onMovieLike={handleMovieLike}
                  onMoviesAll={handleMoviesAll}
-                 moviesSaved={moviesSaved}
                  moviesAll={moviesAll}
                  loggedIn={loggedIn}
                  onAuthorization={handleProfileNav}
                  onNavigation={handleCloseNavigationBar}
                  onActiveMenu={handleActiveMenu}
                  isLoad={isLoad}
+                 onСlearError={handleСlearError}
+                 isErrorActive={isErrorActive}
                  onInputLanguage={handleInputLanguage}
           />
         }>
@@ -294,7 +296,7 @@ function App() {
                    onUpdateUser={handleUpdateUser}
                    onNavigation={handleCloseNavigationBar}
                    onActiveMenu={handleActiveMenu}
-                   isError={isError}
+                   error={error}
                    isLoad={isLoad}
                    onСlearError={handleСlearError}
           />
@@ -302,13 +304,13 @@ function App() {
         </Route>
         <Route path="/sign-up" element={
           <Register onSubmit={handleRegisterSubmit}
-                    isError={isError} 
+                    error={error} 
                     onСlearError={handleСlearError} />
         }>
         </Route>
         <Route path="/sign-in" element={
           <Login onSubmit={handleLoginSubmit}
-                 isError={isError}
+                 error={error}
                  onСlearError={handleСlearError} />
         }>
         </Route>

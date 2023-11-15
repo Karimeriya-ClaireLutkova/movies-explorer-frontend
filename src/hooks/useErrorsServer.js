@@ -6,7 +6,7 @@ export default function useFormValidator() {
 
   const handleErrorsStatus = (item) => {
     const error = item;
-    const numberError = parseInt((error.split(':').pop()), 10);
+    const numberError = parseInt(error);
     if (numberError === 400) {
       setMessageError(validationError);
     } else if (numberError === 401) {

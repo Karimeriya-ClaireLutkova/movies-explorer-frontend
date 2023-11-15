@@ -6,7 +6,7 @@ import { SCREEN_MIN, SCREEN_MEDIUM, SCREEN_BIG, filtersShortFilm } from '../../u
 import SearchForm from '../SearchForm/SearchForm';
 import './Movies.css';
 
-function Movies({ onMoviesAll, moviesAll, onMovieLike, loggedIn, onAuthorization, onNavigation, onActiveMenu, isLoad, onInputLanguage }) {
+function Movies({ onСlearError, isErrorActive, onMoviesAll, moviesAll, onMovieLike, loggedIn, onAuthorization, onNavigation, onActiveMenu, isLoad, onInputLanguage }) {
   const [windowDimensions, setWindowDimensions] = React.useState(getWindowDimensions());
   const [moviesList, setMoviesList] = React.useState([]);
   const [isLoader, setLoader] = React.useState(false);
@@ -48,7 +48,7 @@ function Movies({ onMoviesAll, moviesAll, onMovieLike, loggedIn, onAuthorization
     }
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
-  }, [windowDimensions])
+  }, [windowDimensions]);
 
   React.useEffect(() => {
     function runOnlyPageLoad() {
@@ -56,7 +56,7 @@ function Movies({ onMoviesAll, moviesAll, onMovieLike, loggedIn, onAuthorization
       setCounterMovies(counterCurrent);
     }
     runOnlyPageLoad();
-  }, [windowDimensions])
+  }, [windowDimensions]);
 
   React.useEffect(() => {
     setLoader(isLoad)
@@ -64,7 +64,7 @@ function Movies({ onMoviesAll, moviesAll, onMovieLike, loggedIn, onAuthorization
 
   React.useEffect(() => {
     setMoviesList(moviesAll)
-  }, [moviesAll])
+  }, [moviesAll]);
 
   React.useEffect(() => {
     if(counterMoviesNew === undefined) {
@@ -78,7 +78,7 @@ function Movies({ onMoviesAll, moviesAll, onMovieLike, loggedIn, onAuthorization
       initialCardsMovies = moviesListNew.slice(initialCounter, counterMoviesNew);
       setInitialMovies(initialCardsMovies);
     }
-  }, [moviesListNew, counterMovies, counterMoviesNew])
+  }, [moviesListNew, counterMovies, counterMoviesNew]);
 
   function handleMoviesFilter(item, isActiveFilter) {
     let movieListScreachNew;
@@ -113,6 +113,7 @@ function Movies({ onMoviesAll, moviesAll, onMovieLike, loggedIn, onAuthorization
   }
 
   function handleUpdateMoviesList(item) {
+    onСlearError();
     setLoader(true);
     onMoviesAll();
     setMoviesListNew([]);
@@ -184,7 +185,7 @@ function Movies({ onMoviesAll, moviesAll, onMovieLike, loggedIn, onAuthorization
           {isLoader ? (
             <Preloader />
           ) : (
-            <MoviesCardList id="1" cardsMovies={initialMovies} buttonInactive={isButtonInactive} onMovieLike={onMovieLike} onChangeDescription={handleChangeDescription} isNotFoundMovies={isNotFoundMovies}/>
+            <MoviesCardList id="1" cardsMovies={initialMovies} isErrorActive={isErrorActive} buttonInactive={isButtonInactive} onMovieLike={onMovieLike} onChangeDescription={handleChangeDescription} isNotFoundMovies={isNotFoundMovies}/>
           )}
         </div>
       </main>
