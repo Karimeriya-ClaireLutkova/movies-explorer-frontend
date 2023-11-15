@@ -65,7 +65,7 @@
   text-overflow: ellipsis;
   overflow: hidden;
   color: #EE3465;
-  opacity: 0;
+  display: none;
 }
 
 .search-form__input-error_active {
