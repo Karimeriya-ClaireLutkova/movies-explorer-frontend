@@ -46,7 +46,13 @@ function Movies({ onСlearError, isErrorActive, onMoviesAll, moviesAll, onMovieL
     function handleResize() {
       setWindowDimensions(getWindowDimensions());
     }
-    window.addEventListener("resize", handleResize);
+    let resizeTimeout;
+    window.addEventListener("resize",  function(event) {
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(function(){
+        handleResize();
+      }, 1500);
+    })
     return () => window.removeEventListener("resize", handleResize);
   }, [windowDimensions]);
 
