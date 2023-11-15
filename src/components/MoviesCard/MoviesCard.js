@@ -40,7 +40,7 @@ function MoviesCard({ movie, onMovieLike, onMovieDelete}) {
       { pathname === '/movies' ? (
         <img className="element__image" src={urlFull} alt={`Постер к фильму ${movie.nameRU}`} />
       ) : (
-        <img className="element__image" src={movie.image.url} alt={`Постер к фильму ${movie.nameRU}`} />
+        <img className="element__image" src={movie.image} alt={`Постер к фильму ${movie.nameRU}`} />
       )}
       <div className="element__description">
         <h3 className="element__title">{movie.nameRU}</h3>

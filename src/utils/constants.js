@@ -6,7 +6,7 @@ export const filtersShortFilm = 40;
 
 export const conflictError = "Пользователь с таким email уже существует.";
 export const forbiddenError = "Нет прав на удаление фильма.";
-export const notFoundError = "Запрашиваемый пользователь не найден.";
+export const notFoundError = "Страница по указанному маршруту не найдена.";
 export const validationError = "Переданы некорректные данные при обновлении профиля.";
 export const unauthorizedError = "Неправильные почта или пароль.";
 export const serverError = "На сервере произошла ошибка.";

@@ -52,18 +52,18 @@ function App() {
   React.useEffect(() => {
     if(loggedIn) {
       setLoad(true);
-      Promise.all([mainApi.getUserInfo(), moviesApi.getMovies()])
+      Promise.all([mainApi.getUserInfo(), mainApi.getMovies()])
         .then(([user, moviesSaved]) => {
           setCurrentUser(user);
           setMoviesSaved(moviesSaved);
-        })
-        .catch((err) => {
-          console.log(err)
-        })
-        .finally(() => {
-          setLoad(false);
-        });
-    }
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => {
+        setLoad(false);
+      });
+  }
   }, [loggedIn]);
 
   function handleMoviesAll() {

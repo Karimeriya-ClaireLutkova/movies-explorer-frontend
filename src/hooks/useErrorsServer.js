@@ -6,20 +6,22 @@ export default function useFormValidator() {
 
   const handleErrorsStatus = (item) => {
     const error = item;
-    const numberError = parseInt(error);
-    if (numberError === 400) {
-      setMessageError(validationError);
-    } else if (numberError === 401) {
-      setMessageError(unauthorizedError);
-    } else if (numberError === 403) {
-      setMessageError(forbiddenError);
-    } else if (numberError === 404) {
-      setMessageError(notFoundError);
-    } else if (numberError === 409) {
-      setMessageError(conflictError);
-    } else if (numberError === 500) {
-      setMessageError(serverError);
-    }
+    if (item !== '' || item !== undefined) {
+      const numberError = parseInt(error);
+      if (numberError === 400) {
+        setMessageError(validationError);
+      } else if (numberError === 401) {
+        setMessageError(unauthorizedError);
+      } else if (numberError === 403) {
+        setMessageError(forbiddenError);
+      } else if (numberError === 404) {
+        setMessageError(notFoundError);
+      } else if (numberError === 409) {
+        setMessageError(conflictError);
+      } else if (numberError === 500) {
+        setMessageError(serverError);
+      }
+    } 
   }
 
   const resetError = React.useCallback(

@@ -36,11 +36,11 @@ function MoviesCardList({ cardsMovies, onMovieLike, onMovieDelete, isErrorActive
         { pathname === "/movies" && (
           cardsMovies.map((movie, i) => (<MoviesCard id="1" key={movie.id} movie={movie} onMovieLike={onMovieLike} onMovieDelete={onMovieDelete} />))
         )}
-        { pathname === "/movies" && ( 
+        { pathname === "/saved-movies" && ( 
           cardsMovies.map((movie, i) => (<MoviesCard id="2" key={movie._id} movie={movie} onMovieLike={onMovieLike} onMovieDelete={onMovieDelete} />))
         )}   
       </div>
-      { pathname === '/movies' &&
+      { pathname === "/movies" &&
         <div className="elements-adding">
           <button className={className} type="button" onClick={handleChangeDescription}>Ещё</button>
         </div>

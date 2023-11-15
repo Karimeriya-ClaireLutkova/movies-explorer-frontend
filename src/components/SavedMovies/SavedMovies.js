@@ -115,7 +115,7 @@ function SavedMovies({ onMovieDelete, isLoad, loggedIn, onAuthorization, onNavig
           {loading ? (
             <Preloader />
           ) : (
-            <MoviesCardList id="2" cardsMovies={moviesListNew} onMovieDelete={onMovieDelete} buttonInactive="" isNotFoundMovies={isNotFoundMovies} />
+            <MoviesCardList id="2" cardsMovies={moviesListNew} onMovieDelete={onMovieDelete} isNotFoundMovies={isNotFoundMovies} />
           )}
         </div> 
       </main>
