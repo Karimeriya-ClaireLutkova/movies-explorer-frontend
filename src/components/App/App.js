@@ -237,6 +237,10 @@ function App() {
 
   function signOut() {
     localStorage.removeItem('jwt');
+    localStorage.removeItem('moviesScreach');
+    localStorage.removeItem('textScreach');
+    localStorage.removeItem('filter');
+    localStorage.removeItem('counterView');
     setLoggedIn(false);
     setCurrentUser({});
     navigate('/'); 

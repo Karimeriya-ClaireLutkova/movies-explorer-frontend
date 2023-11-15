@@ -18,6 +18,7 @@ function Movies({ onСlearError, isErrorActive, onMoviesAll, moviesAll, onMovieL
   const [moviesListNew, setMoviesListNew] = React.useState([]);
   const [isButtonInactive, setButtonInactive] = React.useState(true);
   const [isNotFoundMovies, setNotFoundMovies] = React.useState(false);
+  const [textInput, setTextInput] = React.useState('');
 
   function handleCounterWidth(item) {
     let count;
@@ -74,6 +75,44 @@ function Movies({ onСlearError, isErrorActive, onMoviesAll, moviesAll, onMovieL
   }, [moviesAll]);
 
   React.useEffect(() => {
+    localStorage.setItem("moviesScreach", JSON.stringify(initialMovies));
+    localStorage.setItem("textScreach", textInput);
+    localStorage.setItem("filter", isActiveFilter);
+    localStorage.setItem("counterView", JSON.stringify({counterMovies: counterMovies, counterMoviesNew: counterMoviesNew}));   
+  }, [initialMovies, textInput, isActiveFilter, counterMovies, counterMoviesNew]);
+  
+  React.useEffect(() => {
+    if (loggedIn) {
+      if (localStorage.getItem("moviesScreach")) {
+        const movies = localStorage.getItem('moviesScreach');
+        const moviesScreachCurrent = JSON.parse(movies);
+        const filterCurrent = localStorage.getItem("filter");
+        const textScreachCurrent = localStorage.getItem("textScreach");
+        const counter = localStorage.getItem("counterView");
+        const {counterMovies, counterMoviesNew } = JSON.parse(counter);
+        setActiveFilter(filterCurrent);
+        setTextInput(textScreachCurrent);
+        if (movies.length > 0) {
+          if (counterMoviesNew > 0) {
+            let initialCardsMovies = [];
+            initialCardsMovies = moviesScreachCurrent.slice(initialCounter, counterMoviesNew);
+            setInitialMovies(initialCardsMovies);
+            setCounterMoviesNew(counterMoviesNew);
+          } else {
+            let initialCardsMovies = [];
+            if(moviesScreachCurrent.length > 0) {
+              initialCardsMovies = moviesScreachCurrent.slice(initialCounter, counterMovies);
+              setInitialMovies(initialCardsMovies);
+            }
+          }
+        } else {
+          setNotFoundMovies(true);
+        }
+      }
+    }
+  }, [loggedIn]);
+
+  React.useEffect(() => {
     if(counterMoviesNew === undefined) {
       let initialCardsMovies = [];
       if(moviesListNew.length > 0) {
@@ -120,6 +159,7 @@ function Movies({ onСlearError, isErrorActive, onMoviesAll, moviesAll, onMovieL
   }
 
   function handleUpdateMoviesList(item) {
+    setTextInput(item.name);
     onСlearError();
     setLoader(true);
     onMoviesAll();
@@ -188,7 +228,7 @@ function Movies({ onСlearError, isErrorActive, onMoviesAll, moviesAll, onMovieL
       <Header id="2" loggedIn={loggedIn} onAuthorization={onAuthorization} onNavigation={onNavigation} onActiveMenu={onActiveMenu} />
       <main>
         <div className="movies">
-          <SearchForm id="1" onUpdateMoviesList={handleUpdateMoviesList} onActiveFilter={handleActiveFilter} isActiveFilterMovies={isActiveFilter} />
+          <SearchForm id="1" textInput={textInput} onUpdateMoviesList={handleUpdateMoviesList} onActiveFilter={handleActiveFilter} isActiveFilterMovies={isActiveFilter} />
           {isLoader ? (
             <Preloader />
           ) : (

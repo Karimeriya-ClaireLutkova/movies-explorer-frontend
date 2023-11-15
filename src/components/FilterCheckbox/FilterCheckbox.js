@@ -5,8 +5,8 @@ function FilterCheckbox({onActiveFilter, isActiveFilterMovies}) {
   const [isActiveFilter, setActiveFilter] = React.useState(false);
 
   React.useEffect(() => {
-    setActiveFilter(isActiveFilterMovies)
-  }, [isActiveFilterMovies])
+    setActiveFilter(isActiveFilterMovies);
+  }, [isActiveFilterMovies]);
 
   function handleActiveFilter() {
     const status = !isActiveFilter;

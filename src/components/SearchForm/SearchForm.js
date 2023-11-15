@@ -4,10 +4,14 @@ import useFormValidator from '../../hooks/useFormValidator';
 import { useLocation } from 'react-router-dom';
 import './SearchForm.css';
 
-function SearchForm({onUpdateMoviesList, onActiveFilter, isActiveFilterMovies}) {
+function SearchForm({ textInput, onUpdateMoviesList, onActiveFilter, isActiveFilterMovies }) {
   const [name, setName] = React.useState('');
   const { pathname } = useLocation();
   const { errors, isValid, handleChange, resetForm } = useFormValidator();
+
+  React.useEffect(() => {
+    setName(textInput);
+  }, [textInput]);
 
   function handleSearchMovies(evt) {
     handleChange(evt);
