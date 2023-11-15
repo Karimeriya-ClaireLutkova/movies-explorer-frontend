@@ -56,7 +56,7 @@
 }
 
 .search-form__input-error {
-  width: 390px;
+  width: 200px;
   font-size: 12px;
   line-height: 1.2;
   font-weight: 400;
@@ -132,6 +132,9 @@
   .search-form__field {
     padding: 19px 19px;
   }
+  .search-form__input-error_active {
+    width: 160px;
+  }
 
   .search-form__button {
     padding: 0 13px 0;
@@ -149,7 +152,7 @@
   }
 
   .search-form__input-error_active {
-    width: 300px;
+    width: 130px;
     transform: translate(-240px, 65px);
   }
 
@@ -204,7 +207,7 @@
   .search-form__input-error_active {
     transform: translate(-195px, 65px);
   }
-
+  
   .search-form__button {
     padding: 10px 8px;
     margin: 19px 19px 19px 0;

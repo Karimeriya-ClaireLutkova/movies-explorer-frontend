@@ -7,7 +7,7 @@ import './SearchForm.css';
 function SearchForm({ textInput, onUpdateMoviesList, onActiveFilter, isActiveFilterMovies }) {
   const [name, setName] = React.useState('');
   const { pathname } = useLocation();
-  const { errors, isValid, handleChange, resetForm } = useFormValidator();
+  const { errors, isValid, handleChange} = useFormValidator();
 
   React.useEffect(() => {
     setName(textInput);
@@ -25,7 +25,6 @@ function SearchForm({ textInput, onUpdateMoviesList, onActiveFilter, isActiveFil
     onUpdateMoviesList({
       name: name,
     }, isValid);
-    resetForm();
   }
 
   return (

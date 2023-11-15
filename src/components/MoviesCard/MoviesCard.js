@@ -37,23 +37,25 @@ function MoviesCard({ movie, onMovieLike, onMovieDelete}) {
 
   return (
     <div className="element">
-      { pathname === '/movies' ? (
-        <img className="element__image" src={urlFull} alt={`Постер к фильму ${movie.nameRU}`} />
-      ) : (
-        <img className="element__image" src={movie.image} alt={`Постер к фильму ${movie.nameRU}`} />
-      )}
-      <div className="element__description">
-        <h3 className="element__title">{movie.nameRU}</h3>
-        <div className="element__container-like">
-          { pathname === '/movies' ? (
-              <button type="button" className={cardLikeButtonClassName} aria-label="Добавить фильм в сохраненные" onClick={handleLikeClick} />
-            ) : (
-              <button type="button" className="element__button element__button_delete" aria-label="Удалить фильм из сохраненных" onClick={handleDeleteClick} />          
-            )
-          }
+      <a className="element__trailer-link" href={movie.trailerLink} target="_blank" rel="noreferrer">
+        { pathname === '/movies' ? (
+          <img className="element__image" src={urlFull} alt={`Постер к фильму ${movie.nameRU}`} />
+        ) : (
+          <img className="element__image" src={movie.image} alt={`Постер к фильму ${movie.nameRU}`} />
+        )}
+      </a>
+        <div className="element__description">
+          <h3 className="element__title">{movie.nameRU}</h3>
+          <div className="element__container-like">
+            { pathname === '/movies' ? (
+                <button type="button" className={cardLikeButtonClassName} aria-label="Добавить фильм в сохраненные" onClick={handleLikeClick} />
+              ) : (
+                <button type="button" className="element__button element__button_delete" aria-label="Удалить фильм из сохраненных" onClick={handleDeleteClick} />          
+              )
+            }
+          </div>
         </div>
-      </div>
-      <div className="element__duration">{newDuration}</div>
+        <div className="element__duration">{newDuration}</div>     
     </div>
   )
 }

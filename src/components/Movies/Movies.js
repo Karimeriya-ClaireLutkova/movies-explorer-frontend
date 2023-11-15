@@ -10,10 +10,10 @@ function Movies({ onСlearError, isErrorActive, onMoviesAll, moviesAll, onMovieL
   const [windowDimensions, setWindowDimensions] = React.useState(getWindowDimensions());
   const [moviesList, setMoviesList] = React.useState([]);
   const [isLoader, setLoader] = React.useState(false);
-  const [counterMovies, setCounterMovies] = React.useState();
+  const [counterMovies, setCounterMovies] = React.useState(0);
   const initialCounter = 0;
   const [isActiveFilter, setActiveFilter] = React.useState(false);
-  const [counterMoviesNew, setCounterMoviesNew] = React.useState();
+  const [counterMoviesNew, setCounterMoviesNew] = React.useState(0);
   const [initialMovies, setInitialMovies] = React.useState([]);
   const [moviesListNew, setMoviesListNew] = React.useState([]);
   const [isButtonInactive, setButtonInactive] = React.useState(true);
@@ -74,12 +74,12 @@ function Movies({ onСlearError, isErrorActive, onMoviesAll, moviesAll, onMovieL
     setMoviesList(moviesAll)
   }, [moviesAll]);
 
-  React.useEffect(() => {
+  function saveData() {
     localStorage.setItem("moviesScreach", JSON.stringify(initialMovies));
     localStorage.setItem("textScreach", textInput);
     localStorage.setItem("filter", isActiveFilter);
-    localStorage.setItem("counterView", JSON.stringify({counterMovies: counterMovies, counterMoviesNew: counterMoviesNew}));   
-  }, [initialMovies, textInput, isActiveFilter, counterMovies, counterMoviesNew]);
+    localStorage.setItem("counterView", JSON.stringify({counterMovies: counterMovies, counterMoviesNew: counterMoviesNew}));
+  }
   
   React.useEffect(() => {
     if (loggedIn) {
@@ -191,6 +191,7 @@ function Movies({ onСlearError, isErrorActive, onMoviesAll, moviesAll, onMovieL
     setMoviesListNew(movieListScreachNew);
     const initialCardsMovies = handleDisplayPart(movieListScreachNew);
     setInitialMovies(initialCardsMovies);
+    saveData();
     setLoader(false);
   }
  
