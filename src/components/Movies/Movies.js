@@ -47,13 +47,14 @@ function Movies({ onСlearError, isErrorActive, onMoviesAll, moviesAll, onMovieL
       setWindowDimensions(getWindowDimensions());
     }
     let resizeTimeout;
-    window.addEventListener("resize",  function(event) {
+    function resizeHandler() {
       clearTimeout(resizeTimeout);
       resizeTimeout = setTimeout(function(){
         handleResize();
-      }, 1500);
-    })
-    return () => window.removeEventListener("resize", handleResize);
+      }, 1000)
+    }
+    window.addEventListener("resize", resizeHandler);
+    return () => window.removeEventListener("resize", resizeHandler);
   }, [windowDimensions]);
 
   React.useEffect(() => {
