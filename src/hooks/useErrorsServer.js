@@ -1,17 +1,28 @@
 import React from 'react';
-import {conflictError, forbiddenError, notFoundError, validationError, unauthorizedError, serverError } from '../utils/constants';
+
+import { conflictError, 
+       forbiddenError, 
+       notFoundError, 
+       validationError, 
+       unauthorizedError,
+       serverError,
+       validationErrorRegister, 
+       unauthorizedErrorToken,
+      } from '../utils/constants';
 
 export default function useFormValidator() {
   const [messageError, setMessageError] = React.useState('');
 
-  const handleErrorsStatus = (item) => {
+  const handleErrorsStatus = (item, pathname) => {
     const error = item;
     if (item !== '' || item !== undefined) {
       const numberError = parseInt(error);
       if (numberError === 400) {
-        setMessageError(validationError);
+        pathname === '/sign-up' ? setMessageError(validationErrorRegister)
+        : setMessageError(validationError)
       } else if (numberError === 401) {
-        setMessageError(unauthorizedError);
+        pathname === '/sign-in' && setMessageError(unauthorizedError);
+        pathname === '/' && setMessageError(unauthorizedErrorToken);        
       } else if (numberError === 403) {
         setMessageError(forbiddenError);
       } else if (numberError === 404) {
@@ -21,7 +32,7 @@ export default function useFormValidator() {
       } else if (numberError === 500) {
         setMessageError(serverError);
       }
-    } 
+    }
   }
 
   const resetError = React.useCallback(

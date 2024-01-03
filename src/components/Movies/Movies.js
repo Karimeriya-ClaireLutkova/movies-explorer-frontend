@@ -6,14 +6,14 @@ import { SCREEN_MIN, SCREEN_MEDIUM, SCREEN_BIG, filtersShortFilm } from '../../u
 import SearchForm from '../SearchForm/SearchForm';
 import './Movies.css';
 
-function Movies({ onСlearError, isErrorActive, onMoviesAll, moviesAll, onMovieLike, loggedIn, onAuthorization, onNavigation, onActiveMenu, isLoad, onInputLanguage }) {
+function Movies({ isOpen, onСlearError, isErrorActive, onMoviesAll, moviesAll, onMovieLike, loggedIn, onAuthorization, onNavigation, onActiveMenu, isLoad, onInputLanguage }) {
   const [windowDimensions, setWindowDimensions] = React.useState(getWindowDimensions());
   const [moviesList, setMoviesList] = React.useState([]);
   const [isLoader, setLoader] = React.useState(false);
-  const [counterMovies, setCounterMovies] = React.useState(0);
+  const [counterMovies, setCounterMovies] = React.useState();
   const initialCounter = 0;
   const [isActiveFilter, setActiveFilter] = React.useState(false);
-  const [counterMoviesNew, setCounterMoviesNew] = React.useState(0);
+  const [counterMoviesNew, setCounterMoviesNew] = React.useState();
   const [initialMovies, setInitialMovies] = React.useState([]);
   const [moviesListNew, setMoviesListNew] = React.useState([]);
   const [isButtonInactive, setButtonInactive] = React.useState(true);
@@ -74,43 +74,59 @@ function Movies({ onСlearError, isErrorActive, onMoviesAll, moviesAll, onMovieL
     setMoviesList(moviesAll)
   }, [moviesAll]);
 
-  function saveData() {
-    localStorage.setItem("moviesScreach", JSON.stringify(initialMovies));
-    localStorage.setItem("textScreach", textInput);
-    localStorage.setItem("filter", isActiveFilter);
+  function saveData(item, movies) {
+    localStorage.setItem("moviesScreach", JSON.stringify(movies));
+    localStorage.setItem("textScreach", item);
     localStorage.setItem("counterView", JSON.stringify({counterMovies: counterMovies, counterMoviesNew: counterMoviesNew}));
   }
-  
+
+  function restoreCheckboxState() {
+    const checkboxCurrent = localStorage.getItem("filter");
+    const checkbox = JSON.parse(checkboxCurrent);
+    if (checkbox) {
+      const checkboxNew = document.querySelector('input[type="checkbox"]');
+      checkboxNew.checked = checkbox.checked;
+      setActiveFilter(checkbox.checked);
+    }
+  }
+
+  function saveCheckboxState() {
+    const checkboxes = document.querySelector('input[type="checkbox"]');
+    let checkboxState = {};
+    checkboxState = {
+      checked: checkboxes.checked
+    };
+    localStorage.setItem("filter", JSON.stringify(checkboxState));
+  }
+
   React.useEffect(() => {
-    if (loggedIn) {
-      if (localStorage.getItem("moviesScreach")) {
-        const movies = localStorage.getItem('moviesScreach');
-        const moviesScreachCurrent = JSON.parse(movies);
-        const filterCurrent = localStorage.getItem("filter");
-        const textScreachCurrent = localStorage.getItem("textScreach");
-        const counter = localStorage.getItem("counterView");
-        const {counterMovies, counterMoviesNew } = JSON.parse(counter);
-        setActiveFilter(filterCurrent);
-        setTextInput(textScreachCurrent);
-        if (movies.length > 0) {
-          if (counterMoviesNew > 0) {
-            let initialCardsMovies = [];
-            initialCardsMovies = moviesScreachCurrent.slice(initialCounter, counterMoviesNew);
-            setInitialMovies(initialCardsMovies);
-            setCounterMoviesNew(counterMoviesNew);
-          } else {
-            let initialCardsMovies = [];
-            if(moviesScreachCurrent.length > 0) {
-              initialCardsMovies = moviesScreachCurrent.slice(initialCounter, counterMovies);
-              setInitialMovies(initialCardsMovies);
-            }
-          }
+    if (localStorage.getItem("moviesScreach")) {
+      if (moviesAll.length === 0 || moviesAll === undefined) {
+        onMoviesAll();
+      }      
+      setLoader(true);
+      restoreCheckboxState();
+      const movies = localStorage.getItem("moviesScreach");
+      const moviesScreachCurrent = JSON.parse(movies);
+      const textScreachCurrent = localStorage.getItem("textScreach");
+      const counter = localStorage.getItem("counterView");
+      const {counterMovies, counterMoviesNew } = JSON.parse(counter);
+      setTextInput(textScreachCurrent);        
+      if (moviesScreachCurrent.length > 0) {
+        if (counterMoviesNew > 0) {
+          let initialCardsMovies = [];
+          initialCardsMovies = moviesScreachCurrent.slice(initialCounter, counterMoviesNew);
+          setInitialMovies(initialCardsMovies);
+          setCounterMoviesNew(counterMoviesNew);
         } else {
-          setNotFoundMovies(true);
+          let initialCardsMovies = [];
+          initialCardsMovies = moviesScreachCurrent.slice(initialCounter, counterMovies);
+          setInitialMovies(initialCardsMovies);
         }
       }
+      setLoader(false);
     }
-  }, [loggedIn]);
+  }, [isOpen]);
 
   React.useEffect(() => {
     if(counterMoviesNew === undefined) {
@@ -127,8 +143,9 @@ function Movies({ onСlearError, isErrorActive, onMoviesAll, moviesAll, onMovieL
   }, [moviesListNew, counterMovies, counterMoviesNew]);
 
   function handleMoviesFilter(item, isActiveFilter) {
+    saveCheckboxState();
     let movieListScreachNew;
-    if (isActiveFilter) {
+    if (isActiveFilter === true) {
       movieListScreachNew = item.filter(movie => 
         movie.duration <= filtersShortFilm
       )
@@ -159,40 +176,37 @@ function Movies({ onСlearError, isErrorActive, onMoviesAll, moviesAll, onMovieL
   }
 
   function handleUpdateMoviesList(item) {
-    setTextInput(item.name);
     onСlearError();
-    setLoader(true);
     onMoviesAll();
-    setMoviesListNew([]);
-    setNotFoundMovies(false);    
-    const {checkLanguageRu, checkLanguageEn} = onInputLanguage(item.name);
-    let movieListScreach;
-    if (checkLanguageRu) {
-      movieListScreach = moviesList.filter(movie => {
-        const nameRu = movie.nameRU.toLowerCase();
-        return (nameRu.includes(item.name))
-      });
-      if (movieListScreach.length === 0) {
-        setNotFoundMovies(true);
+    if (moviesList.length > 0) {
+      setNotFoundMovies(false);    
+      const {checkLanguageRu, checkLanguageEn} = onInputLanguage(item.name);
+      let movieListScreach;
+      setLoader(true);
+      if (checkLanguageRu) {
+        movieListScreach = moviesList.filter(movie => {
+          const nameRu = movie.nameRU.toLowerCase();
+          return (nameRu.includes(item.name))
+        });
+      } else if (checkLanguageEn) {
+        movieListScreach = moviesList.filter(movie => {
+          const nameEn = movie.nameEN.toLowerCase();
+          return (nameEn.includes(item.name))
+        });
       }
-    } else if (checkLanguageEn) {
-      movieListScreach = moviesList.filter(movie => {
-        const nameEn = movie.nameEN.toLowerCase();
-        return (nameEn.includes(item.name))
-      });
-      if (movieListScreach.length === 0) {
+      saveData(item.name, movieListScreach); 
+      const movieListScreachNew = handleMoviesFilter(movieListScreach, isActiveFilter);
+      if (movieListScreachNew.length === 0) {
         setNotFoundMovies(true);
-      }
+      } else {
+        setMoviesListNew(movieListScreachNew);
+        const initialCardsMovies = handleDisplayPart(movieListScreachNew);
+        setInitialMovies(initialCardsMovies);
+      }      
+      saveCheckboxState();
+    } else {
+      setLoader(true);
     }
-    const movieListScreachNew = handleMoviesFilter(movieListScreach, isActiveFilter);
-    if (movieListScreachNew.length === 0) {
-      setNotFoundMovies(true);
-    }
-    setMoviesListNew(movieListScreachNew);
-    const initialCardsMovies = handleDisplayPart(movieListScreachNew);
-    setInitialMovies(initialCardsMovies);
-    saveData();
-    setLoader(false);
   }
  
   function handleChangeDescription(item) {

@@ -6,7 +6,7 @@ import useFormValidator from '../../hooks/useFormValidator';
 import useErrorsServer from '../../hooks/useErrorsServer';
 import './Profile.css';
 
-export default function Profile({onSignOut, onUpdateUser, loggedIn, onAuthorization, onNavigation, onActiveMenu, isError, isLoad, onСlearError}) {
+export default function Profile({onSignOut, onUpdateUser, loggedIn, onAuthorization, onNavigation, onActiveMenu, error, isLoad, onСlearError}) {
   const currentUser = React.useContext(CurrentUserContext);
   const [isActive, setActive] = React.useState(false);
   const [isName, setName] = React.useState('');
@@ -23,9 +23,9 @@ export default function Profile({onSignOut, onUpdateUser, loggedIn, onAuthorizat
   }
 
   React.useEffect(() => {
-    setErrorServer(isError);
+    setErrorServer(error);
     handleErrorsStatus(isErrorServer);
-  }, [handleErrorsStatus, isError, isErrorServer]);
+  }, [handleErrorsStatus, error, isErrorServer]);
 
   React.useEffect(() => {
     if(isLoad === false) {

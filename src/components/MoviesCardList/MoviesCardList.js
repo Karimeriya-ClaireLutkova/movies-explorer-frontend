@@ -32,7 +32,7 @@ function MoviesCardList({ cardsMovies, onMovieLike, onMovieDelete, isErrorActive
         <p className="elements__text">Ничего не найдено.</p>
       )}
       </div>
-      <div className={`elements__container ${ pathname === '/saved-movies' ? "elements__container_saved-movies" : ""}`}>
+      <div className={`elements__container ${ pathname === "/saved-movies" ? "elements__container_saved-movies" : ""}`}>
         { pathname === "/movies" && (
           cardsMovies.map((movie, i) => (<MoviesCard id="1" key={movie.id} movie={movie} onMovieLike={onMovieLike} onMovieDelete={onMovieDelete} />))
         )}

@@ -14,6 +14,7 @@ import mainApi from '../../utils/MainApi.js';
 import moviesApi from '../../utils/MoviesApi.js';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext.js';
 import { register, authorization, getContent } from '../../utils/Auth.js';
+import useErrorsServer from '../../hooks/useErrorsServer';
 
 function App() {
   const [currentUser, setCurrentUser] = React.useState({});
@@ -25,6 +26,8 @@ function App() {
   const [error, setError] = React.useState('');
   const navigate = useNavigate();
   const { pathname } = useLocation();
+  const { messageError, handleErrorsStatus } = useErrorsServer();
+  const [isOpen, setOpen] = React.useState(true);
 
   React.useEffect(() => {
     const tokenCheck = () => {
@@ -39,32 +42,31 @@ function App() {
               navigate(pathname);
             })
             .catch((err) => {
-              console.log(err);
+              handleErrorsStatus(err, pathname);
+              console.log(messageError);
             })
             .finally(() => {
               setLoad(false);
             })
         }
+      } else {
+        navigate("/", {replace: true});
       }
-    };
+    }
     tokenCheck();    
   }, []);
 
   React.useEffect(() => {
     if(loggedIn) {
-      setLoad(true);
       Promise.all([mainApi.getUserInfo(), mainApi.getMovies()])
         .then(([user, moviesSaved]) => {
           setCurrentUser(user);
           setMoviesSaved(moviesSaved);
-      })
-      .catch((err) => {
-        console.log(err);
-      })
-      .finally(() => {
-        setLoad(false);
-      });
-  }
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+    }
   }, [loggedIn]);
 
   function handleMoviesAll() {
@@ -114,7 +116,7 @@ function App() {
         setError(err)
       })
       .finally(() => {
-        setLoad(false)
+        setLoad(false);
       });
   }
 
@@ -127,7 +129,7 @@ function App() {
             setCurrentUser(user);
           })
           .catch((err) => {
-            console.log(err);
+            setError(err);
           })
           .finally(() => {
             setLoad(false);
@@ -244,6 +246,7 @@ function App() {
     localStorage.removeItem('counterView');
     setLoggedIn(false);
     setCurrentUser({});
+    setOpen(false)
     navigate('/', { replace: true });
   }
 
@@ -266,6 +269,7 @@ function App() {
         </Route>
         <Route path="/movies" element={
           <ProtectedRoute pathname="/movies"
+                 isOpen={isOpen}
                  component={Movies}
                  onMovieLike={handleMovieLike}
                  onMoviesAll={handleMoviesAll}
@@ -315,7 +319,8 @@ function App() {
           ) : (
           <Register onSubmit={handleRegisterSubmit}
                     error={error} 
-                    onСlearError={handleСlearError} />
+                    onСlearError={handleСlearError}
+                     />
         )}>
         </Route>
         <Route path="/sign-in" element={
@@ -323,7 +328,8 @@ function App() {
           ) : (
           <Login onSubmit={handleLoginSubmit}
                  error={error}
-                 onСlearError={handleСlearError} />
+                 onСlearError={handleСlearError}
+                  />
           )}>
         </Route>
         <Route path="*" element={

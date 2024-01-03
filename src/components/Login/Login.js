@@ -3,18 +3,20 @@ import Header from '../Header/Header';
 import PopupWithForm from '../PopupWithForm/PopupWithForm';
 import useFormValidator from '../../hooks/useFormValidator';
 import useErrorsServer from '../../hooks/useErrorsServer';
+import { useLocation } from 'react-router-dom';
 
-export default function Login ({ onSubmit, isLoad, isError, onСlearError}) {
+export default function Login ({ onSubmit, isLoad, error, onСlearError}) {
+  const { pathname } = useLocation();
   const [userEmail, setUserEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
-  const [isErrorServer, setErrorServer] = React.useState('');
+  const [errorServer, setErrorServer] = React.useState('');
   const { errors, isValid, handleChange, resetForm } = useFormValidator();
   const { messageError, handleErrorsStatus, resetError } = useErrorsServer();
 
   React.useEffect(() => {
-    setErrorServer(isError);
-    handleErrorsStatus(isErrorServer);
-  }, [handleErrorsStatus, isError, isErrorServer]);
+    setErrorServer(error);
+    handleErrorsStatus(errorServer, pathname);
+  }, [handleErrorsStatus, error, errorServer, pathname]);
 
   function handleChangeInput(evt) {
     onСlearError();
