@@ -27,7 +27,6 @@ function App() {
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const { messageError, handleErrorsStatus } = useErrorsServer();
-  const [isOpen, setOpen] = React.useState(true);
 
   React.useEffect(() => {
     const tokenCheck = () => {
@@ -53,19 +52,21 @@ function App() {
         navigate("/", {replace: true});
       }
     }
-    tokenCheck();    
+    tokenCheck();
   }, []);
 
   React.useEffect(() => {
     if(loggedIn) {
-      Promise.all([mainApi.getUserInfo(), mainApi.getMovies()])
-        .then(([user, moviesSaved]) => {
-          setCurrentUser(user);
+      mainApi.getMovies()
+        .then((moviesSaved) => {
           setMoviesSaved(moviesSaved);
         })
         .catch((err) => {
           console.log(err);
         })
+        if (localStorage.getItem("moviesScreach")) {
+          handleMoviesAll();
+        }
     }
   }, [loggedIn]);
 
@@ -246,7 +247,6 @@ function App() {
     localStorage.removeItem('counterView');
     setLoggedIn(false);
     setCurrentUser({});
-    setOpen(false)
     navigate('/', { replace: true });
   }
 
@@ -267,13 +267,13 @@ function App() {
           />
         }>
         </Route>
-        <Route path="/movies" element={
-          <ProtectedRoute pathname="/movies"
-                 isOpen={isOpen}
+        <Route path="movies" element={
+          <ProtectedRoute
                  component={Movies}
                  onMovieLike={handleMovieLike}
                  onMoviesAll={handleMoviesAll}
                  moviesAll={moviesAll}
+                 moviesSaved={moviesSaved}
                  loggedIn={loggedIn}
                  onAuthorization={handleProfileNav}
                  onNavigation={handleCloseNavigationBar}
@@ -285,22 +285,22 @@ function App() {
           />
         }>
         </Route>
-        <Route path="/saved-movies" element={
-          <ProtectedRoute pathname="/saved-movies"
-                       component={SavedMovies}
-                       moviesSaved={moviesSaved}
-                       onMovieDelete={handleMovieDelete}
-                       loggedIn={loggedIn}
-                       onAuthorization={handleProfileNav}
-                       onNavigation={handleCloseNavigationBar}
-                       onActiveMenu={handleActiveMenu}
-                       isLoad={isLoad}
-                       onInputLanguage={handleInputLanguage}               
+        <Route path="saved-movies" element={
+          <ProtectedRoute
+                  component={SavedMovies}
+                  moviesSaved={moviesSaved}
+                  onMovieDelete={handleMovieDelete}
+                  loggedIn={loggedIn}
+                  onAuthorization={handleProfileNav}
+                  onNavigation={handleCloseNavigationBar}
+                  onActiveMenu={handleActiveMenu}
+                  isLoad={isLoad}
+                  onInputLanguage={handleInputLanguage}               
           />
         }>
         </Route>
-        <Route path="/profile" element={
-          <ProtectedRoute pathname="/profile"
+        <Route path="profile" element={
+          <ProtectedRoute
                    component={Profile}
                    loggedIn={loggedIn}
                    onSignOut={signOut}
@@ -314,7 +314,7 @@ function App() {
           />
         }>
         </Route>
-        <Route path="/sign-up" element={
+        <Route path="sign-up" element={
           loggedIn ? (<Navigate to="/movies" replace />
           ) : (
           <Register onSubmit={handleRegisterSubmit}
@@ -323,7 +323,7 @@ function App() {
                      />
         )}>
         </Route>
-        <Route path="/sign-in" element={
+        <Route path="sign-in" element={
           loggedIn ? (<Navigate to="/movies" replace />
           ) : (
           <Login onSubmit={handleLoginSubmit}

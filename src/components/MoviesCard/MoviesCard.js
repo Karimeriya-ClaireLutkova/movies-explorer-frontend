@@ -20,7 +20,7 @@ function MoviesCard({ movie, onMovieLike, onMovieDelete}) {
     } else {
       setLike(true);
     }
-  }, [movie.owner, movie]);
+  }, [movie]);
 
   function handleLikeClick() {
     if (movie.owner === '' || movie.owner === undefined) {
