@@ -21,7 +21,7 @@ function Movies({ onСlearError, isErrorActive, onMoviesAll, moviesAll, moviesSa
   const [moviesListNew, setMoviesListNew] = React.useState([]);
   const [isButtonInactive, setButtonInactive] = React.useState(true);
   const [isNotFoundMovies, setNotFoundMovies] = React.useState(false);
-  const [textInput, setTextInput] = React.useState(moviesStorage ? textScreachCurrent : '');
+  const [textInput, setTextInput] = React.useState('');
   const [initialMovies, setInitialMovies] = React.useState([]);
   
   function handleCounterWidth(item) {
@@ -81,29 +81,46 @@ function Movies({ onСlearError, isErrorActive, onMoviesAll, moviesAll, moviesSa
   React.useEffect(() => {
     setMoviesListSaved(moviesSaved)
   }, [moviesSaved]);
+
+  React.useEffect(() => {
+    restoreCheckboxState();
+  }, []);
   
   React.useEffect(() => {
-    if (moviesStorage) {
-      setLoader(true);
-      const checkbox = localStorage.getItem("filter");
-      const movieListStorageNew = handleMoviesFilter(moviesScreachCurrent, checkbox);
-      if (movieListStorageNew.length === 0) {
-        setNotFoundMovies(true);
-      } else {
+    const restoreDataSearch = () => {
+      if (moviesStorage) {
+        setLoader(true);        
+        setActiveFilter(restoreCheckboxState());
+        setTextInput(textScreachCurrent);
         if (moviesListSaved.length > 0) {
           let cardsMoviesStorageLike;
-          cardsMoviesStorageLike = movieListStorageNew.map(item => checkMoviesLike(item));
-          setMoviesListNew(cardsMoviesStorageLike);
-          const initialCardsMovies = handleDisplayPart(cardsMoviesStorageLike);
-          setInitialMovies(initialCardsMovies);
+          cardsMoviesStorageLike = moviesScreachCurrent.map(item => checkMoviesLike(item));
+          if (cardsMoviesStorageLike.length === 0) {
+            setNotFoundMovies(true);
+          } else {
+            setMoviesListNew(cardsMoviesStorageLike);
+            const movieListStorageNew = handleMoviesFilter(cardsMoviesStorageLike, restoreCheckboxState());
+            if (movieListStorageNew.length === 0) {
+              setNotFoundMovies(true);
+            } else {
+              const initialCardsMovies = handleDisplayPart(movieListStorageNew);
+              setInitialMovies(initialCardsMovies);
+            }
+          }
         } else {
-          setMoviesListNew(movieListStorageNew);
-          const initialCardsMovies = handleDisplayPart(movieListStorageNew);
-          setInitialMovies(initialCardsMovies);
+          setMoviesListNew(moviesScreachCurrent);
+          const movieListStorageNew = handleMoviesFilter(moviesScreachCurrent, restoreCheckboxState());
+          if (movieListStorageNew.length === 0) {
+            setNotFoundMovies(true);
+          } else {
+            const initialCardsMovies = handleDisplayPart(movieListStorageNew);
+            setInitialMovies(initialCardsMovies);
+          }
         }
       }
       setLoader(false);
     }
+    restoreDataSearch();
   }, [moviesListSaved]);
 
   function saveData(item, movies) {
@@ -113,23 +130,22 @@ function Movies({ onСlearError, isErrorActive, onMoviesAll, moviesAll, moviesSa
 
   function saveCheckboxState() {
     const checkboxes = document.querySelector('input[type="checkbox"]');
-    let checkboxState;
-    checkboxState = checkboxes.checked;
-    localStorage.setItem("filter", checkboxState);
+    let checkboxState = {};
+    checkboxState = {
+      checked: checkboxes.checked
+    };
+    localStorage.setItem("filter", JSON.stringify(checkboxState));
   }
   
   function restoreCheckboxState() {
-    const checkbox = localStorage.getItem("filter");
+    const checkboxCurrent = localStorage.getItem("filter");
+    const checkbox = JSON.parse(checkboxCurrent);
     if (checkbox) {
       const checkboxNew = document.querySelector('input[type="checkbox"]');
-      checkboxNew.checked = checkbox;
-      setActiveFilter(checkbox);
+      checkboxNew.checked = checkbox.checked;
+      return checkbox.checked;
     }
   }
-
-  React.useEffect(() => {
-    restoreCheckboxState();
-  }, []);
 
 /*
   function saveCheckboxState() {
@@ -187,8 +203,8 @@ function Movies({ onСlearError, isErrorActive, onMoviesAll, moviesAll, moviesSa
 
   function handleMoviesFilter(item, isActiveFilter) {
     let movieListScreachNew;
-    if (isActiveFilter === true) {
-      movieListScreachNew = item.filter(movie => 
+    if (isActiveFilter) {
+      movieListScreachNew = item.filter((movie) => 
         movie.duration <= filtersShortFilm
       )
     } else {
@@ -200,8 +216,12 @@ function Movies({ onСlearError, isErrorActive, onMoviesAll, moviesAll, moviesSa
 
   function handleDisplayPart(item) {
     let initialCardsMovies = [];
-    if (item.length > counterMovies) {
+    if (item.length > counterMovies && counterMovies !== undefined) {
       initialCardsMovies = item.slice(initialCounter, counterMovies);
+      setButtonInactive(false);
+    } else if(counterMovies === undefined) {
+      const counterCurrent = handleCounterWidth(windowDimensions);
+      initialCardsMovies = item.slice(initialCounter, counterCurrent);
       setButtonInactive(false);
     } else {
       initialCardsMovies = item;
@@ -219,13 +239,20 @@ function Movies({ onСlearError, isErrorActive, onMoviesAll, moviesAll, moviesSa
 
   function checkMoviesLike(movie) {
     let card;
-    moviesListSaved.map(item => item.movieId === movie.id ? card = {...movie, owner: item.owner} : card = movie);
+    const movieAvailability = moviesSaved.find(i => i.movieId === movie.id);
+    if(movieAvailability) {
+      moviesSaved.map(item => item.movieId === movie.id ? card = {...movie, owner: item.owner} : '');      
+    } else {
+      card = movie;
+    }
     return card;
   }
 
   function handleUpdateMoviesList(item) {
     onСlearError();
     setLoader(true);
+    setInitialMovies([]);
+    setMoviesListNew([]);
     onMoviesAll();
     setNotFoundMovies(false);    
     const {checkLanguageRu, checkLanguageEn} = onInputLanguage(item.name);
