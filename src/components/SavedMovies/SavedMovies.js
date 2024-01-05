@@ -12,9 +12,9 @@ function SavedMovies({ onMovieDelete, isLoad, loggedIn, onAuthorization, onNavig
   const [isNotFoundMovies, setNotFoundMovies] = React.useState(false);
   const [moviesList, setMoviesList] = React.useState([]);
 
- /* React.useEffect(() => {
+  React.useEffect(() => {
     setLoading(isLoad)
-  }, [isLoad])*/
+  }, [isLoad])
 
   React.useEffect(() => {
     setMoviesListNew(moviesSaved);

@@ -191,6 +191,7 @@ function App() {
   }
 
   function handleMovieDelete(movie) {
+    setLoad(true);
     mainApi.deleteMovie(movie._id) 
       .then((newMovie) => {
         const cards = moviesAll.map(item => item.id === newMovie.movieId ? {...item, owner: ''} : item);
@@ -201,6 +202,9 @@ function App() {
       .catch((err) => {
         console.error(err)
       })
+      .finally(() => {
+        setLoad(false);
+      });
   }
 
   function handleProfileNav() {

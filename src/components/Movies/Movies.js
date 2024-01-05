@@ -85,9 +85,8 @@ function Movies({ onСlearError, isErrorActive, onMoviesAll, moviesAll, moviesSa
   React.useEffect(() => {
     restoreCheckboxState();
   }, []);
-  
   React.useEffect(() => {
-    const restoreDataSearch = () => {
+    if(loggedIn) {
       if (moviesStorage) {
         setLoader(true);        
         setActiveFilter(restoreCheckboxState());
@@ -119,9 +118,8 @@ function Movies({ onСlearError, isErrorActive, onMoviesAll, moviesAll, moviesSa
         }
       }
       setLoader(false);
-    }
-    restoreDataSearch();
-  }, [moviesListSaved]);
+    }      
+  }, [loggedIn, moviesListSaved]);
 
   function saveData(item, movies) {
     localStorage.setItem("moviesScreach", JSON.stringify(movies));
@@ -185,7 +183,6 @@ function Movies({ onСlearError, isErrorActive, onMoviesAll, moviesAll, moviesSa
       setLoader(false);
     }
   }, [isOpen]);
-  */
 
   React.useEffect(() => {
     if(counterMoviesNew === undefined) {
@@ -200,6 +197,7 @@ function Movies({ onСlearError, isErrorActive, onMoviesAll, moviesAll, moviesSa
       setInitialMovies(initialCardsMovies);
     }
   }, [moviesListNew, counterMovies, counterMoviesNew]);
+  */
 
   function handleMoviesFilter(item, isActiveFilter) {
     let movieListScreachNew;
@@ -216,16 +214,19 @@ function Movies({ onСlearError, isErrorActive, onMoviesAll, moviesAll, moviesSa
 
   function handleDisplayPart(item) {
     let initialCardsMovies = [];
+    console.log(item.length, counterMovies);
     if (item.length > counterMovies && counterMovies !== undefined) {
       initialCardsMovies = item.slice(initialCounter, counterMovies);
       setButtonInactive(false);
     } else if(counterMovies === undefined) {
       const counterCurrent = handleCounterWidth(windowDimensions);
       initialCardsMovies = item.slice(initialCounter, counterCurrent);
+      console.log(initialCardsMovies);
       setButtonInactive(false);
-    } else {
+    } else if(item.length < counterMovies && counterMovies !== undefined){
       initialCardsMovies = item;
       setButtonInactive(true);
+      console.log(initialCardsMovies, counterMovies);
     }
     return initialCardsMovies;
   }
