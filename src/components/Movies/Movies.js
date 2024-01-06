@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import Header from '../Header/Header';
 import Preloader from '../Preloader/Preloader';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
@@ -23,7 +23,7 @@ function Movies({ onСlearError, isErrorActive, onMoviesAll, moviesAll, moviesSa
   const [isNotFoundMovies, setNotFoundMovies] = React.useState(false);
   const [textInput, setTextInput] = React.useState('');
   const [initialMovies, setInitialMovies] = React.useState([]);
-  
+
   function handleCounterWidth(item) {
     let count;
     if (item.width < SCREEN_MIN) {
@@ -66,6 +66,7 @@ function Movies({ onСlearError, isErrorActive, onMoviesAll, moviesAll, moviesSa
     function runOnlyPageLoad() {
       const counterCurrent = handleCounterWidth(windowDimensions);
       setCounterMovies(counterCurrent);
+      setCounterMoviesNew();
     }
     runOnlyPageLoad();
   }, [windowDimensions]);
@@ -79,13 +80,69 @@ function Movies({ onСlearError, isErrorActive, onMoviesAll, moviesAll, moviesSa
   }, [moviesAll]);
 
   React.useEffect(() => {
-    setMoviesListSaved(moviesSaved)
+    setMoviesListSaved(moviesSaved);
+  }, [moviesSaved]);
+
+  React.useEffect(() => {
+    const cardsMoviesStorageLike = throughIterateArray(moviesListNew);
+    setMoviesListNew(cardsMoviesStorageLike);
+    if(isActiveFilter === true) {
+      const moviesFilter = handleMoviesFilter(cardsMoviesStorageLike, isActiveFilter);
+      setInitialMovies(moviesFilter);
+      console.log(moviesFilter);
+    }
   }, [moviesSaved]);
 
   React.useEffect(() => {
     restoreCheckboxState();
   }, []);
+
   React.useEffect(() => {
+    let initialCardsMovies = [];
+    if(counterMoviesNew === undefined) {
+      if(moviesListNew.length > 0) {
+        initialCardsMovies = handleDisplayPart(moviesListNew);
+      }
+    } else {
+      const counterCurrent = handleCounterWidth(windowDimensions);
+      if(counterCurrent !== counterMovies) {
+        if(counterMoviesNew < counterCurrent) {
+          if(moviesListNew.length > counterMoviesNew) {
+            initialCardsMovies = moviesListNew.slice(initialCounter, counterMoviesNew);
+            setButtonInactive(false);
+          } else {
+            initialCardsMovies = moviesListNew;
+            setButtonInactive(true);
+          }
+        } else {
+          if(moviesListNew.length > counterCurrent) {
+            initialCardsMovies = moviesListNew.slice(initialCounter, counterCurrent);
+            setButtonInactive(false);
+          } else {
+            initialCardsMovies = moviesListNew;
+            setButtonInactive(true);
+          }
+        }
+      } else {
+        if(moviesListNew.length > counterMoviesNew) {
+          initialCardsMovies = moviesListNew.slice(initialCounter, counterMoviesNew);
+          setButtonInactive(false);
+        } else {
+          initialCardsMovies = moviesListNew;
+          setButtonInactive(true);
+        }
+      }
+    }
+    if(isActiveFilter === true) {
+      const moviesFilter = handleMoviesFilter(initialCardsMovies, isActiveFilter);
+      setInitialMovies(moviesFilter);
+      console.log(moviesFilter);
+    } else {
+      setInitialMovies(initialCardsMovies);
+    }
+  }, [moviesListNew, counterMovies, counterMoviesNew, windowDimensions]);
+
+  /*React.useEffect(() => {
     if(loggedIn) {
       if (moviesStorage) {
         setLoader(true);        
@@ -120,6 +177,57 @@ function Movies({ onСlearError, isErrorActive, onMoviesAll, moviesAll, moviesSa
       setLoader(false);
     }      
   }, [loggedIn, moviesListSaved]);
+  
+  React.useEffect(() => {
+    if(loggedIn) {
+      if (moviesStorage) {
+        const restoreDataHistory = () => {
+          setLoader(true);        
+          setActiveFilter(restoreCheckboxState());
+          setTextInput(textScreachCurrent);
+          const cardsMoviesStorageLike = throughIterateArray(moviesScreachCurrent);
+          setMoviesListNew(cardsMoviesStorageLike);
+          const movieListStorageNew = handleMoviesFilter(cardsMoviesStorageLike, restoreCheckboxState());
+          const resultNew = checkAvailabilityResult(movieListStorageNew);
+          if (resultNew) {
+            const initialCardsMovies = handleDisplayPart(movieListStorageNew);
+            setInitialMovies(initialCardsMovies);
+          } else {
+            setNotFoundMovies(true);
+          }
+        }
+        restoreDataHistory();
+        setLoader(false);
+      }
+    }      
+  }, [loggedIn]);*/
+
+  React.useEffect(() => {
+    if(loggedIn) {
+      if (moviesStorage) {
+        setLoader(true);
+        const restoreDataHistory = () => {
+          setLoader(true);
+          setActiveFilter(restoreCheckboxState());
+          setTextInput(textScreachCurrent);
+          const cardsMoviesStorageLike = throughIterateArray(moviesScreachCurrent);
+          setMoviesListNew(cardsMoviesStorageLike);
+          const movieListStorageNew = handleMoviesFilter(cardsMoviesStorageLike, restoreCheckboxState());
+          const resultNew = checkAvailabilityResult(movieListStorageNew);
+          if (resultNew) {
+            const initialCardsMovies = handleDisplayPart(movieListStorageNew);
+            setInitialMovies(initialCardsMovies);
+          } else {
+            setNotFoundMovies(true);
+          }
+        }
+        restoreDataHistory();
+        setLoader(false);
+      }
+    }      
+  }, [loggedIn]);
+
+ 
 
   function saveData(item, movies) {
     localStorage.setItem("moviesScreach", JSON.stringify(movies));
@@ -197,7 +305,39 @@ function Movies({ onСlearError, isErrorActive, onMoviesAll, moviesAll, moviesSa
       setInitialMovies(initialCardsMovies);
     }
   }, [moviesListNew, counterMovies, counterMoviesNew]);
+   function handleDisplayPart(item) {
+    let initialCardsMovies = [];
+    if (item.length > counterMovies && counterMovies !== undefined) {
+      initialCardsMovies = item.slice(initialCounter, counterMovies);
+      setButtonInactive(false);
+    } else if(counterMovies === undefined) {
+      const counterCurrent = handleCounterWidth(windowDimensions);
+      initialCardsMovies = item.slice(initialCounter, counterCurrent);
+      setButtonInactive(false);
+    } else {
+      initialCardsMovies = item;
+      setButtonInactive(true);
+    }
+    return initialCardsMovies;
+  }
   */
+  function throughIterateArray(items) {
+    let listMoviesLike;
+    if (moviesListSaved.length > 0) {
+      listMoviesLike = items.map(item => checkMoviesLike(item));
+    } else {
+      listMoviesLike = items;
+    }
+    return listMoviesLike;
+  }
+
+  function checkAvailabilityResult(item) {
+    if (item.length === 0) {
+      return false;
+    } else {
+      return true;
+    }
+  }
 
   function handleMoviesFilter(item, isActiveFilter) {
     let movieListScreachNew;
@@ -214,20 +354,26 @@ function Movies({ onСlearError, isErrorActive, onMoviesAll, moviesAll, moviesSa
 
   function handleDisplayPart(item) {
     let initialCardsMovies = [];
-    console.log(item.length, counterMovies);
-    if (item.length > counterMovies && counterMovies !== undefined) {
-      initialCardsMovies = item.slice(initialCounter, counterMovies);
-      setButtonInactive(false);
-    } else if(counterMovies === undefined) {
+    if (counterMovies === undefined) {
       const counterCurrent = handleCounterWidth(windowDimensions);
-      initialCardsMovies = item.slice(initialCounter, counterCurrent);
-      console.log(initialCardsMovies);
-      setButtonInactive(false);
-    } else if(item.length < counterMovies && counterMovies !== undefined){
-      initialCardsMovies = item;
-      setButtonInactive(true);
-      console.log(initialCardsMovies, counterMovies);
+      setCounterMovies(counterCurrent);
+      if(item.length > counterCurrent) {
+        initialCardsMovies = item.slice(initialCounter, counterCurrent);
+        setButtonInactive(false);
+      } else {
+        initialCardsMovies = item;
+        setButtonInactive(true);
+      }     
+    } else {
+      if (item.length > counterMovies) {
+        initialCardsMovies = item.slice(initialCounter, counterMovies);
+        setButtonInactive(false);
+      } else {
+        initialCardsMovies = item;
+        setButtonInactive(true);
+      }
     }
+    
     return initialCardsMovies;
   }
   
@@ -235,6 +381,7 @@ function Movies({ onСlearError, isErrorActive, onMoviesAll, moviesAll, moviesSa
     setActiveFilter(isActive);
     let movies;
     movies = handleMoviesFilter(moviesListNew, isActive);
+    console.log(movies);
     setInitialMovies(handleDisplayPart(movies));
   }
 
@@ -250,12 +397,11 @@ function Movies({ onСlearError, isErrorActive, onMoviesAll, moviesAll, moviesSa
   }
 
   function handleUpdateMoviesList(item) {
-    onСlearError();
     setLoader(true);
+    onСlearError();
     setInitialMovies([]);
     setMoviesListNew([]);
-    onMoviesAll();
-    setNotFoundMovies(false);    
+    setNotFoundMovies(false);
     const {checkLanguageRu, checkLanguageEn} = onInputLanguage(item.name);
     let movieListScreach;
     if (checkLanguageRu) {
@@ -269,23 +415,18 @@ function Movies({ onСlearError, isErrorActive, onMoviesAll, moviesAll, moviesSa
         return (nameEn.includes(item.name))
       });
     }
-    saveData(item.name, movieListScreach); 
-    const movieListScreachNew = handleMoviesFilter(movieListScreach, isActiveFilter);
-    if (movieListScreachNew.length === 0) {
-      setNotFoundMovies(true);
+    saveData(item.name, movieListScreach);
+    const moviesLike = throughIterateArray(movieListScreach);
+    setMoviesListNew(moviesLike);
+    const moviesListFilterNew = handleMoviesFilter(moviesLike, isActiveFilter);
+    const resultNew = checkAvailabilityResult(moviesListFilterNew);
+    if (resultNew) {
+      const initialCardsMovies = handleDisplayPart(moviesListFilterNew);
+      setInitialMovies(initialCardsMovies);
     } else {
-      setMoviesListNew(movieListScreachNew);
-      const initialCardsMovies = handleDisplayPart(movieListScreachNew);
-      if (moviesListSaved.length > 0) {
-        let initialCardsMoviesLike;
-        initialCardsMoviesLike = initialCardsMovies.map(item => checkMoviesLike(item));
-        setInitialMovies(initialCardsMoviesLike);
-      } else {
-        setInitialMovies(initialCardsMovies);
-      }  
+      setNotFoundMovies(true);
     }
     saveCheckboxState();
-    setLoader(false);
   }
  
   function handleChangeDescription(item) {
