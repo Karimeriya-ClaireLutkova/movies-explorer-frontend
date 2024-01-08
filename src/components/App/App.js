@@ -11,7 +11,6 @@ import Login from '../Login/Login';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import { urlBeginning } from '../../utils/constants';
 import mainApi from '../../utils/MainApi.js';
-import moviesApi from '../../utils/MoviesApi.js';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext.js';
 import { register, authorization, getContent } from '../../utils/Auth.js';
 import useErrorsServer from '../../hooks/useErrorsServer';
@@ -20,7 +19,6 @@ function App() {
   const [currentUser, setCurrentUser] = React.useState({});
   const [isLoad, setLoad] = React.useState(false);
   const [loggedIn, setLoggedIn] = React.useState(false);
-  const [isErrorActive, setErrorActive] = React.useState(false);
   const [moviesSaved, setMoviesSaved] = React.useState([]);
   const [moviesAll, setMoviesAll] = React.useState([]);
   const [error, setError] = React.useState('');
@@ -57,31 +55,22 @@ function App() {
 
   React.useEffect(() => {
     if(loggedIn) {
-      mainApi.getMovies()
-        .then((moviesSaved) => {
+      Promise.all([mainApi.getUserInfo(), mainApi.getMovies()])
+        .then(([user, moviesSaved]) => {
+          setCurrentUser(user);
           setMoviesSaved(moviesSaved);
         })
         .catch((err) => {
           console.log(err);
         })
-        if (localStorage.getItem("moviesScreach")) {
-          handleMoviesAll();
-        }
+      if (localStorage.getItem("moviesScreach")) {
+        handleMoviesAll();
+      }
     }
   }, [loggedIn]);
 
-  function handleMoviesAll() {
-    setLoad(true);
-    moviesApi.getMovies()
-      .then((movies) => {
-        setMoviesAll(movies);
-      })
-      .catch((err) => {
-        setErrorActive(true);
-      })
-      .finally(() => {
-        setLoad(false);
-      });
+  function handleMoviesAll(item) {
+    setMoviesAll(item);
   }
 
   function handleCloseForm() {
@@ -256,7 +245,6 @@ function App() {
 
   function handleСlearError() {
     setError('');
-    setErrorActive('');
   }
 
   return (
@@ -283,8 +271,6 @@ function App() {
                  onNavigation={handleCloseNavigationBar}
                  onActiveMenu={handleActiveMenu}
                  isLoad={isLoad}
-                 onСlearError={handleСlearError}
-                 isErrorActive={isErrorActive}
                  onInputLanguage={handleInputLanguage}
           />
         }>

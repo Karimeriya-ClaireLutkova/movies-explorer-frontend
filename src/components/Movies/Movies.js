@@ -1,4 +1,5 @@
-import React, { useCallback } from 'react';
+import React from 'react';
+import moviesApi from '../../utils/MoviesApi.js';
 import Header from '../Header/Header';
 import Preloader from '../Preloader/Preloader';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
@@ -6,7 +7,7 @@ import { SCREEN_MIN, SCREEN_MEDIUM, SCREEN_BIG, filtersShortFilm } from '../../u
 import SearchForm from '../SearchForm/SearchForm';
 import './Movies.css';
 
-function Movies({ onСlearError, isErrorActive, onMoviesAll, moviesAll, moviesSaved, onMovieLike, loggedIn, onAuthorization, onNavigation, onActiveMenu, isLoad, onInputLanguage }) {
+function Movies({ moviesAll, onMoviesAll, moviesSaved, onMovieLike, loggedIn, onAuthorization, onNavigation, onActiveMenu, isLoad, onInputLanguage }) {
   const [windowDimensions, setWindowDimensions] = React.useState(getWindowDimensions());
   const moviesStorage = localStorage.getItem("moviesScreach");
   const moviesScreachCurrent = JSON.parse(moviesStorage);
@@ -19,6 +20,7 @@ function Movies({ onСlearError, isErrorActive, onMoviesAll, moviesAll, moviesSa
   const [counterMoviesNew, setCounterMoviesNew] = React.useState();
   const [isActiveFilter, setActiveFilter] = React.useState(false);
   const [moviesListNew, setMoviesListNew] = React.useState([]);
+  const [isErrorActive, setErrorActive] = React.useState(false);
   const [isButtonInactive, setButtonInactive] = React.useState(true);
   const [isNotFoundMovies, setNotFoundMovies] = React.useState(false);
   const [textInput, setTextInput] = React.useState('');
@@ -396,21 +398,44 @@ function Movies({ onСlearError, isErrorActive, onMoviesAll, moviesAll, moviesSa
     return card;
   }
 
-  function handleUpdateMoviesList(item) {
+  function getMoviesAll(movies) {
+    onMoviesAll(movies);
+  }
+
+  async function handleMoviesAll() {
+    try {
+      let movies = await moviesApi.getMovies();
+      setMoviesList(movies);
+      getMoviesAll(movies);
+      return movies;
+    } catch {
+      setErrorActive(true);
+    }
+  }
+
+  function handleСlearError() {
+    setErrorActive('');
+  }   
+
+  async function handleUpdateMoviesList(item) {
     setLoader(true);
-    onСlearError();
+    handleСlearError();
     setInitialMovies([]);
     setMoviesListNew([]);
     setNotFoundMovies(false);
+    let promise = new Promise((resolve) => {
+      resolve(handleMoviesAll());
+    })
+    let moviesListAll = await promise;
     const {checkLanguageRu, checkLanguageEn} = onInputLanguage(item.name);
     let movieListScreach;
     if (checkLanguageRu) {
-      movieListScreach = moviesList.filter(movie => {
+      movieListScreach = moviesListAll.filter(movie => {
         const nameRu = movie.nameRU.toLowerCase();
         return (nameRu.includes(item.name))
       });
     } else if (checkLanguageEn) {
-      movieListScreach = moviesList.filter(movie => {
+      movieListScreach = moviesListAll.filter(movie => {
         const nameEn = movie.nameEN.toLowerCase();
         return (nameEn.includes(item.name))
       });
@@ -427,6 +452,7 @@ function Movies({ onСlearError, isErrorActive, onMoviesAll, moviesAll, moviesSa
       setNotFoundMovies(true);
     }
     saveCheckboxState();
+    setLoader(false);
   }
  
   function handleChangeDescription(item) {
