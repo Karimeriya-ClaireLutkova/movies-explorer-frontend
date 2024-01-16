@@ -9,15 +9,12 @@ export default function Login ({ onSubmit, isLoad, error, onСlearError}) {
   const { pathname } = useLocation();
   const [userEmail, setUserEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
-  const [errorServer, setErrorServer] = React.useState('');
   const { errors, isValid, handleChange, resetForm } = useFormValidator();
   const { messageError, handleErrorsStatus, resetError } = useErrorsServer();
 
   React.useEffect(() => {
-    console.log(error);
-    setErrorServer(error);
     handleErrorsStatus(error, pathname);
-  }, [handleErrorsStatus, error, errorServer, pathname]);
+  }, [handleErrorsStatus, error, pathname]);
 
   function handleChangeInput(evt) {
     onСlearError();

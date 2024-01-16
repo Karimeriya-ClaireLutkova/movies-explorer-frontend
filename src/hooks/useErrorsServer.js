@@ -17,7 +17,6 @@ export default function useFormValidator() {
     const error = item.split(' ').slice(-1);
     if (item !== '' || item !== undefined) {
       const numberError = parseInt(error);
-      console.log(numberError, error);
       if (numberError === 400) {
         pathname === '/sign-up' && setMessageError(validationErrorRegister);
         pathname === '/sign-in' && setMessageError(unauthorizedError);
@@ -43,6 +42,5 @@ export default function useFormValidator() {
     }, [setMessageError]
   );
 
-  console.log(messageError);
   return { messageError, handleErrorsStatus, resetError };
 };
