@@ -14,12 +14,14 @@ export default function useFormValidator() {
   const [messageError, setMessageError] = React.useState('');
 
   const handleErrorsStatus = (item, pathname) => {
-    const error = item;
+    const error = item.split(' ').slice(-1);
     if (item !== '' || item !== undefined) {
       const numberError = parseInt(error);
+      console.log(numberError, error);
       if (numberError === 400) {
-        pathname === '/sign-up' ? setMessageError(validationErrorRegister)
-        : setMessageError(validationError)
+        pathname === '/sign-up' && setMessageError(validationErrorRegister);
+        pathname === '/sign-in' && setMessageError(unauthorizedError);
+        pathname === '/profile' && setMessageError(validationError);
       } else if (numberError === 401) {
         pathname === '/sign-in' && setMessageError(unauthorizedError);
         pathname === '/' && setMessageError(unauthorizedErrorToken);        
@@ -41,5 +43,6 @@ export default function useFormValidator() {
     }, [setMessageError]
   );
 
+  console.log(messageError);
   return { messageError, handleErrorsStatus, resetError };
 };

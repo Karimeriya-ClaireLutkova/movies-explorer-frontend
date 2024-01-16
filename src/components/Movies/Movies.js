@@ -88,11 +88,12 @@ function Movies({ moviesAll, onMoviesAll, moviesSaved, onMovieLike, loggedIn, on
   React.useEffect(() => {
     const cardsMoviesStorageLike = throughIterateArray(moviesListNew);
     setMoviesListNew(cardsMoviesStorageLike);
-    if(isActiveFilter === true) {
+    setLoader(false);
+    /*if(isActiveFilter === true) {
       const moviesFilter = handleMoviesFilter(cardsMoviesStorageLike, isActiveFilter);
       setInitialMovies(moviesFilter);
       console.log(moviesFilter);
-    }
+    }*/
   }, [moviesSaved]);
 
   React.useEffect(() => {
@@ -104,6 +105,7 @@ function Movies({ moviesAll, onMoviesAll, moviesSaved, onMovieLike, loggedIn, on
     if(counterMoviesNew === undefined) {
       if(moviesListNew.length > 0) {
         initialCardsMovies = handleDisplayPart(moviesListNew);
+        console.log(moviesListNew);
       }
     } else {
       const counterCurrent = handleCounterWidth(windowDimensions);
@@ -135,13 +137,10 @@ function Movies({ moviesAll, onMoviesAll, moviesSaved, onMovieLike, loggedIn, on
         }
       }
     }
-    if(isActiveFilter === true) {
-      const moviesFilter = handleMoviesFilter(initialCardsMovies, isActiveFilter);
-      setInitialMovies(moviesFilter);
-      console.log(moviesFilter);
-    } else {
-      setInitialMovies(initialCardsMovies);
-    }
+    console.log(initialCardsMovies);
+    const moviesFilter = handleMoviesFilter(initialCardsMovies, isActiveFilter);
+    console.log(initialCardsMovies);
+    setInitialMovies(moviesFilter);
   }, [moviesListNew, counterMovies, counterMoviesNew, windowDimensions]);
 
   /*React.useEffect(() => {
@@ -218,15 +217,16 @@ function Movies({ moviesAll, onMoviesAll, moviesSaved, onMovieLike, loggedIn, on
           const resultNew = checkAvailabilityResult(movieListStorageNew);
           if (resultNew) {
             const initialCardsMovies = handleDisplayPart(movieListStorageNew);
+            console.log(initialCardsMovies);
             setInitialMovies(initialCardsMovies);
           } else {
             setNotFoundMovies(true);
-          }
+          }  
         }
         restoreDataHistory();
         setLoader(false);
       }
-    }      
+    }
   }, [loggedIn]);
 
  
@@ -324,6 +324,7 @@ function Movies({ moviesAll, onMoviesAll, moviesSaved, onMovieLike, loggedIn, on
   }
   */
   function throughIterateArray(items) {
+    setLoader(true);
     let listMoviesLike;
     if (moviesListSaved.length > 0) {
       listMoviesLike = items.map(item => checkMoviesLike(item));
@@ -375,7 +376,7 @@ function Movies({ moviesAll, onMoviesAll, moviesSaved, onMovieLike, loggedIn, on
         setButtonInactive(true);
       }
     }
-    
+    console.log(initialCardsMovies);
     return initialCardsMovies;
   }
   
@@ -403,8 +404,10 @@ function Movies({ moviesAll, onMoviesAll, moviesSaved, onMovieLike, loggedIn, on
   }
 
   async function handleMoviesAll() {
+    setLoader(true);
     try {
       let movies = await moviesApi.getMovies();
+      console.log(movies);
       setMoviesList(movies);
       getMoviesAll(movies);
       return movies;
@@ -415,20 +418,13 @@ function Movies({ moviesAll, onMoviesAll, moviesSaved, onMovieLike, loggedIn, on
 
   function handleСlearError() {
     setErrorActive('');
-  }   
+  }
 
-  async function handleUpdateMoviesList(item) {
+  function searchMovies(item, moviesListAll) {
     setLoader(true);
-    handleСlearError();
-    setInitialMovies([]);
-    setMoviesListNew([]);
-    setNotFoundMovies(false);
-    let promise = new Promise((resolve) => {
-      resolve(handleMoviesAll());
-    })
-    let moviesListAll = await promise;
     const {checkLanguageRu, checkLanguageEn} = onInputLanguage(item.name);
     let movieListScreach;
+    console.log(moviesListAll, item);
     if (checkLanguageRu) {
       movieListScreach = moviesListAll.filter(movie => {
         const nameRu = movie.nameRU.toLowerCase();
@@ -440,6 +436,7 @@ function Movies({ moviesAll, onMoviesAll, moviesSaved, onMovieLike, loggedIn, on
         return (nameEn.includes(item.name))
       });
     }
+    console.log(movieListScreach);
     saveData(item.name, movieListScreach);
     const moviesLike = throughIterateArray(movieListScreach);
     setMoviesListNew(moviesLike);
@@ -453,6 +450,27 @@ function Movies({ moviesAll, onMoviesAll, moviesSaved, onMovieLike, loggedIn, on
     }
     saveCheckboxState();
     setLoader(false);
+  }
+
+  async function handleUpdateMoviesList(item) {
+    setLoader(true);
+    handleСlearError();
+    setInitialMovies([]);
+    setMoviesListNew([]);
+    setNotFoundMovies(false);
+    let moviesListAll;
+    if(moviesList === undefined || moviesList.length === 0) {
+      let promise = new Promise((resolve) => {
+        moviesListAll = handleMoviesAll();
+        console.log(handleMoviesAll());
+        resolve(moviesListAll);
+      })
+      let movie = await promise;
+      searchMovies(item, movie);
+    } else {
+      moviesListAll = moviesList;
+      searchMovies(item, moviesListAll);
+    }
   }
  
   function handleChangeDescription(item) {

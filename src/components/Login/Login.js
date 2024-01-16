@@ -14,8 +14,9 @@ export default function Login ({ onSubmit, isLoad, error, onСlearError}) {
   const { messageError, handleErrorsStatus, resetError } = useErrorsServer();
 
   React.useEffect(() => {
+    console.log(error);
     setErrorServer(error);
-    handleErrorsStatus(errorServer, pathname);
+    handleErrorsStatus(error, pathname);
   }, [handleErrorsStatus, error, errorServer, pathname]);
 
   function handleChangeInput(evt) {

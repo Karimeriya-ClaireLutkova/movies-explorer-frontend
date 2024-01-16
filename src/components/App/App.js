@@ -103,7 +103,7 @@ function App() {
         handleCloseForm();
       })
       .catch((err) => {
-        setError(err)
+        setError(err);
       })
       .finally(() => {
         setLoad(false);
@@ -163,7 +163,7 @@ function App() {
           setMoviesSaved([newMovie, ...moviesSaved]);
         })
         .catch((err) => {
-          console.error(err)
+          console.log(err)
         });
     } else {
       mainApi.deleteMovie(movieInitial._id) 
@@ -174,7 +174,7 @@ function App() {
           setMoviesSaved(movieNewList);
         })
         .catch((err) => {
-          console.error(err)
+          console.log(err)
         })
     }
   }
@@ -189,7 +189,7 @@ function App() {
         setMoviesSaved(movieNewList);
       })
       .catch((err) => {
-        console.error(err)
+        console.log(err)
       })
       .finally(() => {
         setLoad(false);
