@@ -46,8 +46,6 @@ function App() {
               setLoad(false);
             })
         }
-      } else {
-        navigate("/", {replace: true});
       }
     }
     tokenCheck();

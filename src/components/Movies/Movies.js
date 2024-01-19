@@ -102,46 +102,46 @@ function Movies({ moviesAll, onMoviesAll, moviesSaved, onMovieLike, loggedIn, on
 
   React.useEffect(() => {
     let initialCardsMovies = [];
+    let moviesFilter = [];
     if(counterMoviesNew === undefined) {
       if(moviesListNew.length > 0) {
-        initialCardsMovies = handleDisplayPart(moviesListNew);
-        console.log(moviesListNew);
+        initialCardsMovies = handleMoviesFilter(moviesListNew, isActiveFilter);
+        moviesFilter = handleDisplayPart(initialCardsMovies);
       }
     } else {
       const counterCurrent = handleCounterWidth(windowDimensions);
+      initialCardsMovies = handleMoviesFilter(moviesListNew, isActiveFilter);
       if(counterCurrent !== counterMovies) {
         if(counterMoviesNew < counterCurrent) {
-          if(moviesListNew.length > counterMoviesNew) {
-            initialCardsMovies = moviesListNew.slice(initialCounter, counterMoviesNew);
+          if(initialCardsMovies.length > counterMoviesNew) {
+            moviesFilter = initialCardsMovies.slice(initialCounter, counterMoviesNew);
             setButtonInactive(false);
           } else {
-            initialCardsMovies = moviesListNew;
+            moviesFilter = initialCardsMovies;
             setButtonInactive(true);
           }
         } else {
-          if(moviesListNew.length > counterCurrent) {
-            initialCardsMovies = moviesListNew.slice(initialCounter, counterCurrent);
+          if(initialCardsMovies.length > counterCurrent) {
+            moviesFilter = initialCardsMovies.slice(initialCounter, counterCurrent);
             setButtonInactive(false);
           } else {
-            initialCardsMovies = moviesListNew;
+            moviesFilter = initialCardsMovies;
             setButtonInactive(true);
           }
         }
       } else {
-        if(moviesListNew.length > counterMoviesNew) {
-          initialCardsMovies = moviesListNew.slice(initialCounter, counterMoviesNew);
+        if(initialCardsMovies.length > counterMoviesNew) {
+          moviesFilter = initialCardsMovies.slice(initialCounter, counterMoviesNew);
+          console.log(initialCardsMovies);
           setButtonInactive(false);
         } else {
-          initialCardsMovies = moviesListNew;
+          moviesFilter = initialCardsMovies;
           setButtonInactive(true);
         }
-      }
+      }  
     }
-    console.log(initialCardsMovies);
-    const moviesFilter = handleMoviesFilter(initialCardsMovies, isActiveFilter);
-    console.log(initialCardsMovies);
     setInitialMovies(moviesFilter);
-  }, [moviesListNew, counterMovies, counterMoviesNew, windowDimensions]);
+  }, [moviesListNew, counterMovies, counterMoviesNew, windowDimensions, isActiveFilter]);
 
   /*React.useEffect(() => {
     if(loggedIn) {
@@ -381,11 +381,17 @@ function Movies({ moviesAll, onMoviesAll, moviesSaved, onMovieLike, loggedIn, on
   }
   
   function handleActiveFilter(isActive) {
+    setNotFoundMovies(false);
     setActiveFilter(isActive);
     let movies;
     movies = handleMoviesFilter(moviesListNew, isActive);
     console.log(movies);
-    setInitialMovies(handleDisplayPart(movies));
+    const resultNew = checkAvailabilityResult(movies);
+    if (resultNew) {
+      setInitialMovies(handleDisplayPart(movies));
+    } else {
+      setNotFoundMovies(true);
+    }
   }
 
   function checkMoviesLike(movie) {
@@ -474,6 +480,7 @@ function Movies({ moviesAll, onMoviesAll, moviesSaved, onMovieLike, loggedIn, on
   }
  
   function handleChangeDescription(item) {
+    console.log(moviesListNew, item, initialMovies);
     if(initialMovies.length > 0 && moviesListNew.length > 0 && moviesListNew.length > item.length) {
       let currentMovies = item;
       const countPrimier = item.length;
@@ -488,15 +495,18 @@ function Movies({ moviesAll, onMoviesAll, moviesSaved, onMovieLike, loggedIn, on
       } else if (SCREEN_BIG <= width) {
         counterNew = countPrimier + 4;
       }
-      let cardsMoviesNew = [];
-      cardsMoviesNew = moviesListNew.slice(countPrimier, counterNew);
-      const initialCardsMovies = currentMovies.concat(cardsMoviesNew);
-      if(initialCardsMovies.length < moviesListNew.length) {
+      let moviesFilter = [];
+      moviesFilter = handleMoviesFilter(moviesListNew, isActiveFilter);
+      if (counterNew <= moviesFilter.length) {
+        const cardsMoviesNew = moviesFilter.slice(countPrimier, counterNew);
+        console.log(cardsMoviesNew, countPrimier, counterNew, moviesFilter);
+        const initialCardsMovies = currentMovies.concat(cardsMoviesNew);
+        console.log(initialCardsMovies);
         setInitialMovies(initialCardsMovies);
         setCounterMoviesNew(initialCardsMovies.length);
-        setButtonInactive(false);   
+        setButtonInactive(false);
       } else {
-        setInitialMovies(moviesListNew);
+        setInitialMovies(moviesFilter);
         setButtonInactive(true);
       }
     }

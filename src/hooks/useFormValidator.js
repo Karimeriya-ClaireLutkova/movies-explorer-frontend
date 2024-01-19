@@ -80,8 +80,14 @@ export default function useFormValidator() {
       if (value.length === 0) {
         setErrors({...errors, [name]: "Нужно ввести ключевое слово."}); 
         setValidNew(false);
-      } else {
-        setValidNew(true);
+      } else if (value.length > 0) {
+        const textScreachCurrent = localStorage.getItem("textScreach");
+        if(value === textScreachCurrent) {
+          setErrors({...errors, [name]: "Нужно ввести ключевое слово, отличающееся от изначального."}); 
+          setValidNew(false);
+        } else {
+          setValidNew(true);
+        }
       }
     }
   }
