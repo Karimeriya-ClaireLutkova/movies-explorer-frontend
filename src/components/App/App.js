@@ -61,9 +61,6 @@ function App() {
         .catch((err) => {
           console.log(err);
         })
-      if (localStorage.getItem("moviesScreach")) {
-        handleMoviesAll();
-      }
     }
   }, [loggedIn]);
 
@@ -138,6 +135,7 @@ function App() {
   }
   
   function handleMovieLike(movie) {
+    console.log(movie);
     const movieInitial = moviesSaved.find(i => i.movieId === movie.id);
     let cards;
     if (movieInitial === undefined) {
@@ -179,8 +177,10 @@ function App() {
 
   function handleMovieDelete(movie) {
     setLoad(true);
+    console.log(movie);
     mainApi.deleteMovie(movie._id) 
       .then((newMovie) => {
+        console.log(newMovie, moviesAll);
         const cards = moviesAll.map(item => item.id === newMovie.movieId ? {...item, owner: ''} : item);
         setMoviesAll(cards);
         const movieNewList = moviesSaved.filter((item) => item._id !== newMovie._id);

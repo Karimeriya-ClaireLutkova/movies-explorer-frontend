@@ -207,6 +207,7 @@ function Movies({ moviesAll, onMoviesAll, moviesSaved, onMovieLike, loggedIn, on
     if(loggedIn) {
       if (moviesStorage) {
         setLoader(true);
+        handleMoviesAll();
         const restoreDataHistory = () => {
           setLoader(true);
           setActiveFilter(restoreCheckboxState());
