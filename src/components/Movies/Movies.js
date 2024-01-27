@@ -86,15 +86,11 @@ function Movies({ moviesAll, onMoviesAll, moviesSaved, onMovieLike, loggedIn, on
   }, [moviesSaved]);
 
   React.useEffect(() => {
-    const cardsMoviesStorageLike = throughIterateArray(moviesListNew);
-    setMoviesListNew(cardsMoviesStorageLike);
-    setLoader(false);
-    /*if(isActiveFilter === true) {
-      const moviesFilter = handleMoviesFilter(cardsMoviesStorageLike, isActiveFilter);
-      setInitialMovies(moviesFilter);
-      console.log(moviesFilter);
-    }*/
-  }, [moviesSaved]);
+    if(localStorage.getItem('loggedIn')) {
+      const cardsMoviesStorageLike = throughIterateArray(moviesListNew);
+      setMoviesListNew(cardsMoviesStorageLike);
+    }
+  }, []);
 
   React.useEffect(() => {
     restoreCheckboxState();

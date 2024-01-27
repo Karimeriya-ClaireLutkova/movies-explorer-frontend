@@ -17,9 +17,10 @@ import useErrorsServer from '../../hooks/useErrorsServer';
 
 function App() {
   const loggedInLocalStorage = localStorage.getItem("loggedIn");
+  const jwt = localStorage.getItem('jwt');
   const [currentUser, setCurrentUser] = React.useState({});
   const [isLoad, setLoad] = React.useState(false);
-  const [loggedIn, setLoggedIn] = React.useState(loggedInLocalStorage ? loggedInLocalStorage : false);
+  const [loggedIn, setLoggedIn] = React.useState(loggedInLocalStorage ? loggedInLocalStorage : (jwt ? true : false));
   const [moviesSaved, setMoviesSaved] = React.useState([]);
   const [moviesAll, setMoviesAll] = React.useState([]);
   const [error, setError] = React.useState('');
@@ -29,30 +30,30 @@ function App() {
 
   React.useEffect(() => {
     const tokenCheck = () => {
-      if (localStorage.getItem('jwt')) {
-        const jwt = localStorage.getItem('jwt');
-        if (jwt) {
-          setLoad(true);
-          getContent(jwt)
-            .then((res) => {
-              setCurrentUser(res);
-              setLoggedIn(true);
-              navigate(pathname);
-              localStorage.setItem('loggedIn', loggedIn);  
-            })
-            .catch((err) => {
-              handleErrorsStatus(err, pathname);
-              localStorage.removeItem('loggedIn');
-              console.log(messageError);
-            })
-            .finally(() => {
-              setLoad(false);
-            })
-        }
+      if (jwt) {
+        setLoad(true);
+        getContent(jwt)
+          .then((res) => {
+            setCurrentUser(res);
+            setLoggedIn(true);
+            navigate(pathname);
+            localStorage.setItem('loggedIn', loggedIn);  
+          })
+          .catch((err) => {
+            handleErrorsStatus(err, pathname);
+            localStorage.removeItem('loggedIn');
+            console.log(messageError);
+          })
+          .finally(() => {
+            setLoad(false);
+          })
+      } else {
+        signOut();
       }
     }
     tokenCheck();
   }, []);
+
 
   React.useEffect(() => {
     if(loggedIn) {
@@ -164,7 +165,7 @@ function App() {
         })
         .catch((err) => {
           console.log(err)
-        });
+        })
     } else {
       mainApi.deleteMovie(movieInitial._id) 
         .then((newMovie) => {
