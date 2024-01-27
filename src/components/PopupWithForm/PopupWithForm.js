@@ -1,9 +1,9 @@
 import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import './PopupWithForm.css';
 
 function PopupWithForm(props) {
-  const {name, title, onSubmit, children, buttonText, isActive, isValid, errorServer, isLoad, textLoad } = props;
+  const {name, title, onSubmit, children, buttonText, isActive, isValid, errorServer, onResetErrorServer, isLoad, textLoad } = props;
   const { pathname } = useLocation();
   const className = `popup popup_${name} popup_opened`;
   const classNameButton = `popup__button popup__button_save popup__button_${name} ${!isValid ? "popup__button_inactive" : ""}`;
@@ -16,6 +16,10 @@ function PopupWithForm(props) {
       setActiveError(false);
     }
   }, [errorServer, setActiveError]);
+
+  function resetErrorServer() {
+    onResetErrorServer();
+  }
 
   return (
     <div className = {className}>
@@ -40,13 +44,13 @@ function PopupWithForm(props) {
         { pathname === '/sign-up' &&
           <div className={`popup__redirection popup__redirection_${name}`}>
             <p className="popup__title popup__title_redirection">Уже зарегистрированы?</p>
-            <Link to="/sign-in" className="popup__link">Войти</Link>
+            <NavLink to="/sign-in" className="popup__link" onClick={resetErrorServer}>Войти</NavLink>
           </div>
         }
         { pathname === '/sign-in' &&
           <div className={`popup__redirection popup__redirection_${name}`}>
             <p className="popup__title popup__title_redirection">Ещё не зарегистрированы?</p>
-            <Link to="/sign-up" className="popup__link">Регистрация</Link>
+            <NavLink to="/sign-up" className="popup__link" onClick={resetErrorServer}>Регистрация</NavLink>
           </div>
         }
       </div>

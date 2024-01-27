@@ -11,6 +11,7 @@ export default function Register({ onSubmit, isLoad, error, onСlearError }) {
   const [userEmail, setUserEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [errorServer, setErrorServer] = React.useState('');
+  const [isActiveError, setActiveError] = React.useState(false);
   const { errors, isValid, handleChange, resetForm } = useFormValidator();
   const { messageError, handleErrorsStatus, resetError } = useErrorsServer();
 
@@ -19,9 +20,21 @@ export default function Register({ onSubmit, isLoad, error, onСlearError }) {
     handleErrorsStatus(errorServer, pathname);
   }, [handleErrorsStatus, error, errorServer, pathname]);
 
+  React.useEffect(() => {
+    if(messageError === "Пользователь с таким email уже существует.") {
+      setActiveError(true);
+    }
+  }, [messageError]);
+
+  function resetErrorServer() {
+    onСlearError();
+    resetError();
+  }
+
   function handleChangeInput(evt) {
     onСlearError();
-    resetError();   
+    setActiveError(false);
+    resetError();    
     handleChange(evt);
     if(evt.target.name === 'email') {
       setUserEmail(evt.target.value);
@@ -35,9 +48,11 @@ export default function Register({ onSubmit, isLoad, error, onСlearError }) {
   function handleSubmit(evt) {
     evt.preventDefault();
     onSubmit(name, userEmail, password);
-    setUserEmail('');
-    setPassword('');
-    setName('');
+    if(errors === undefined) {
+      setUserEmail('');
+      setPassword('');
+      setName('');
+    }
     resetForm();
   }
 
@@ -51,6 +66,7 @@ export default function Register({ onSubmit, isLoad, error, onСlearError }) {
                        isLoad={isLoad}
                        isValid={isValid}
                        errorServer={messageError}
+                       onResetErrorServer={resetErrorServer}
                        textLoad={"Регистрация..."}>
           <div className={`popup__field ${errors.name ? "popup__field_error" : ""}`}>
             <p className="popup__input-text">Имя</p>
@@ -59,7 +75,7 @@ export default function Register({ onSubmit, isLoad, error, onСlearError }) {
           </div>
           <div className={`popup__field ${errors.email ? "popup__field_error" : ""}`}>
             <p className="popup__input-text">E-mail</p>
-            <input id="user-email-input" type="email" className={`popup__input popup__input_entry ${errors.email ? "popup__input_error" :""}`} pattern="^([^ ]+@[^ ]+\.[a-z]{2,6}|)$" name="email" placeholder="Email" value={userEmail} onChange={handleChangeInput} required  />
+            <input id="user-email-input" type="email" className={`popup__input popup__input_entry ${(errors.email || isActiveError) ? "popup__input_error" :""}`} pattern="^([^ ]+@[^ ]+\.[a-z]{2,6}|)$" name="email" placeholder="Email" value={userEmail} onChange={handleChangeInput} required  />
             <span className={`user-email-input-error popup__input-error ${errors.email ? "popup__input-error_active" : ""}`}>{errors.email}</span>
           </div>
           <div className={`popup__field ${errors.password ? "popup__field_error" : ""}`}>

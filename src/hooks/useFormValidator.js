@@ -17,14 +17,19 @@ export default function useFormValidator() {
     }
   }, [isValid, isValidNew]);
 
-  const handleChange = (event, currentUser) => {
+  const handleChange = (event, currentUser, messageError) => {
     const target = event.target;
     const name = target.name;
     const value = target.value;
     if(currentUser !== undefined) {
       setCurrentName(currentUser.name);
       setCurrentEmail(currentUser.email);
-    }  
+    }
+    if(messageError) {
+      setValues({...values, [name]: value});
+      setErrors({...errors, [name]: '' });
+      checkFieldsForm(name, value, messageError);
+    }
     setValues({...values, [name]: value});
     setErrors({...errors, [name]: target.validationMessage });
     setIsValid(target.closest("form").checkValidity());

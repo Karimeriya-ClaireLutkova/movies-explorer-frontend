@@ -9,12 +9,23 @@ export default function Login ({ onSubmit, isLoad, error, onСlearError}) {
   const { pathname } = useLocation();
   const [userEmail, setUserEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
+  const [isActiveError, setActiveError] = React.useState(false);
   const { errors, isValid, handleChange, resetForm } = useFormValidator();
   const { messageError, handleErrorsStatus, resetError } = useErrorsServer();
 
   React.useEffect(() => {
     handleErrorsStatus(error, pathname);
   }, [handleErrorsStatus, error, pathname]);
+
+  React.useEffect(() => {
+    if(messageError === "Вы ввели неправильный логин или пароль.") {
+      setActiveError(true);
+    }
+  }, [messageError]);
+
+  function resetErrorServer() {
+    resetError();
+  }
 
   function handleChangeInput(evt) {
     onСlearError();
@@ -30,8 +41,10 @@ export default function Login ({ onSubmit, isLoad, error, onСlearError}) {
   function handleSubmit(evt) {
     evt.preventDefault();
     onSubmit(userEmail, password);
-    setUserEmail('');
-    setPassword('');
+    if(errors === undefined) {
+      setUserEmail('');
+      setPassword('');
+    }
     resetForm();
   }
 
@@ -45,15 +58,16 @@ export default function Login ({ onSubmit, isLoad, error, onСlearError}) {
                        isLoad={isLoad}
                        isValid={isValid}
                        errorServer={messageError}
+                       onResetErrorServer={resetErrorServer}
                        textLoad={"Вход..."}>
           <div className={`popup__field ${errors.email ? "popup__field_error" : ""}`}>
             <p className="popup__input-text">E-mail</p>
-            <input id="user-email-input" type="email" className={`popup__input popup__input_entry ${errors.email ? "popup__input_error" :""}`} pattern="^([^ ]+@[^ ]+\.[a-z]{2,6}|)$" name="email" value={userEmail} placeholder="Email" onChange={handleChangeInput} autoComplete="off" required  />
+            <input id="user-email-input" type="email" className={`popup__input popup__input_entry ${(errors.email || isActiveError) ? "popup__input_error" :""}`} pattern="^([^ ]+@[^ ]+\.[a-z]{2,6}|)$" name="email" value={userEmail} placeholder="Email" onChange={handleChangeInput} autoComplete="off" required  />
             <span className={`user-email-input-error popup__input-error ${errors.email ? "popup__input-error_active" : ""}`}>{errors.email}</span>
           </div>
           <div className={`popup__field ${errors.password ? "popup__field_error" : ""}`}>
             <p className="popup__input-text">Пароль</p>
-            <input id="user-password-input" type="password" className={`popup__input popup__input_entry ${errors.password ? "popup__input_error" :""}`} name="password" value={password} placeholder="Пароль" onChange={handleChangeInput} autoComplete="off" required />
+            <input id="user-password-input" type="password" className={`popup__input popup__input_entry ${(errors.password || isActiveError) ? "popup__input_error" :""}`} name="password" value={password} placeholder="Пароль" onChange={handleChangeInput} autoComplete="off" required />
             <span className={`user-password-input-error popup__input-error ${errors.password ? "popup__input-error_active" : ""}`}>{errors.password}</span>
           </div>
         </PopupWithForm>
