@@ -24,6 +24,7 @@ export default function Login ({ onSubmit, isLoad, error, onСlearError}) {
   }, [messageError]);
 
   function resetErrorServer() {
+    onСlearError();
     resetError();
   }
 
