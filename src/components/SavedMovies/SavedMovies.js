@@ -2,15 +2,16 @@ import React from 'react';
 import Header from '../Header/Header';
 import SearchForm from '../SearchForm/SearchForm';
 import Preloader from '../Preloader/Preloader';
-import {filtersShortFilm } from '../../utils/constants';
+import { filtersShortFilm } from '../../utils/constants';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 
 function SavedMovies({ onMovieDelete, isLoad, loggedIn, onAuthorization, onNavigation, onActiveMenu, moviesSaved, onInputLanguage}) {
   const [loading, setLoading] = React.useState(false);
   const [isActiveFilter, setActiveFilter] = React.useState(false);
-  const [moviesListNew, setMoviesListNew] = React.useState(moviesSaved);
+  const [moviesListSaved, setMoviesListSaved] = React.useState(moviesSaved); 
   const [isNotFoundMovies, setNotFoundMovies] = React.useState(false);
   const [moviesList, setMoviesList] = React.useState([]);
+  const [moviesListNew, setMoviesListNew] = React.useState(moviesSaved);
 
   React.useEffect(() => {
     setLoading(isLoad)
@@ -18,22 +19,28 @@ function SavedMovies({ onMovieDelete, isLoad, loggedIn, onAuthorization, onNavig
 
   React.useEffect(() => {
     setMoviesListNew(moviesSaved);
+    setMoviesListSaved(moviesSaved);
   }, [moviesSaved])
 
   function handleActiveFilter(isActive) {
     setNotFoundMovies(false);
     setActiveFilter(isActive);
     let movies;
-    if (isActive) {
-      movies = handleMoviesFilter(moviesListNew, isActive);
+    movies = handleMoviesFilter(moviesListNew, isActive);
+    const resultNew = checkAvailabilityResult(movies);
+    if (resultNew) {
       setMoviesListNew(movies);
-      setMoviesList(moviesListNew);
     } else {
-      if (moviesListNew.length > 0) {
-        setMoviesListNew(moviesList);
-      }      
+      setNotFoundMovies(true);
     }
-    setLoading(false);
+  }
+
+  function checkAvailabilityResult(item) {
+    if (item.length === 0) {
+      return false;
+    } else {
+      return true;
+    }
   }
 
   function handleMoviesFilter(item, isActiveFilter) {
@@ -54,7 +61,8 @@ function SavedMovies({ onMovieDelete, isLoad, loggedIn, onAuthorization, onNavig
     return movieListScreachNew;
   }
 
-  function handleUpdateMoviesList(item, isValid) {
+  function handleUpdateMoviesList(item) {
+    setMoviesListNew([]);
     setLoading(true);
     if (isActiveFilter) {
       const {checkLanguageRu, checkLanguageEn} = onInputLanguage(item.name);
@@ -98,10 +106,6 @@ function SavedMovies({ onMovieDelete, isLoad, loggedIn, onAuthorization, onNavig
         };
       }
       setMoviesListNew(movieListScreach);
-    }
-    if (isValid === true && isNotFoundMovies === true) {
-      setNotFoundMovies(false);
-      setMoviesListNew(moviesSaved);
     }
     setLoading(false);
   }

@@ -16,15 +16,16 @@ import { register, authorization, getContent } from '../../utils/Auth.js';
 import useErrorsServer from '../../hooks/useErrorsServer';
 
 function App() {
+  const loggedInLocalStorage = localStorage.getItem("loggedIn");
   const [currentUser, setCurrentUser] = React.useState({});
   const [isLoad, setLoad] = React.useState(false);
-  const [loggedIn, setLoggedIn] = React.useState(false);
+  const [loggedIn, setLoggedIn] = React.useState(loggedInLocalStorage ? loggedInLocalStorage : false);
   const [moviesSaved, setMoviesSaved] = React.useState([]);
   const [moviesAll, setMoviesAll] = React.useState([]);
   const [error, setError] = React.useState('');
   const navigate = useNavigate();
   const { pathname } = useLocation();
-  const { messageError, handleErrorsStatus } = useErrorsServer();
+  const { messageError, handleErrorsStatus } = useErrorsServer(); 
 
   React.useEffect(() => {
     const tokenCheck = () => {
@@ -37,9 +38,11 @@ function App() {
               setCurrentUser(res);
               setLoggedIn(true);
               navigate(pathname);
+              localStorage.setItem('loggedIn', loggedIn);  
             })
             .catch((err) => {
               handleErrorsStatus(err, pathname);
+              localStorage.removeItem('loggedIn');
               console.log(messageError);
             })
             .finally(() => {
@@ -63,6 +66,7 @@ function App() {
         })
     }
   }, [loggedIn]);
+   
 
   function handleMoviesAll(item) {
     setMoviesAll(item);
@@ -95,6 +99,7 @@ function App() {
       .then((data) => {
         localStorage.setItem('jwt', data.token);
         setLoggedIn(true);
+        localStorage.setItem('loggedIn', true);
         handleCloseForm();
       })
       .catch((err) => {
@@ -135,7 +140,6 @@ function App() {
   }
   
   function handleMovieLike(movie) {
-    console.log(movie);
     const movieInitial = moviesSaved.find(i => i.movieId === movie.id);
     let cards;
     if (movieInitial === undefined) {
@@ -177,10 +181,8 @@ function App() {
 
   function handleMovieDelete(movie) {
     setLoad(true);
-    console.log(movie);
     mainApi.deleteMovie(movie._id) 
       .then((newMovie) => {
-        console.log(newMovie, moviesAll);
         const cards = moviesAll.map(item => item.id === newMovie.movieId ? {...item, owner: ''} : item);
         setMoviesAll(cards);
         const movieNewList = moviesSaved.filter((item) => item._id !== newMovie._id);
@@ -236,6 +238,7 @@ function App() {
     localStorage.removeItem('textScreach');
     localStorage.removeItem('filter');
     localStorage.removeItem('counterView');
+    localStorage.removeItem('loggedIn');
     setLoggedIn(false);
     setCurrentUser({});
     navigate('/', { replace: true });

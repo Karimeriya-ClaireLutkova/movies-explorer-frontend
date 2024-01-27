@@ -23,8 +23,8 @@ function SearchForm({ textInput, onUpdateMoviesList, onActiveFilter, isActiveFil
   function handleSubmit(evt) {
     evt.preventDefault();
     onUpdateMoviesList({
-      name: name,
-    }, isValid);
+      name: name
+    });
   }
 
   return (
