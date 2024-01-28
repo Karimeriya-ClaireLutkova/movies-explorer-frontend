@@ -144,7 +144,6 @@ function App() {
     const movieInitial = moviesSaved.find(i => i.movieId === movie.id);
     let cards;
     if (movieInitial === undefined) {
-      console.log(movie, movieInitial);
       const movieNew = {
         country: movie.country,
         director: movie.director,
@@ -238,6 +237,7 @@ function App() {
     localStorage.removeItem('jwt');
     localStorage.removeItem('moviesScreach');
     localStorage.removeItem('textScreach');
+    localStorage.removeItem('textScreachSaved');
     localStorage.removeItem('filter');
     localStorage.removeItem('counterView');
     localStorage.removeItem('loggedIn');

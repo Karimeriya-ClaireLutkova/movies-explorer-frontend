@@ -7,16 +7,17 @@ import './SearchForm.css';
 function SearchForm({ textInput, onUpdateMoviesList, onActiveFilter, isActiveFilterMovies }) {
   const [name, setName] = React.useState('');
   const { pathname } = useLocation();
-  const { errors, isValid, handleChange} = useFormValidator();
+  const { errors, isValid, handleChange, resetForm } = useFormValidator();
 
   React.useEffect(() => {
-    if(textInput) {
+    if(textInput !== undefined) {
       setName(textInput);
     }
   }, [textInput]);
 
   function handleSearchMovies(evt) {
     let currentUser;
+    resetForm();
     handleChange(evt, currentUser, pathname);
     if(evt.target.name === 'film') {
       setName(evt.target.value);
@@ -28,6 +29,7 @@ function SearchForm({ textInput, onUpdateMoviesList, onActiveFilter, isActiveFil
     onUpdateMoviesList({
       name: name
     });
+    resetForm();
   }
 
   return (

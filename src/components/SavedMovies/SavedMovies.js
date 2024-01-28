@@ -20,17 +20,35 @@ function SavedMovies({ onMovieDelete, isLoad, loggedIn, onAuthorization, onNavig
     setMoviesListNew(moviesSaved);
   }, [moviesSaved])
 
+  function saveData(item) {
+    localStorage.setItem("textScreachSaved", item);
+  } 
+
   function handleActiveFilter(isActive) {
     setNotFoundMovies(false);
     setActiveFilter(isActive);
     let movies;
-    movies = handleMoviesFilter(moviesListNew, isActive);
+    movies = handleMoviesFilter(moviesList, isActive);
     const resultNew = checkAvailabilityResult(movies);
     if (resultNew) {
       setMoviesListNew(movies);
     } else {
+      setMoviesListNew([]);
       setNotFoundMovies(true);
     }
+  }
+
+  function handleMoviesFilter(item, isActiveFilter) {
+    let movieListScreachNew;
+    if (isActiveFilter) {
+      movieListScreachNew = item.filter((movie) => 
+        movie.duration <= filtersShortFilm
+      )
+    } else {
+      movieListScreachNew = item;
+    }
+    
+    return movieListScreachNew;
   }
 
   function checkAvailabilityResult(item) {
@@ -41,30 +59,15 @@ function SavedMovies({ onMovieDelete, isLoad, loggedIn, onAuthorization, onNavig
     }
   }
 
-  function handleMoviesFilter(item, isActiveFilter) {
+  function handleUpdateMoviesList(item) {
+    setMoviesListNew([]);
     setLoading(true);
     setNotFoundMovies(false);
-    let movieListScreachNew;
-    if (isActiveFilter) {
-      movieListScreachNew = item.filter(movie => 
-        movie.duration <= filtersShortFilm
-      );
-      if (movieListScreachNew.length === 0) {
-        setNotFoundMovies(true);
-      }
-    } else {
-      movieListScreachNew = item;
-    }
-    setLoading(false);
-    return movieListScreachNew;
-  }
-
-  function handleUpdateMoviesList(item) {
-    setLoading(true);
+    saveData(item.name);
     const {checkLanguageRu, checkLanguageEn} = onInputLanguage(item.name);
     let movieListScreach;
     if (checkLanguageRu) {
-      movieListScreach = moviesListNew.filter(movie => {
+      movieListScreach = moviesSaved.filter(movie => {
         const nameRu = movie.nameRU.toLowerCase();
         return (nameRu.includes(item.name))
       });
@@ -72,7 +75,7 @@ function SavedMovies({ onMovieDelete, isLoad, loggedIn, onAuthorization, onNavig
         setNotFoundMovies(true);          
       };
     } else if(checkLanguageEn) {
-      movieListScreach = moviesListNew.filter(movie => {
+      movieListScreach = moviesSaved.filter(movie => {
         const nameEn = movie.nameEN.toLowerCase();
         return (nameEn.includes(item.name))
       });
@@ -84,7 +87,7 @@ function SavedMovies({ onMovieDelete, isLoad, loggedIn, onAuthorization, onNavig
     const moviesListFilterNew = handleMoviesFilter(movieListScreach, isActiveFilter);
     const resultNew = checkAvailabilityResult(moviesListFilterNew);
     if (resultNew) {
-      setMoviesListNew(resultNew);
+      setMoviesListNew(moviesListFilterNew);
     } else {
       setMoviesListNew([]);
       setNotFoundMovies(true);

@@ -28,10 +28,10 @@ export default function useFormValidator() {
     setValues({...values, [name]: value});
     setErrors({...errors, [name]: target.validationMessage });
     setIsValid(target.closest("form").checkValidity());
-    if(pathname !== undefined) {
-      checkFieldsForm(name, value, pathname);
-    } else {
+    if(pathname === undefined) {
       checkFieldsForm(name, value);
+    } else {
+      checkFieldsForm(name, value, pathname);
     }
   };
 
@@ -85,14 +85,18 @@ export default function useFormValidator() {
         setErrors({...errors, [name]: "Нужно ввести ключевое слово."}); 
         setValidNew(false);
       } else if (value.length > 0) {
-        if(pathname !== '/saved-movies') {
-          const textScreachCurrent = localStorage.getItem("textScreach");
-          if(value === textScreachCurrent) {
+        const textScreachCurrent = localStorage.getItem("textScreach");
+        const textScreachSavedCurrent = localStorage.getItem("textScreachSaved");
+        if(pathname === "/movies" && value === textScreachCurrent) {
+          setErrors({...errors, [name]: "Нужно ввести ключевое слово, отличающееся от изначального."}); 
+          setValidNew(false);
+        } else if(pathname === "/saved-movies") {
+          if(value === textScreachSavedCurrent) {
             setErrors({...errors, [name]: "Нужно ввести ключевое слово, отличающееся от изначального."}); 
             setValidNew(false);
           } else {
             setValidNew(true);
-          }        
+          } 
         } else {
           setValidNew(true);
         }

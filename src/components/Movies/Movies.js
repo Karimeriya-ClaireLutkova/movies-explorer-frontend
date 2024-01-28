@@ -153,10 +153,11 @@ function Movies({ moviesAll, onMoviesAll, moviesSaved, onMovieLike, loggedIn, on
           if (resultNew) {
             const initialCardsMovies = handleDisplayPart(movieListStorageNew);
             setInitialMovies(initialCardsMovies);
+            setLoader(false);
           } else {
             setNotFoundMovies(true);
+            setLoader(false);
           }
-          setLoader(false);
         }
         restoreDataHistory();
       }
