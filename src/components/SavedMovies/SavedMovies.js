@@ -28,7 +28,11 @@ function SavedMovies({ onMovieDelete, isLoad, loggedIn, onAuthorization, onNavig
     setNotFoundMovies(false);
     setActiveFilter(isActive);
     let movies;
-    movies = handleMoviesFilter(moviesList, isActive);
+    if(moviesList.length > 0) {
+      movies = handleMoviesFilter(moviesList, isActive);
+    } else {
+      movies = handleMoviesFilter(moviesSaved, isActive);
+    }
     const resultNew = checkAvailabilityResult(movies);
     if (resultNew) {
       setMoviesListNew(movies);
