@@ -27,7 +27,7 @@ function App() {
   const [error, setError] = React.useState('');
   const navigate = useNavigate();
   const { pathname } = useLocation();
-  const { messageError, handleErrorsStatus } = useErrorsServer(); 
+  const { messageError, handleErrorsStatus } = useErrorsServer();
   
   React.useEffect(() => {
     const tokenCheck = () => {
@@ -40,7 +40,7 @@ function App() {
             if(notFoundPage === undefined) {
               navigate(pathname);
             }
-            localStorage.setItem('loggedIn', loggedIn);  
+            localStorage.setItem('loggedIn', loggedIn);
           })
           .catch((err) => {
             handleErrorsStatus(err, pathname);
@@ -67,7 +67,6 @@ function App() {
         })
     }
   }, [loggedIn]);
-   
 
   function handleMoviesAll(item) {
     setMoviesAll(item);
@@ -91,8 +90,8 @@ function App() {
       })
       .finally(() => {
         setLoad(false);
-      })      
-  }
+      })
+    }
   
   function handleLoginSubmit(userEmail, password) {
     setLoad(true);
@@ -139,7 +138,7 @@ function App() {
     const checkLanguageEn = new RegExp(/^[a-zA-Z]+$/).test(item);
     return {checkLanguageRu, checkLanguageEn}
   }
-  
+
   function handleMovieLike(movie) {
     const movieInitial = moviesSaved.find(i => i.movieId === movie.id);
     let cards;
@@ -164,10 +163,10 @@ function App() {
           setMoviesSaved([newMovie, ...moviesSaved]);
         })
         .catch((err) => {
-          console.log(err)
+          console.log(err);
         })
     } else {
-      mainApi.deleteMovie(movieInitial._id) 
+      mainApi.deleteMovie(movieInitial._id)
         .then((newMovie) => {
           cards = moviesAll.map(item => item.id === newMovie.movieId ? {...item, owner: ''} : item);
           setMoviesAll(cards);
@@ -175,14 +174,14 @@ function App() {
           setMoviesSaved(movieNewList);
         })
         .catch((err) => {
-          console.log(err)
+          console.log(err);
         })
     }
   }
 
   function handleMovieDelete(movie) {
     setLoad(true);
-    mainApi.deleteMovie(movie._id) 
+    mainApi.deleteMovie(movie._id)
       .then((newMovie) => {
         const cards = moviesAll.map(item => item.id === newMovie.movieId ? {...item, owner: ''} : item);
         setMoviesAll(cards);
@@ -190,7 +189,7 @@ function App() {
         setMoviesSaved(movieNewList);
       })
       .catch((err) => {
-        console.log(err)
+        console.log(err);
       })
       .finally(() => {
         setLoad(false);
@@ -311,7 +310,7 @@ function App() {
           loggedIn ? (<Navigate to="/movies" replace />
           ) : (
           <Register onSubmit={handleRegisterSubmit}
-                    error={error} 
+                    error={error}
                     onСlearError={handleСlearError}
                      />
         )}>
