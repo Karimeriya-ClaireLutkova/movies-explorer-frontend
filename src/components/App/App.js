@@ -55,7 +55,6 @@ function App() {
     tokenCheck();
   }, []);
 
-
   React.useEffect(() => {
     if(loggedIn) {
       Promise.all([mainApi.getUserInfo(), mainApi.getMovies()])
@@ -206,7 +205,6 @@ function App() {
 
   function handleBackPage(item) {
     setNotFoundPage(item);
-    console.log(item);
   }
 
   function handleActiveMenu() {
