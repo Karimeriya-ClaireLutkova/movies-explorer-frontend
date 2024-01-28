@@ -23,11 +23,12 @@ function App() {
   const [loggedIn, setLoggedIn] = React.useState(loggedInLocalStorage ? loggedInLocalStorage : (jwt ? true : false));
   const [moviesSaved, setMoviesSaved] = React.useState([]);
   const [moviesAll, setMoviesAll] = React.useState([]);
+  const [notFoundPage, setNotFoundPage] = React.useState('');
   const [error, setError] = React.useState('');
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const { messageError, handleErrorsStatus } = useErrorsServer(); 
-
+  
   React.useEffect(() => {
     const tokenCheck = () => {
       if (jwt) {
@@ -36,7 +37,9 @@ function App() {
           .then((res) => {
             setCurrentUser(res);
             setLoggedIn(true);
-            navigate(pathname);
+            if(notFoundPage === undefined) {
+              navigate(pathname);
+            }
             localStorage.setItem('loggedIn', loggedIn);  
           })
           .catch((err) => {
@@ -47,8 +50,6 @@ function App() {
           .finally(() => {
             setLoad(false);
           })
-      } else {
-        signOut();
       }
     }
     tokenCheck();
@@ -203,8 +204,9 @@ function App() {
     handleCloseNavigationBar();
   }
 
-  function handleGoBackPageNav() {
-    navigate(-1, {replace: true});
+  function handleBackPage(item) {
+    setNotFoundPage(item);
+    console.log(item);
   }
 
   function handleActiveMenu() {
@@ -262,7 +264,7 @@ function App() {
           />
         }>
         </Route>
-        <Route path="movies" element={
+        <Route path="/movies" element={
           <ProtectedRoute
                  component={Movies}
                  onMovieLike={handleMovieLike}
@@ -278,7 +280,7 @@ function App() {
           />
         }>
         </Route>
-        <Route path="saved-movies" element={
+        <Route path="/saved-movies" element={
           <ProtectedRoute
                   component={SavedMovies}
                   moviesSaved={moviesSaved}
@@ -292,7 +294,7 @@ function App() {
           />
         }>
         </Route>
-        <Route path="profile" element={
+        <Route path="/profile" element={
           <ProtectedRoute
                    component={Profile}
                    loggedIn={loggedIn}
@@ -307,7 +309,7 @@ function App() {
           />
         }>
         </Route>
-        <Route path="sign-up" element={
+        <Route path="/sign-up" element={
           loggedIn ? (<Navigate to="/movies" replace />
           ) : (
           <Register onSubmit={handleRegisterSubmit}
@@ -316,7 +318,7 @@ function App() {
                      />
         )}>
         </Route>
-        <Route path="sign-in" element={
+        <Route path="/sign-in" element={
           loggedIn ? (<Navigate to="/movies" replace />
           ) : (
           <Login onSubmit={handleLoginSubmit}
@@ -326,7 +328,7 @@ function App() {
           )}>
         </Route>
         <Route path="*" element={
-          <NotFoundPage onBack={handleGoBackPageNav} />
+          <NotFoundPage onBackPage={handleBackPage}/>
         }>
         </Route>
       </Routes>
