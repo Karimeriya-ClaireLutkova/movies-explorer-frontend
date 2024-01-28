@@ -15,7 +15,7 @@ export default function Profile({onSignOut, onUpdateUser, loggedIn, onAuthorizat
   const { errors, isValid, handleChange, resetForm } = useFormValidator();
   const { messageError, handleErrorsStatus, resetError } = useErrorsServer();
   const greeting = `Привет, ${currentUser.name}!`;
-  
+
   function handleEditProfile() {
     const inputEditList = Array.from(document.querySelectorAll('.popup__input_profile-info'));
     inputEditList.map(item => item.removeAttribute('disabled'));
@@ -36,14 +36,14 @@ export default function Profile({onSignOut, onUpdateUser, loggedIn, onAuthorizat
 
   function handleChangeInput(evt) {
     onСlearError();
-    resetError();      
-    handleChange(evt, currentUser);    
+    resetError();
+    handleChange(evt, currentUser);
     if(evt.target.name === 'name') {
       setName(evt.target.value);
     } else if(evt.target.name === 'email') {
       setEmail(evt.target.value);
     }
-  }  
+  }
 
   function handleSubmit(evt) {
     evt.preventDefault();
@@ -70,14 +70,14 @@ export default function Profile({onSignOut, onUpdateUser, loggedIn, onAuthorizat
           <div className="popup__field popup__field_profile-info">
             <p className="popup__input-text popup__input-text_profile">Имя</p>
             <div className={`popup__data-input ${errors.name ? "popup__data-input_error" : ""}`}>
-              <input id="profile-name-input" type="text" className={`popup__input popup__input_profile-info ${errors.name ? "popup__input_error" :""}`} name="name" placeholder="Имя" value={isName} onChange={handleChangeInput} autoComplete="off" disabled required  />
+              <input id="profile-name-input" type="text" className={`popup__input popup__input_profile-info ${errors.name ? "popup__input_error" :""}`} name="name" placeholder="Имя" value={isName} onChange={handleChangeInput} autoComplete="off" disabled required />
               <span className={`profile-name-input-error popup__input-error ${errors.name ? "popup__input-error_active_profile" : ""}`}>{errors.name}</span>
             </div>
           </div>
           <div className="popup__field popup__field_profile-info popup__field_not-underlined">
             <p className="popup__input-text popup__input-text_profile">E-mail</p>
             <div className={`popup__data-input ${errors.email ? "popup__data-input_error" : ""}`}>
-              <input id="profile-email-input" type="email" className={`popup__input popup__input_profile-info ${errors.email ? "popup__input_error" :""}`} name="email" pattern="^([^ ]+@[^ ]+\.[a-z]{2,6}|)$" placeholder="Email" value={isEmail} onChange={handleChangeInput} autoComplete="off" disabled required  />
+              <input id="profile-email-input" type="email" className={`popup__input popup__input_profile-info ${errors.email ? "popup__input_error" :""}`} name="email" pattern="^([^ ]+@[^ ]+\.[a-z]{2,6}|)$" placeholder="Email" value={isEmail} onChange={handleChangeInput} autoComplete="off" disabled required />
               <span className={`profile-email-input-error popup__input-error ${errors.email ? "popup__input-error_active_profile" : ""}`}>{errors.email}</span>
             </div>
           </div>

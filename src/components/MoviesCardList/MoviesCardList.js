@@ -12,7 +12,7 @@ function MoviesCardList({ cardsMovies, onMovieLike, onMovieDelete, isErrorActive
   const textInfo = `${isError ? serverErrorMovies : notFoundMovies}`;
 
   React.useEffect(() => {
-    setNotMovies(isNotFoundMovies);  
+    setNotMovies(isNotFoundMovies);
   }, [isNotFoundMovies]);
 
   React.useEffect(() => {
@@ -36,16 +36,16 @@ function MoviesCardList({ cardsMovies, onMovieLike, onMovieDelete, isErrorActive
         { pathname === "/movies" && (
           cardsMovies.map((movie, i) => (<MoviesCard id="1" key={movie.id} movie={movie} onMovieLike={onMovieLike} onMovieDelete={onMovieDelete} />))
         )}
-        { pathname === "/saved-movies" && ( 
+        { pathname === "/saved-movies" && (
           cardsMovies.map((movie, i) => (<MoviesCard id="2" key={movie._id} movie={movie} onMovieLike={onMovieLike} onMovieDelete={onMovieDelete} />))
-        )}   
+        )}
       </div>
       { pathname === "/movies" &&
         <div className="elements-adding">
           <button className={className} type="button" onClick={handleChangeDescription}>Ещё</button>
         </div>
       }
-    </section> 
+    </section>
   )
 }
 

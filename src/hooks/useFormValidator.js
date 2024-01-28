@@ -52,7 +52,7 @@ export default function useFormValidator() {
             setValidNew(true);
           }
         }
-      }      
+      }
     }
     if (name === "name") {
       if (value.length === 0) {
@@ -82,21 +82,21 @@ export default function useFormValidator() {
     }
     if(name === "film") {
       if (value.length === 0) {
-        setErrors({...errors, [name]: "Нужно ввести ключевое слово."}); 
+        setErrors({...errors, [name]: "Нужно ввести ключевое слово."});
         setValidNew(false);
       } else if (value.length > 0) {
         const textScreachCurrent = localStorage.getItem("textScreach");
         const textScreachSavedCurrent = localStorage.getItem("textScreachSaved");
         if(pathname === "/movies" && value === textScreachCurrent) {
-          setErrors({...errors, [name]: "Нужно ввести ключевое слово, отличающееся от изначального."}); 
+          setErrors({...errors, [name]: "Нужно ввести ключевое слово, отличающееся от изначального."});
           setValidNew(false);
         } else if(pathname === "/saved-movies") {
           if(value === textScreachSavedCurrent) {
-            setErrors({...errors, [name]: "Нужно ввести ключевое слово, отличающееся от изначального."}); 
+            setErrors({...errors, [name]: "Нужно ввести ключевое слово, отличающееся от изначального."});
             setValidNew(false);
           } else {
             setValidNew(true);
-          } 
+          }
         } else {
           setValidNew(true);
         }

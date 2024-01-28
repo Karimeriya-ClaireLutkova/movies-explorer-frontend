@@ -16,7 +16,7 @@ function Main({ loggedIn, onAuthorization, onNavigation, onActiveMenu}) {
       <Techs />
       <AboutMe />
     </main>
-    </> 
+    </>
   )
 }
 

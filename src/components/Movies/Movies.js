@@ -133,7 +133,7 @@ function Movies({ moviesAll, onMoviesAll, moviesSaved, onMovieLike, loggedIn, on
           moviesFilter = initialCardsMovies;
           setButtonInactive(true);
         }
-      }  
+      }
     }
     setInitialMovies(moviesFilter);
   }, [moviesListNew, counterMovies, counterMoviesNew, windowDimensions, isActiveFilter]);
@@ -164,12 +164,10 @@ function Movies({ moviesAll, onMoviesAll, moviesSaved, onMovieLike, loggedIn, on
     }
   }, [loggedIn]);
 
- 
-
   function saveData(item, movies) {
     localStorage.setItem("moviesScreach", JSON.stringify(movies));
     localStorage.setItem("textScreach", item);
-  } 
+  }
 
   function saveCheckboxState() {
     const checkboxes = document.querySelector('input[type="checkbox"]');
@@ -179,7 +177,7 @@ function Movies({ moviesAll, onMoviesAll, moviesSaved, onMovieLike, loggedIn, on
     };
     localStorage.setItem("filter", JSON.stringify(checkboxState));
   }
-  
+
   function restoreCheckboxState() {
     const checkboxCurrent = localStorage.getItem("filter");
     const checkbox = JSON.parse(checkboxCurrent);
@@ -211,13 +209,13 @@ function Movies({ moviesAll, onMoviesAll, moviesSaved, onMovieLike, loggedIn, on
   function handleMoviesFilter(item, isActiveFilter) {
     let movieListScreachNew;
     if (isActiveFilter) {
-      movieListScreachNew = item.filter((movie) => 
+      movieListScreachNew = item.filter((movie) =>
         movie.duration <= filtersShortFilm
       )
     } else {
       movieListScreachNew = item;
     }
-    
+
     return movieListScreachNew;
   }
 
@@ -232,7 +230,7 @@ function Movies({ moviesAll, onMoviesAll, moviesSaved, onMovieLike, loggedIn, on
       } else {
         initialCardsMovies = item;
         setButtonInactive(true);
-      }     
+      }   
     } else {
       if (item.length > counterMovies) {
         initialCardsMovies = item.slice(initialCounter, counterMovies);
@@ -244,7 +242,7 @@ function Movies({ moviesAll, onMoviesAll, moviesSaved, onMovieLike, loggedIn, on
     }
     return initialCardsMovies;
   }
-  
+
   function handleActiveFilter(isActive) {
     setNotFoundMovies(false);
     setActiveFilter(isActive);
@@ -262,7 +260,7 @@ function Movies({ moviesAll, onMoviesAll, moviesSaved, onMovieLike, loggedIn, on
     let card;
     const movieAvailability = moviesSaved.find(i => i.movieId === movie.id);
     if(movieAvailability) {
-      moviesSaved.map(item => item.movieId === movie.id ? card = {...movie, owner: item.owner} : '');      
+      moviesSaved.map(item => item.movieId === movie.id ? card = {...movie, owner: item.owner} : '');
     } else {
       card = movie;
     }
@@ -338,7 +336,7 @@ function Movies({ moviesAll, onMoviesAll, moviesSaved, onMovieLike, loggedIn, on
       searchMovies(item, moviesListAll);
     }
   }
- 
+
   function handleChangeDescription(item) {
     if(initialMovies.length > 0 && moviesListNew.length > 0 && moviesListNew.length > item.length) {
       let currentMovies = item;
@@ -382,7 +380,7 @@ function Movies({ moviesAll, onMoviesAll, moviesSaved, onMovieLike, loggedIn, on
           )}
         </div>
       </main>
-    </> 
+    </>
   )
 }
 

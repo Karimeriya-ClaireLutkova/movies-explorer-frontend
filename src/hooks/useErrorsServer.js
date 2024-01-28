@@ -1,12 +1,12 @@
 import React from 'react';
 
-import { conflictError, 
-       forbiddenError, 
-       notFoundError, 
-       validationError, 
+import { conflictError,
+       forbiddenError,
+       notFoundError,
+       validationError,
        unauthorizedError,
        serverError,
-       validationErrorRegister, 
+       validationErrorRegister,
        unauthorizedErrorToken,
       } from '../utils/constants';
 
@@ -23,7 +23,7 @@ export default function useFormValidator() {
         pathname === '/profile' && setMessageError(validationError);
       } else if (numberError === 401) {
         pathname === '/sign-in' && setMessageError(unauthorizedError);
-        pathname === '/' && setMessageError(unauthorizedErrorToken);        
+        pathname === '/' && setMessageError(unauthorizedErrorToken);     
       } else if (numberError === 403) {
         setMessageError(forbiddenError);
       } else if (numberError === 404) {

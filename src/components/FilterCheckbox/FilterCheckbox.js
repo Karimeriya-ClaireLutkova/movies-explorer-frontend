@@ -15,7 +15,7 @@ function FilterCheckbox({onActiveFilter, isActiveFilterMovies}) {
     setActiveFilter(status);
     onActiveFilter(status);
   }
-  
+
   return (
     <div className="filter-checkbox">
       <label className="filter-checkbox__toggle">

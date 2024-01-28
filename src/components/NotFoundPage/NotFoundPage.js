@@ -2,7 +2,6 @@ import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import './NotFoundPage.css';
 
-
 function NotFoundPage({onBackPage}) {
   const navigate = useNavigate();
   const { pathname } = useLocation();
@@ -24,8 +23,8 @@ function NotFoundPage({onBackPage}) {
           <h2 className="missing-page__subtitle">Страница не найдена</h2>
           <button type="button" className="missing-page__button" onClick={handleGoBackPageNav}>Назад</button>
         </div>
-      </section> 
-    </main>    
+      </section>
+    </main>
   )
 }
 

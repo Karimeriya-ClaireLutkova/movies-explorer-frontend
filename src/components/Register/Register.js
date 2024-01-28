@@ -34,7 +34,7 @@ export default function Register({ onSubmit, isLoad, error, onСlearError }) {
   function handleChangeInput(evt) {
     onСlearError();
     setActiveError(false);
-    resetError();    
+    resetError();
     handleChange(evt);
     if(evt.target.name === 'email') {
       setUserEmail(evt.target.value);
@@ -70,12 +70,12 @@ export default function Register({ onSubmit, isLoad, error, onСlearError }) {
                        textLoad={"Регистрация..."}>
           <div className={`popup__field ${errors.name ? "popup__field_error" : ""}`}>
             <p className="popup__input-text">Имя</p>
-            <input id="user-name-input" type="text" className={`popup__input popup__input_entry ${errors.name ? "popup__input_error" :""}`} name="name" placeholder="Имя" value={name} onChange={handleChangeInput} required  />
+            <input id="user-name-input" type="text" className={`popup__input popup__input_entry ${errors.name ? "popup__input_error" :""}`} name="name" placeholder="Имя" value={name} onChange={handleChangeInput} required />
             <span className={`user-name-input-error popup__input-error ${errors.name ? "popup__input-error_active" : ""}`}>{errors.name}</span>
           </div>
           <div className={`popup__field ${errors.email ? "popup__field_error" : ""}`}>
             <p className="popup__input-text">E-mail</p>
-            <input id="user-email-input" type="email" className={`popup__input popup__input_entry ${(errors.email || isActiveError) ? "popup__input_error" :""}`} pattern="^([^ ]+@[^ ]+\.[a-z]{2,6}|)$" name="email" placeholder="Email" value={userEmail} onChange={handleChangeInput} required  />
+            <input id="user-email-input" type="email" className={`popup__input popup__input_entry ${(errors.email || isActiveError) ? "popup__input_error" :""}`} pattern="^([^ ]+@[^ ]+\.[a-z]{2,6}|)$" name="email" placeholder="Email" value={userEmail} onChange={handleChangeInput} required />
             <span className={`user-email-input-error popup__input-error ${errors.email ? "popup__input-error_active" : ""}`}>{errors.email}</span>
           </div>
           <div className={`popup__field ${errors.password ? "popup__field_error" : ""}`}>

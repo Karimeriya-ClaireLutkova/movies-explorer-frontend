@@ -22,7 +22,7 @@ function SavedMovies({ onMovieDelete, isLoad, loggedIn, onAuthorization, onNavig
 
   function saveData(item) {
     localStorage.setItem("textScreachSaved", item);
-  } 
+  }
 
   function handleActiveFilter(isActive) {
     setNotFoundMovies(false);
@@ -41,13 +41,13 @@ function SavedMovies({ onMovieDelete, isLoad, loggedIn, onAuthorization, onNavig
   function handleMoviesFilter(item, isActiveFilter) {
     let movieListScreachNew;
     if (isActiveFilter) {
-      movieListScreachNew = item.filter((movie) => 
+      movieListScreachNew = item.filter((movie) =>
         movie.duration <= filtersShortFilm
       )
     } else {
       movieListScreachNew = item;
     }
-    
+  
     return movieListScreachNew;
   }
 
@@ -72,7 +72,7 @@ function SavedMovies({ onMovieDelete, isLoad, loggedIn, onAuthorization, onNavig
         return (nameRu.includes(item.name))
       });
       if (movieListScreach.length === 0) {
-        setNotFoundMovies(true);          
+        setNotFoundMovies(true);
       };
     } else if(checkLanguageEn) {
       movieListScreach = moviesSaved.filter(movie => {
@@ -106,7 +106,7 @@ function SavedMovies({ onMovieDelete, isLoad, loggedIn, onAuthorization, onNavig
           ) : (
             <MoviesCardList id="2" cardsMovies={moviesListNew} onMovieDelete={onMovieDelete} isNotFoundMovies={isNotFoundMovies} />
           )}
-        </div> 
+        </div>
       </main>
     </>
   )
