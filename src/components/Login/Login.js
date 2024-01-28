@@ -29,8 +29,7 @@ export default function Login ({ onSubmit, isLoad, error, onСlearError}) {
   }
 
   function handleChangeInput(evt) {
-    onСlearError();
-    resetError();
+    resetErrorServer();
     handleChange(evt);
     if(evt.target.name === 'email') {
       setUserEmail(evt.target.value);

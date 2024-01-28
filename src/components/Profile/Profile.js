@@ -4,14 +4,15 @@ import PopupWithForm from '../PopupWithForm/PopupWithForm';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import useFormValidator from '../../hooks/useFormValidator';
 import useErrorsServer from '../../hooks/useErrorsServer';
+import { useLocation } from 'react-router-dom';
 import './Profile.css';
 
 export default function Profile({onSignOut, onUpdateUser, loggedIn, onAuthorization, onNavigation, onActiveMenu, error, isLoad, onСlearError}) {
   const currentUser = React.useContext(CurrentUserContext);
+  const { pathname } = useLocation();
   const [isActive, setActive] = React.useState(false);
   const [isName, setName] = React.useState('');
   const [isEmail, setEmail] = React.useState('');
-  const [isErrorServer, setErrorServer] = React.useState('');
   const { errors, isValid, handleChange, resetForm } = useFormValidator();
   const { messageError, handleErrorsStatus, resetError } = useErrorsServer();
   const greeting = `Привет, ${currentUser.name}!`;
@@ -23,9 +24,8 @@ export default function Profile({onSignOut, onUpdateUser, loggedIn, onAuthorizat
   }
 
   React.useEffect(() => {
-    setErrorServer(error);
-    handleErrorsStatus(isErrorServer);
-  }, [handleErrorsStatus, error, isErrorServer]);
+    handleErrorsStatus(error, pathname);
+  }, [handleErrorsStatus, error, pathname]);
 
   React.useEffect(() => {
     if(isLoad === false) {
@@ -34,9 +34,13 @@ export default function Profile({onSignOut, onUpdateUser, loggedIn, onAuthorizat
     }
   }, [currentUser, isLoad]);
 
-  function handleChangeInput(evt) {
+  function resetErrorServer() {
     onСlearError();
     resetError();
+  }
+
+  function handleChangeInput(evt) {
+    resetErrorServer();
     handleChange(evt, currentUser);
     if(evt.target.name === 'name') {
       setName(evt.target.value);
@@ -52,6 +56,7 @@ export default function Profile({onSignOut, onUpdateUser, loggedIn, onAuthorizat
       email: isEmail,
     });
     resetForm();
+    setActive(false);
   }
 
   return (

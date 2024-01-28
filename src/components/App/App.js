@@ -222,6 +222,7 @@ function App() {
   }
 
   function handleCloseNavigationBar() {
+    handleСlearError();
     const navigationSection = document.querySelector(".navigate-autorized");
     const navigationContainer = document.querySelector(".navigate-container");
     const page = document.querySelector(".page");

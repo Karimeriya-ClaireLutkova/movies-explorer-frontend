@@ -58,7 +58,10 @@ export default function useFormValidator() {
       if (value.length === 0) {
         setErrors({...errors, [name]: "Поле Имя не может быть пустым."});
         setValidNew(false);
-      } else if (value.length > 0) {
+      } else if (value.length === 1) {
+        setErrors({...errors, [name]: "Поле Имя не может содержать менее 2 символов."});
+        setValidNew(false);
+      } else if(value.length >= 2) {
         if (!new RegExp(/^[a-zA-Zа-яёА-ЯЁ-]+$/).test(value)) {
           setErrors({...errors, [name]: "Используйте только латиницу или кириллицу, дефис."});
           setValidNew(false);
