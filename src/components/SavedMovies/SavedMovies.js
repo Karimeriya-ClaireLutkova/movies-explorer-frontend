@@ -8,7 +8,6 @@ import MoviesCardList from '../MoviesCardList/MoviesCardList';
 function SavedMovies({ onMovieDelete, isLoad, loggedIn, onAuthorization, onNavigation, onActiveMenu, moviesSaved, onInputLanguage}) {
   const [loading, setLoading] = React.useState(false);
   const [isActiveFilter, setActiveFilter] = React.useState(false);
-  const [moviesListSaved, setMoviesListSaved] = React.useState(moviesSaved); 
   const [isNotFoundMovies, setNotFoundMovies] = React.useState(false);
   const [moviesList, setMoviesList] = React.useState([]);
   const [moviesListNew, setMoviesListNew] = React.useState(moviesSaved);
@@ -19,7 +18,6 @@ function SavedMovies({ onMovieDelete, isLoad, loggedIn, onAuthorization, onNavig
 
   React.useEffect(() => {
     setMoviesListNew(moviesSaved);
-    setMoviesListSaved(moviesSaved);
   }, [moviesSaved])
 
   function handleActiveFilter(isActive) {
@@ -62,50 +60,34 @@ function SavedMovies({ onMovieDelete, isLoad, loggedIn, onAuthorization, onNavig
   }
 
   function handleUpdateMoviesList(item) {
-    setMoviesListNew([]);
     setLoading(true);
-    if (isActiveFilter) {
-      const {checkLanguageRu, checkLanguageEn} = onInputLanguage(item.name);
-      let movieListScreach;
-      if (checkLanguageRu) {
-        movieListScreach = moviesListNew.filter(movie => {
-          const nameRu = movie.nameRU.toLowerCase();
-          return (nameRu.includes(item.name))
-        });
-        if (movieListScreach.length === 0) {
-          setNotFoundMovies(true);          
-        };
-      } else if(checkLanguageEn) {
-        movieListScreach = moviesListNew.filter(movie => {
-          const nameEn = movie.nameEN.toLowerCase();
-          return (nameEn.includes(item.name))
-        });
-        if (movieListScreach.length === 0) {
-          setNotFoundMovies(true);
-        };
-      }
-      setMoviesListNew(movieListScreach);
+    const {checkLanguageRu, checkLanguageEn} = onInputLanguage(item.name);
+    let movieListScreach;
+    if (checkLanguageRu) {
+      movieListScreach = moviesListNew.filter(movie => {
+        const nameRu = movie.nameRU.toLowerCase();
+        return (nameRu.includes(item.name))
+      });
+      if (movieListScreach.length === 0) {
+        setNotFoundMovies(true);          
+      };
+    } else if(checkLanguageEn) {
+      movieListScreach = moviesListNew.filter(movie => {
+        const nameEn = movie.nameEN.toLowerCase();
+        return (nameEn.includes(item.name))
+      });
+      if (movieListScreach.length === 0) {
+        setNotFoundMovies(true);
+      };
+    }
+    setMoviesList(movieListScreach);
+    const moviesListFilterNew = handleMoviesFilter(movieListScreach, isActiveFilter);
+    const resultNew = checkAvailabilityResult(moviesListFilterNew);
+    if (resultNew) {
+      setMoviesListNew(resultNew);
     } else {
-      const {checkLanguageRu, checkLanguageEn} = onInputLanguage(item.name);
-      let movieListScreach;
-      if (checkLanguageRu) {
-        movieListScreach = moviesListNew.filter(movie => {
-          const nameRu = movie.nameRU.toLowerCase();
-          return (nameRu.includes(item.name))
-        });
-        if (movieListScreach.length === 0) {
-          setNotFoundMovies(true);
-        };
-      } else if(checkLanguageEn) {
-        movieListScreach = moviesListNew.filter(movie => {
-          const nameEn = movie.nameEN.toLowerCase();
-          return (nameEn.includes(item.name))
-        });
-        if (movieListScreach.length === 0) {
-          setNotFoundMovies(true);          
-        };
-      }
-      setMoviesListNew(movieListScreach);
+      setMoviesListNew([]);
+      setNotFoundMovies(true);
     }
     setLoading(false);
   }

@@ -10,11 +10,14 @@ function SearchForm({ textInput, onUpdateMoviesList, onActiveFilter, isActiveFil
   const { errors, isValid, handleChange} = useFormValidator();
 
   React.useEffect(() => {
-    setName(textInput);
+    if(textInput) {
+      setName(textInput);
+    }
   }, [textInput]);
 
   function handleSearchMovies(evt) {
-    handleChange(evt);
+    let currentUser;
+    handleChange(evt, currentUser, pathname);
     if(evt.target.name === 'film') {
       setName(evt.target.value);
     }

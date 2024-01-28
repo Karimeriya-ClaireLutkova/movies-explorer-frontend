@@ -17,7 +17,7 @@ export default function useFormValidator() {
     }
   }, [isValid, isValidNew]);
 
-  const handleChange = (event, currentUser, messageError) => {
+  const handleChange = (event, currentUser, pathname) => {
     const target = event.target;
     const name = target.name;
     const value = target.value;
@@ -25,18 +25,17 @@ export default function useFormValidator() {
       setCurrentName(currentUser.name);
       setCurrentEmail(currentUser.email);
     }
-    if(messageError) {
-      setValues({...values, [name]: value});
-      setErrors({...errors, [name]: '' });
-      checkFieldsForm(name, value, messageError);
-    }
     setValues({...values, [name]: value});
     setErrors({...errors, [name]: target.validationMessage });
     setIsValid(target.closest("form").checkValidity());
-    checkFieldsForm(name, value);
+    if(pathname !== undefined) {
+      checkFieldsForm(name, value, pathname);
+    } else {
+      checkFieldsForm(name, value);
+    }
   };
 
-  function checkFieldsForm(name, value) {
+  function checkFieldsForm(name, value, pathname) {
     if (name === "email") {
       if (value.length === 0) {
         setErrors({...errors, [name]: "Поле email не может быть пустым."});
@@ -86,10 +85,14 @@ export default function useFormValidator() {
         setErrors({...errors, [name]: "Нужно ввести ключевое слово."}); 
         setValidNew(false);
       } else if (value.length > 0) {
-        const textScreachCurrent = localStorage.getItem("textScreach");
-        if(value === textScreachCurrent) {
-          setErrors({...errors, [name]: "Нужно ввести ключевое слово, отличающееся от изначального."}); 
-          setValidNew(false);
+        if(pathname !== '/saved-movies') {
+          const textScreachCurrent = localStorage.getItem("textScreach");
+          if(value === textScreachCurrent) {
+            setErrors({...errors, [name]: "Нужно ввести ключевое слово, отличающееся от изначального."}); 
+            setValidNew(false);
+          } else {
+            setValidNew(true);
+          }        
         } else {
           setValidNew(true);
         }
