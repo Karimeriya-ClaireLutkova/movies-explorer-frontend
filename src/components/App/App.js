@@ -36,6 +36,7 @@ function App() {
         getContent(jwt)
           .then((res) => {
             setCurrentUser(res);
+            localStorage.setItem('userName', res.name);
             setLoggedIn(true);
             if(notFoundPage === undefined) {
               navigate(pathname);
@@ -60,6 +61,7 @@ function App() {
       Promise.all([mainApi.getUserInfo(), mainApi.getMovies()])
         .then(([user, moviesSaved]) => {
           setCurrentUser(user);
+          localStorage.setItem('userName', user.name);
           setMoviesSaved(moviesSaved);
         })
         .catch((err) => {
@@ -117,6 +119,7 @@ function App() {
         mainApi.getUserInfo()
           .then((user) => {
             setCurrentUser(user);
+            localStorage.setItem('userName', user.name);
           })
           .catch((err) => {
             setError(err);
@@ -241,6 +244,7 @@ function App() {
     localStorage.removeItem('filter');
     localStorage.removeItem('counterView');
     localStorage.removeItem('loggedIn');
+    localStorage.removeItem('userName');
     setLoggedIn(false);
     setCurrentUser({});
     navigate('/', { replace: true });
