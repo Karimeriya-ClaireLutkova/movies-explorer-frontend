@@ -86,11 +86,11 @@ function Movies({ moviesAll, onMoviesAll, moviesSaved, onMovieLike, loggedIn, on
   }, [moviesSaved]);
 
   React.useEffect(() => {
-    if(localStorage.getItem('loggedIn')) {
+    if(moviesSaved !== undefined) {
       const cardsMoviesStorageLike = throughIterateArray(moviesListNew);
       setMoviesListNew(cardsMoviesStorageLike);
     }
-  }, []);
+  }, [moviesSaved]);
 
   React.useEffect(() => {
     restoreCheckboxState();
@@ -152,7 +152,6 @@ function Movies({ moviesAll, onMoviesAll, moviesSaved, onMovieLike, loggedIn, on
           const resultNew = checkAvailabilityResult(movieListStorageNew);
           if (resultNew) {
             const initialCardsMovies = handleDisplayPart(movieListStorageNew);
-            console.log(initialCardsMovies);
             setInitialMovies(initialCardsMovies);
           } else {
             setNotFoundMovies(true);
