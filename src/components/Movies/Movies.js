@@ -156,6 +156,7 @@ function Movies({ moviesAll, onMoviesAll, moviesSaved, onMovieLike, loggedIn, on
             setLoader(false);
           } else {
             setNotFoundMovies(true);
+            setButtonInactive(true);
             setLoader(false);
           }
         }
@@ -253,6 +254,7 @@ function Movies({ moviesAll, onMoviesAll, moviesSaved, onMovieLike, loggedIn, on
       setInitialMovies(handleDisplayPart(movies));
     } else {
       setNotFoundMovies(true);
+      setButtonInactive(true);
     }
   }
 
@@ -312,6 +314,7 @@ function Movies({ moviesAll, onMoviesAll, moviesSaved, onMovieLike, loggedIn, on
       setInitialMovies(initialCardsMovies);
     } else {
       setNotFoundMovies(true);
+      setButtonInactive(true);
     }
     saveCheckboxState();
     setLoader(false);

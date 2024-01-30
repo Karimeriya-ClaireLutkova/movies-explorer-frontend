@@ -28,7 +28,7 @@ function App() {
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const { messageError, handleErrorsStatus } = useErrorsServer();
-  
+
   React.useEffect(() => {
     const tokenCheck = () => {
       if (jwt) {
@@ -93,8 +93,8 @@ function App() {
       .finally(() => {
         setLoad(false);
       })
-    }
-  
+  }
+
   function handleLoginSubmit(userEmail, password) {
     setLoad(true);
     authorization(userEmail, password)
@@ -292,7 +292,7 @@ function App() {
                   onNavigation={handleCloseNavigationBar}
                   onActiveMenu={handleActiveMenu}
                   isLoad={isLoad}
-                  onInputLanguage={handleInputLanguage}               
+                  onInputLanguage={handleInputLanguage}
           />
         }>
         </Route>
