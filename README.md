@@ -24,7 +24,7 @@ Alt - H1
 10. Реализован декларативный подход с использованием JSX, React.
 11. Были созданы Инфраструктурные файлы проекта через CRA.
 12. Проект на GitHub - https://github.com/Karimeriya-ClaireLutkova/movies-explorer-frontend
-13. Ссылка на пул реквест(GitHub) - 
+13. Ссылка на пул реквест(GitHub) - https://github.com/Karimeriya-ClaireLutkova/movies-explorer-frontend/pull/2
 14. Проект на сервере - Frontend https://moviesYP.nomoredomainsrocks.ru
                         Backend https://api.moviesyp.students.nomoredomainsrocks.ru
    
