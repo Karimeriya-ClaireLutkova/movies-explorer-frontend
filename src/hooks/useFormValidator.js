@@ -62,10 +62,10 @@ export default function useFormValidator() {
         setErrors({...errors, [name]: "Поле Имя не может содержать менее 2 символов."});
         setValidNew(false);
       } else if(value.length >= 2) {
-        if (!new RegExp(/^[a-zA-Zа-яёА-ЯЁ-]+$/).test(value)) {
-          setErrors({...errors, [name]: "Используйте только латиницу или кириллицу, дефис."});
+        if (!new RegExp(/^[а-яёА-ЯЁ]+(?:[\s.-][а-яёА-ЯЁ]+)*$/).test(value)) {
+          setErrors({...errors, [name]: "Используйте только латиницу или кириллицу, дефис и один пробел между словами."});
           setValidNew(false);
-        } else if (new RegExp(/^[a-zA-Zа-яёА-ЯЁ-]+$/).test(value)) {
+        } else if (new RegExp(/^[а-яёА-ЯЁ]+(?:[\s.-][а-яёА-ЯЁ]+)*$/).test(value)) {
           if (isCurrentName === value) {
             setErrors({...errors, [name]: "Введите имя, отличающееся от изначального."});
             setValidNew(false);
