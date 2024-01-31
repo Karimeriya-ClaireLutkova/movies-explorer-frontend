@@ -6,6 +6,10 @@
   color: #FFF;
 }
 
+.element:hover .element__button_delete {
+  opacity: 0.8;
+}
+
 .element__image {
   width: 270px;
   height: 151px;
@@ -83,10 +87,6 @@
   cursor: pointer;
 }
 
-.element__button_delete:hover {
-  opacity: 0.8;
-}
-
 .element__duration {
   display: flex;
   max-width: 100%;
@@ -145,5 +145,9 @@
   .element__duration {
     font-size: 10px;
     line-height: 1.2;
+  }
+
+  .element__button_delete {
+    opacity: 0.8;
   }
 }
