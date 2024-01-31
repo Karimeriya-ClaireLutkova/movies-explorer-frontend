@@ -247,6 +247,7 @@ function Movies({ moviesAll, onMoviesAll, moviesSaved, onMovieLike, loggedIn, on
   function handleActiveFilter(isActive) {
     setNotFoundMovies(false);
     setActiveFilter(isActive);
+    saveCheckboxState(isActive);
     let movies;
     movies = handleMoviesFilter(moviesListNew, isActive);
     const resultNew = checkAvailabilityResult(movies);
