@@ -25,18 +25,18 @@ function PopupWithForm(props) {
     <div className = {className}>
       <div className={`popup__container popup__container_${name}`}>
         <h2 className={`popup__title popup__title_${name}`}>{title}</h2>
-        <form className="popup__form" name={name} onSubmit={onSubmit} noValidate>
+        <form className="popup__form" name={name} noValidate>
           <div className="popup__form-info">
             {children}
           </div>
           { pathname === '/profile' ? (
             <>
-              <button id="profile-button-submit" type="submit" className={`popup__button popup__button_save ${isActive ? `popup__button_show popup__button_show_${name}` : "popup__button_hide"} ${!isValid ? "popup__button_inactive" : ""}`}>{isLoad ? textLoad: buttonText}</button>
+              <button id="profile-button-submit" type="submit" className={`popup__button popup__button_save ${isActive ? `popup__button_show popup__button_show_${name}` : "popup__button_hide"} ${!isValid ? "popup__button_inactive" : ""}`} onSubmit={onSubmit} disabled={!isValid ? true : ''}>{isLoad ? textLoad: buttonText}</button>
               <p className={`popup__error ${isActiveError ? "popup__error_active popup__error_active_profile" : ""}`}>{errorServer}</p>
            </>
           ) : (
             <>
-            <button type="submit" className={classNameButton}>{isLoad ? textLoad : buttonText}</button>
+            <button type="submit" className={classNameButton} onSubmit={onSubmit} disabled={!isValid ? true : ''}>{isLoad ? textLoad : buttonText}</button>
             <p className={`popup__error ${isActiveError ? "popup__error_active" : ""}`}>{errorServer}</p>
             </>
           )}

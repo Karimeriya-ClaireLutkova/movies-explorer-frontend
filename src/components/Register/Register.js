@@ -12,9 +12,20 @@ export default function Register({ onSubmit, isLoad, error, onСlearError }) {
   const [password, setPassword] = React.useState('');
   const [errorServer, setErrorServer] = React.useState('');
   const [isActiveError, setActiveError] = React.useState(false);
-  const { errors, isValid, handleChange, resetForm } = useFormValidator();
+  const [errorsCurrent, setErrorsCurrent] = React.useState({});
+  const { errors, isValid, handleChange, checkFormErrors, resetForm } = useFormValidator(errorsCurrent);
   const { messageError, handleErrorsStatus, resetError } = useErrorsServer();
 
+  React.useEffect(() => {
+    setErrorsCurrent(errors);
+  }, [errors]);
+
+  React.useEffect(() => {
+    if(errorsCurrent.name !== undefined && errorsCurrent.email !== undefined && errorsCurrent.password !== undefined) {
+      checkFormErrors(errorsCurrent);
+    }
+  }, [errorsCurrent, checkFormErrors]);
+  
   React.useEffect(() => {
     setErrorServer(error);
     handleErrorsStatus(errorServer, pathname);
@@ -32,10 +43,8 @@ export default function Register({ onSubmit, isLoad, error, onСlearError }) {
   }
 
   function handleChangeInput(evt) {
-    onСlearError();
+    resetErrorServer();
     setActiveError(false);
-    resetError();
-    handleChange(evt);
     if(evt.target.name === 'email') {
       setUserEmail(evt.target.value);
     } else if(evt.target.name === 'password') {
@@ -43,6 +52,13 @@ export default function Register({ onSubmit, isLoad, error, onСlearError }) {
     } else if(evt.target.name === 'name') {
       setName(evt.target.value);
     }
+    handleChange(evt);
+  }
+
+  function handleKeyDown(evt) {
+    if(evt.key === 'Enter') {
+      evt.preventDefault();
+    };
   }
 
   function handleSubmit(evt) {
@@ -70,17 +86,17 @@ export default function Register({ onSubmit, isLoad, error, onСlearError }) {
                        textLoad={"Регистрация..."}>
           <div className={`popup__field ${errors.name ? "popup__field_error" : ""}`}>
             <p className="popup__input-text">Имя</p>
-            <input id="user-name-input" type="text" className={`popup__input popup__input_entry ${errors.name ? "popup__input_error" :""}`} name="name" placeholder="Имя" value={name} onChange={handleChangeInput} required />
+            <input id="user-name-input" type="text" className={`popup__input popup__input_entry ${errors.name ? "popup__input_error" :""}`} name="name" placeholder="Имя" value={name} onChange={handleChangeInput} autoComplete="off" onKeyDown={handleKeyDown} required />
             <span className={`user-name-input-error popup__input-error ${errors.name ? "popup__input-error_active" : ""}`}>{errors.name}</span>
           </div>
           <div className={`popup__field ${errors.email ? "popup__field_error" : ""}`}>
             <p className="popup__input-text">E-mail</p>
-            <input id="user-email-input" type="email" className={`popup__input popup__input_entry ${(errors.email || isActiveError) ? "popup__input_error" :""}`} pattern="^([^ ]+@[^ ]+\.[a-z]{2,6}|)$" name="email" placeholder="Email" value={userEmail} onChange={handleChangeInput} required />
+            <input id="user-email-input" type="email" className={`popup__input popup__input_entry ${(errors.email || isActiveError) ? "popup__input_error" :""}`} pattern="^([^ ]+@[^ ]+\.[a-z]{2,6}|)$" name="email" placeholder="Email" value={userEmail} onChange={handleChangeInput} autoComplete="off" onKeyDown={handleKeyDown} required />
             <span className={`user-email-input-error popup__input-error ${errors.email ? "popup__input-error_active" : ""}`}>{errors.email}</span>
           </div>
           <div className={`popup__field ${errors.password ? "popup__field_error" : ""}`}>
             <p className="popup__input-text">Пароль</p>
-            <input id="user-password-input" type="password" className={`popup__input popup__input_entry ${errors.password ? "popup__input_error" :""}`} name="password" placeholder="Пароль" value={password} onChange={handleChangeInput} required />
+            <input id="user-password-input" type="password" className={`popup__input popup__input_entry ${errors.password ? "popup__input_error" :""}`} name="password" placeholder="Пароль" value={password} onChange={handleChangeInput} autoComplete="off" onKeyDown={handleKeyDown} required />
             <span className={`user-password-input-error popup__input-error ${errors.password ? "popup__input-error_active" : ""}`}>{errors.password}</span>
           </div>
         </PopupWithForm>

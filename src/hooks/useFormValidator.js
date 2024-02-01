@@ -1,21 +1,28 @@
 import React from 'react';
 import validator from 'validator';
 
-export default function useFormValidator() {
+export default function useFormValidator(errorsCurrent) {
   const [values, setValues] = React.useState({});
   const [errors, setErrors] = React.useState({});
   const [isValid, setIsValid] = React.useState(false);
   const [isValidNew, setValidNew] = React.useState(false);
+  const [isValidForm, setValidForm] = React.useState(false);
   const [isCurrentName, setCurrentName] = React.useState('');
   const [isCurrentEmail, setCurrentEmail] = React.useState('');
+  const [errorsListCurrent, setErrorsListCurrent] = React.useState(errorsCurrent);
 
   React.useEffect(() => {
-    if(isValid === true && isValidNew === true) {
+    setErrorsListCurrent(errorsCurrent);
+  }, [errorsCurrent]);
+
+  React.useEffect(() => {
+    console.log(isValid, isValidNew, isValidForm);
+    if(isValid === true && isValidNew === true && isValidForm === true) {
       setIsValid(true);
     } else {
       setIsValid(false);
     }
-  }, [isValid, isValidNew]);
+  }, [isValid, isValidNew, isValidForm]);
 
   const handleChange = (event, currentUser, pathname) => {
     const target = event.target;
@@ -63,7 +70,7 @@ export default function useFormValidator() {
         setValidNew(false);
       } else if(value.length >= 2) {
         if (!new RegExp(/^[a-zA-Zа-яёА-ЯЁ]+(?:[\s-][a-zA-Zа-яёА-ЯЁ]+)*$/).test(value)) {
-          setErrors({...errors, [name]: "Используйте только латиницу или кириллицу, дефис и один пробел между словами."});
+          setErrors({...errors, [name]: "Используйте только латиницу или кириллицу, дефис и один пробел."});
           setValidNew(false);
         } else if (new RegExp(/^[a-zA-Zа-яёА-ЯЁ]+(?:[\s-][a-zA-Zа-яёА-ЯЁ]+)*$/).test(value)) {
           if (isCurrentName === value) {
@@ -73,7 +80,7 @@ export default function useFormValidator() {
             setValidNew(true);
           }
         }
-      }
+      } 
     }
     if (name === "password") {
       if (value.length === 0) {
@@ -105,17 +112,34 @@ export default function useFormValidator() {
         }
       }
     }
+    checkFormErrors(errorsListCurrent);
+  }
+
+  function checkFormErrors(errorsListCurrent) {
+    console.log(errorsListCurrent, errors);
+    if(errorsListCurrent !== '') {
+      setValidForm(false);
+    } else if(errorsListCurrent.email !== '') {
+      setValidForm(false);
+    } else if(errorsListCurrent.password !== '') {
+      setValidForm(false);
+    } else if(errorsListCurrent.name === '' && errorsListCurrent.email === '' && (errorsListCurrent.password === '' || errorsListCurrent.password === undefined)) {
+      setValidForm(true);
+    } /*else if(errors.name === '' && errors.email === '' && (errors.password === '' || errors.password === undefined)) {
+      setIsValid(true);
+    }*/
   }
 
   const resetForm = React.useCallback(
-    (newValues = {}, newErrors = {}, newIsValid = false, newValid = false) => {
+    (newValues = {}, newErrors = {}, newIsValid = false, newValid = false, newValidForm = false) => {
       setValues(newValues);
       setErrors(newErrors);
       setIsValid(newIsValid);
       setValidNew(newValid);
+      setValidForm(newValidForm);
     },
-    [setValues, setErrors, setIsValid]
+    [setValues, setErrors, setIsValid, setValidForm]
   );
 
-  return { values, handleChange, errors, isValid, resetForm };
+  return { values, handleChange, errors, isValid, checkFormErrors, resetForm };
 };
