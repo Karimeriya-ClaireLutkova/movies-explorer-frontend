@@ -6,23 +6,41 @@ export default function useFormValidator(errorsCurrent) {
   const [errors, setErrors] = React.useState({});
   const [isValid, setIsValid] = React.useState(false);
   const [isValidNew, setValidNew] = React.useState(false);
-  const [isValidForm, setValidForm] = React.useState(false);
   const [isCurrentName, setCurrentName] = React.useState('');
   const [isCurrentEmail, setCurrentEmail] = React.useState('');
   const [errorsListCurrent, setErrorsListCurrent] = React.useState(errorsCurrent);
+  const [isValidCurrent, setIsValidCurrent] = React.useState(false);
 
   React.useEffect(() => {
     setErrorsListCurrent(errorsCurrent);
   }, [errorsCurrent]);
 
   React.useEffect(() => {
-    console.log(isValid, isValidNew, isValidForm);
-    if(isValid === true && isValidNew === true && isValidForm === true) {
-      setIsValid(true);
-    } else {
-      setIsValid(false);
+    const checkFormErrors = (errorsListCurrent) => {
+      if(errorsListCurrent.name !== '') {
+        setIsValid(false);
+      } else if(errorsListCurrent.email !== '') {
+        setIsValid(false);
+      } else if(errorsListCurrent.password !== '') {
+        setIsValid(false);
+      } else if(errorsListCurrent.name === '' && errorsListCurrent.email === '' && (errorsListCurrent.password === '' || errorsListCurrent.password === undefined)) {
+        setIsValid(true);
+      }
     }
-  }, [isValid, isValidNew, isValidForm]);
+    checkFormErrors(errorsListCurrent);
+  }, [errorsListCurrent, errors]);
+
+  React.useEffect(() => {
+    checkFormValid(isValid, isValidNew);
+  }, [isValid, isValidNew]);
+
+  function checkFormValid(isValid, isValidNew) {
+    if(isValid === true && isValidNew === true) {
+      setIsValidCurrent(true);
+    } else {
+      setIsValidCurrent(false);
+    }
+  }
 
   const handleChange = (event, currentUser, pathname) => {
     const target = event.target;
@@ -34,7 +52,6 @@ export default function useFormValidator(errorsCurrent) {
     }
     setValues({...values, [name]: value});
     setErrors({...errors, [name]: target.validationMessage });
-    setIsValid(target.closest("form").checkValidity());
     if(pathname === undefined) {
       checkFieldsForm(name, value);
     } else {
@@ -80,7 +97,7 @@ export default function useFormValidator(errorsCurrent) {
             setValidNew(true);
           }
         }
-      } 
+      }
     }
     if (name === "password") {
       if (value.length === 0) {
@@ -112,34 +129,19 @@ export default function useFormValidator(errorsCurrent) {
         }
       }
     }
-    checkFormErrors(errorsListCurrent);
-  }
-
-  function checkFormErrors(errorsListCurrent) {
-    console.log(errorsListCurrent, errors);
-    if(errorsListCurrent !== '') {
-      setValidForm(false);
-    } else if(errorsListCurrent.email !== '') {
-      setValidForm(false);
-    } else if(errorsListCurrent.password !== '') {
-      setValidForm(false);
-    } else if(errorsListCurrent.name === '' && errorsListCurrent.email === '' && (errorsListCurrent.password === '' || errorsListCurrent.password === undefined)) {
-      setValidForm(true);
-    } /*else if(errors.name === '' && errors.email === '' && (errors.password === '' || errors.password === undefined)) {
-      setIsValid(true);
-    }*/
   }
 
   const resetForm = React.useCallback(
-    (newValues = {}, newErrors = {}, newIsValid = false, newValid = false, newValidForm = false) => {
+    (newValues = {}, newErrors = {}, newIsValid = false, newValid = false, newIsValidCurrent = false, newErrorsListCurrent = false) => {
       setValues(newValues);
       setErrors(newErrors);
       setIsValid(newIsValid);
       setValidNew(newValid);
-      setValidForm(newValidForm);
+      setIsValidCurrent(newIsValidCurrent);
+      setErrorsListCurrent(newErrorsListCurrent);
     },
-    [setValues, setErrors, setIsValid, setValidForm]
+    [setValues, setErrors, setIsValid, setValidNew, setIsValidCurrent, setErrorsListCurrent]
   );
 
-  return { values, handleChange, errors, isValid, checkFormErrors, resetForm };
+  return { values, handleChange, errors, isValidCurrent, resetForm };
 };

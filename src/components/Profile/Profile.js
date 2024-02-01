@@ -43,6 +43,12 @@ export default function Profile({onSignOut, onUpdateUser, loggedIn, onAuthorizat
     resetError();
   }
 
+  function handleKeyDown(evt) {
+    if(evt.key === 'Enter') {
+      evt.preventDefault();
+    };
+  }
+
   function handleChangeInput(evt) {
     resetErrorServer();
     handleChange(evt, currentUser);
@@ -85,14 +91,14 @@ export default function Profile({onSignOut, onUpdateUser, loggedIn, onAuthorizat
           <div className="popup__field popup__field_profile-info">
             <p className="popup__input-text popup__input-text_profile">Имя</p>
             <div className={`popup__data-input ${errors.name ? "popup__data-input_error" : ""}`}>
-              <input id="profile-name-input" type="text" className={`popup__input popup__input_profile-info ${errors.name ? "popup__input_error" :""}`} name="name" placeholder="Имя" value={nameCurrent ? nameCurrent : name} onChange={handleChangeInput} autoComplete="off" disabled required />
+              <input id="profile-name-input" type="text" className={`popup__input popup__input_profile-info ${errors.name ? "popup__input_error" :""}`} name="name" placeholder="Имя" value={nameCurrent ? nameCurrent : name} onChange={handleChangeInput} onKeyDown={handleKeyDown} autoComplete="off" disabled required />
               <span className={`profile-name-input-error popup__input-error ${errors.name ? "popup__input-error_active_profile" : ""}`}>{errors.name}</span>
             </div>
           </div>
           <div className="popup__field popup__field_profile-info popup__field_not-underlined">
             <p className="popup__input-text popup__input-text_profile">E-mail</p>
             <div className={`popup__data-input ${errors.email ? "popup__data-input_error" : ""}`}>
-              <input id="profile-email-input" type="email" className={`popup__input popup__input_profile-info ${errors.email ? "popup__input_error" :""}`} name="email" pattern="^([^ ]+@[^ ]+\.[a-z]{2,6}|)$" placeholder="Email" value={emailCurrent ? emailCurrent : email} onChange={handleChangeInput} autoComplete="off" disabled required />
+              <input id="profile-email-input" type="email" className={`popup__input popup__input_profile-info ${errors.email ? "popup__input_error" :""}`} name="email" pattern="^([^ ]+@[^ ]+\.[a-z]{2,6}|)$" placeholder="Email" value={emailCurrent ? emailCurrent : email} onChange={handleChangeInput} onKeyDown={handleKeyDown} autoComplete="off" disabled required />
               <span className={`profile-email-input-error popup__input-error ${errors.email ? "popup__input-error_active_profile" : ""}`}>{errors.email}</span>
             </div>
           </div>

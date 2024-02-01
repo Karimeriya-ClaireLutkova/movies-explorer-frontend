@@ -13,7 +13,7 @@ export default function Register({ onSubmit, isLoad, error, onСlearError }) {
   const [errorServer, setErrorServer] = React.useState('');
   const [isActiveError, setActiveError] = React.useState(false);
   const [errorsCurrent, setErrorsCurrent] = React.useState({});
-  const { errors, isValid, handleChange, checkFormErrors, resetForm } = useFormValidator(errorsCurrent);
+  const { errors, isValidCurrent, handleChange, resetForm } = useFormValidator(errorsCurrent);
   const { messageError, handleErrorsStatus, resetError } = useErrorsServer();
 
   React.useEffect(() => {
@@ -21,10 +21,8 @@ export default function Register({ onSubmit, isLoad, error, onСlearError }) {
   }, [errors]);
 
   React.useEffect(() => {
-    if(errorsCurrent.name !== undefined && errorsCurrent.email !== undefined && errorsCurrent.password !== undefined) {
-      checkFormErrors(errorsCurrent);
-    }
-  }, [errorsCurrent, checkFormErrors]);
+   setErrorsCurrent(errors);
+  }, [errorsCurrent, errors]);
   
   React.useEffect(() => {
     setErrorServer(error);
@@ -43,8 +41,11 @@ export default function Register({ onSubmit, isLoad, error, onСlearError }) {
   }
 
   function handleChangeInput(evt) {
-    resetErrorServer();
     setActiveError(false);
+    const target = evt.target;
+    const name = target.name;
+    setErrorsCurrent({...errorsCurrent, [name]: ''});
+    handleChange(evt);
     if(evt.target.name === 'email') {
       setUserEmail(evt.target.value);
     } else if(evt.target.name === 'password') {
@@ -52,7 +53,6 @@ export default function Register({ onSubmit, isLoad, error, onСlearError }) {
     } else if(evt.target.name === 'name') {
       setName(evt.target.value);
     }
-    handleChange(evt);
   }
 
   function handleKeyDown(evt) {
@@ -80,7 +80,7 @@ export default function Register({ onSubmit, isLoad, error, onСlearError }) {
                        onSubmit={handleSubmit}
                        buttonText={"Зарегистрироваться"}
                        isLoad={isLoad}
-                       isValid={isValid}
+                       isValid={isValidCurrent}
                        errorServer={messageError}
                        onResetErrorServer={resetErrorServer}
                        textLoad={"Регистрация..."}>
