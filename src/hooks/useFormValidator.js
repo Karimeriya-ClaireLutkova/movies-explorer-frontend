@@ -16,23 +16,31 @@ export default function useFormValidator(errorsCurrent) {
   }, [errorsCurrent]);
 
   React.useEffect(() => {
-    const checkFormErrors = (errorsListCurrent) => {
-      if(errorsListCurrent.name !== '') {
-        setIsValid(false);
-      } else if(errorsListCurrent.email !== '') {
-        setIsValid(false);
-      } else if(errorsListCurrent.password !== '') {
-        setIsValid(false);
-      } else if(errorsListCurrent.name === '' && errorsListCurrent.email === '' && (errorsListCurrent.password === '' || errorsListCurrent.password === undefined)) {
-        setIsValid(true);
+    if(errorsCurrent) {
+      const checkFormErrors = (errorsListCurrent) => {
+        console.log(errorsCurrent);
+        if(errorsListCurrent.name !== '' && errorsListCurrent.name !== undefined) {
+          setIsValid(false);
+        } else if(errorsListCurrent.email !== '' && errorsListCurrent.email !== undefined) {
+          setIsValid(false);
+        } else if(errorsListCurrent.password !== '' && errorsListCurrent.password !== undefined) {
+          setIsValid(false);
+        } else if((errorsListCurrent.name === '' || errorsListCurrent.name !== undefined) && (errorsListCurrent.email === '' || errorsListCurrent.password === undefined) && (errorsListCurrent.password === '' || errorsListCurrent.password === undefined)) {
+          setIsValid(true);
+        } else {
+          setIsValid(true);
+        }
       }
+      checkFormErrors(errorsListCurrent);
     }
-    checkFormErrors(errorsListCurrent);
-  }, [errorsListCurrent, errors]);
+    
+  }, [errorsListCurrent, errors, errorsCurrent]);
 
   React.useEffect(() => {
-    checkFormValid(isValid, isValidNew);
-  }, [isValid, isValidNew]);
+    if(errorsCurrent) {
+      checkFormValid(isValid, isValidNew);
+    }
+  }, [isValid, isValidNew, errorsCurrent]);
 
   function checkFormValid(isValid, isValidNew) {
     if(isValid === true && isValidNew === true) {
@@ -55,6 +63,7 @@ export default function useFormValidator(errorsCurrent) {
     if(pathname === undefined) {
       checkFieldsForm(name, value);
     } else {
+      setIsValid(true);
       checkFieldsForm(name, value, pathname);
     }
   };
@@ -110,22 +119,22 @@ export default function useFormValidator(errorsCurrent) {
     if(name === "film") {
       if (value.length === 0) {
         setErrors({...errors, [name]: "Нужно ввести ключевое слово."});
-        setValidNew(false);
+        setIsValidCurrent(false);
       } else if (value.length > 0) {
         const textScreachCurrent = localStorage.getItem("textScreach");
         const textScreachSavedCurrent = localStorage.getItem("textScreachSaved");
         if(pathname === "/movies" && value === textScreachCurrent) {
           setErrors({...errors, [name]: "Нужно ввести ключевое слово, отличающееся от изначального."});
-          setValidNew(false);
+          setIsValidCurrent(false);
         } else if(pathname === "/saved-movies") {
           if(value === textScreachSavedCurrent) {
             setErrors({...errors, [name]: "Нужно ввести ключевое слово, отличающееся от изначального."});
-            setValidNew(false);
+            setIsValidCurrent(false);
           } else {
-            setValidNew(true);
+            setIsValidCurrent(true);
           }
         } else {
-          setValidNew(true);
+          setIsValidCurrent(true);
         }
       }
     }

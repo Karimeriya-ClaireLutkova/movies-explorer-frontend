@@ -17,12 +17,8 @@ export default function Register({ onSubmit, isLoad, error, onСlearError }) {
   const { messageError, handleErrorsStatus, resetError } = useErrorsServer();
 
   React.useEffect(() => {
-    setErrorsCurrent(errors);
-  }, [errors]);
-
-  React.useEffect(() => {
    setErrorsCurrent(errors);
-  }, [errorsCurrent, errors]);
+  }, [errors]);
   
   React.useEffect(() => {
     setErrorServer(error);
@@ -63,6 +59,7 @@ export default function Register({ onSubmit, isLoad, error, onСlearError }) {
 
   function handleSubmit(evt) {
     evt.preventDefault();
+    console.log('ggg');
     onSubmit(name, userEmail, password);
     if(errors === undefined) {
       setUserEmail('');

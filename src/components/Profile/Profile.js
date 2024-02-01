@@ -16,13 +16,18 @@ export default function Profile({onSignOut, onUpdateUser, loggedIn, onAuthorizat
   const [email, setEmail] = React.useState('');
   const [nameCurrent, setNameCurrent] = React.useState('');
   const [emailCurrent, setEmailCurrent] = React.useState('');
-  const { errors, isValid, handleChange, resetForm } = useFormValidator();
+  const [errorsCurrent, setErrorsCurrent] = React.useState({});
+  const { errors, isValid, handleChange, resetForm } = useFormValidator(errorsCurrent);
   const { messageError, handleErrorsStatus, resetError } = useErrorsServer();
   const greeting = `Привет, ${ userNameLocalStorage ? userNameLocalStorage : currentUser.name }!`;
 
   React.useEffect(() => {
     handleErrorsStatus(error, pathname);
   }, [handleErrorsStatus, error, pathname]);
+
+  React.useEffect(() => {
+    setErrorsCurrent(errors);
+  }, [errors]);
 
   React.useEffect(() => {
     if(isLoad === false) {
@@ -51,6 +56,9 @@ export default function Profile({onSignOut, onUpdateUser, loggedIn, onAuthorizat
 
   function handleChangeInput(evt) {
     resetErrorServer();
+    const target = evt.target;
+    const name = target.name;
+    setErrorsCurrent({...errorsCurrent, [name]: ''});
     handleChange(evt, currentUser);
     if(evt.target.name === 'name') {
       setNameCurrent('');

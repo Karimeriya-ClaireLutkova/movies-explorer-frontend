@@ -7,7 +7,7 @@ import './SearchForm.css';
 function SearchForm({ textInput, onUpdateMoviesList, onActiveFilter, isActiveFilterMovies }) {
   const [name, setName] = React.useState('');
   const { pathname } = useLocation();
-  const { errors, isValid, handleChange, resetForm } = useFormValidator();
+  const { errors, isValidCurrent, handleChange, resetForm } = useFormValidator();
 
   React.useEffect(() => {
     if(textInput !== undefined) {
@@ -22,6 +22,12 @@ function SearchForm({ textInput, onUpdateMoviesList, onActiveFilter, isActiveFil
     if(evt.target.name === 'film') {
       setName(evt.target.value);
     }
+  }
+
+  function handleKeyDown(evt) {
+    if(evt.key === 'Enter') {
+      evt.preventDefault();
+    };
   }
 
   function handleSubmit(evt) {
@@ -41,7 +47,7 @@ function SearchForm({ textInput, onUpdateMoviesList, onActiveFilter, isActiveFil
             <input id="movies-data-input" type="text" className={`search-form__input search-form__input_type_entry ${errors.film ? "search-form__input_error" :""}`} name="film" value={name} placeholder="Фильм" onChange={handleSearchMovies} autoComplete="off" required />
             <span className={`movies-data-input-error search-form__input-error ${errors.film ? "search-form__input-error_active" : ""}`}>{errors.film}</span>
           </div>
-          <button type="submit" className={`search-form__button ${!isValid ? "search-form__button_inactive" : ""}`}>Найти</button>
+          <button type="submit" className={`search-form__button ${!isValidCurrent ? "search-form__button_inactive" : ""}`} onKeyDown={handleKeyDown} disabled={!isValidCurrent ? true : ''}>Найти</button>
         </div>
         <div className="search-form__filter">
           { pathname === "/movies" ? (
