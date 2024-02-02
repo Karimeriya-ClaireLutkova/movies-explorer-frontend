@@ -18,7 +18,6 @@ export default function useFormValidator(errorsCurrent) {
   React.useEffect(() => {
     if(errorsCurrent) {
       const checkFormErrors = (errorsListCurrent) => {
-        console.log(errorsCurrent);
         if(errorsListCurrent.name !== '' && errorsListCurrent.name !== undefined) {
           setIsValid(false);
         } else if(errorsListCurrent.email !== '' && errorsListCurrent.email !== undefined) {

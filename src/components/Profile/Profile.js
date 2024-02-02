@@ -17,7 +17,7 @@ export default function Profile({onSignOut, onUpdateUser, loggedIn, onAuthorizat
   const [nameCurrent, setNameCurrent] = React.useState('');
   const [emailCurrent, setEmailCurrent] = React.useState('');
   const [errorsCurrent, setErrorsCurrent] = React.useState({});
-  const { errors, isValid, handleChange, resetForm } = useFormValidator(errorsCurrent);
+  const { errors, isValidCurrent, handleChange, resetForm } = useFormValidator(errorsCurrent);
   const { messageError, handleErrorsStatus, resetError } = useErrorsServer();
   const greeting = `Привет, ${ userNameLocalStorage ? userNameLocalStorage : currentUser.name }!`;
 
@@ -91,7 +91,7 @@ export default function Profile({onSignOut, onUpdateUser, loggedIn, onAuthorizat
                        onSubmit={handleSubmit}
                        buttonText={"Сохранить"}
                        isActive={isActive}
-                       isValid={isValid}
+                       isValid={isValidCurrent}
                        errorServer={messageError}
                        isLoad={isLoad}
                        textLoad={"Сохранение..."}>
