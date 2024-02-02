@@ -68,12 +68,13 @@ function SavedMovies({ onMovieDelete, isLoad, loggedIn, onAuthorization, onNavig
     setLoading(true);
     setNotFoundMovies(false);
     saveData(item.name);
+    const itemNew = item.name.toLowerCase();
     const {checkLanguageRu, checkLanguageEn} = onInputLanguage(item.name);
     let movieListScreach;
     if (checkLanguageRu) {
       movieListScreach = moviesSaved.filter(movie => {
         const nameRu = movie.nameRU.toLowerCase();
-        return (nameRu.includes(item.name))
+        return (nameRu.includes(itemNew))
       });
       if (movieListScreach.length === 0) {
         setNotFoundMovies(true);
@@ -81,7 +82,7 @@ function SavedMovies({ onMovieDelete, isLoad, loggedIn, onAuthorization, onNavig
     } else if(checkLanguageEn) {
       movieListScreach = moviesSaved.filter(movie => {
         const nameEn = movie.nameEN.toLowerCase();
-        return (nameEn.includes(item.name))
+        return (nameEn.includes(itemNew))
       });
       if (movieListScreach.length === 0) {
         setNotFoundMovies(true);
