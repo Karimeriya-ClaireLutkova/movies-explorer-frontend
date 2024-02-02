@@ -121,22 +121,27 @@ export default function useFormValidator(errorsCurrent) {
         setIsValidCurrent(false);
       } else if (value.length > 0) {
         const textScreachCurrent = localStorage.getItem("textScreach");
-        const textScreachNew = textScreachCurrent.toLowerCase();
         const textScreachSavedCurrent = localStorage.getItem("textScreachSaved");
-        const textScreachSavedNew = textScreachSavedCurrent.toLowerCase();
         const valueNew = value.toLowerCase();
-        if(pathname === "/movies" && valueNew === textScreachNew) {
-          setErrors({...errors, [name]: "Нужно ввести ключевое слово, отличающееся от изначального."});
-          setIsValidCurrent(false);
-        } else if(pathname === "/saved-movies") {
-          if(valueNew === textScreachSavedNew) {
+        if(textScreachCurrent) {
+          const textScreachNew = textScreachCurrent.toLowerCase();
+          if(pathname === "/movies" && valueNew === textScreachNew) {
             setErrors({...errors, [name]: "Нужно ввести ключевое слово, отличающееся от изначального."});
             setIsValidCurrent(false);
           } else {
             setIsValidCurrent(true);
           }
-        } else {
-          setIsValidCurrent(true);
+        }
+        if(textScreachSavedCurrent) {
+          const textScreachSavedNew = textScreachSavedCurrent.toLowerCase();
+          if(pathname === "/saved-movies") {
+            if(valueNew === textScreachSavedNew) {
+              setErrors({...errors, [name]: "Нужно ввести ключевое слово, отличающееся от изначального."});
+              setIsValidCurrent(false);
+            } else {
+              setIsValidCurrent(true);
+            }
+          }
         }
       }
     }

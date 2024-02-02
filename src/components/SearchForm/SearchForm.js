@@ -5,7 +5,7 @@ import { useLocation } from 'react-router-dom';
 import './SearchForm.css';
 
 function SearchForm({ textInput, onUpdateMoviesList, onActiveFilter, isActiveFilterMovies }) {
-  const [name, setName] = React.useState('');
+  const [name, setName] = React.useState(null);
   const { pathname } = useLocation();
   const { errors, isValidCurrent, handleChange, resetForm } = useFormValidator();
 
@@ -14,6 +14,14 @@ function SearchForm({ textInput, onUpdateMoviesList, onActiveFilter, isActiveFil
       setName(textInput);
     }
   }, [textInput]);
+
+  React.useEffect(() => {
+    if (pathname === '/saved-movies') {
+      if(name === null) {
+        localStorage.removeItem('textScreachSaved');
+      }
+    }
+  })
 
   function handleSearchMovies(evt) {
     let currentUser;
