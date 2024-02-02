@@ -36,6 +36,7 @@ function SavedMovies({ onMovieDelete, isLoad, loggedIn, onAuthorization, onNavig
           setMoviesList(movieNew);
         } else {
           setNotFoundMovies(true);
+          setMoviesListNew([]);
         }
       }
       checkListMoviesDelete();
