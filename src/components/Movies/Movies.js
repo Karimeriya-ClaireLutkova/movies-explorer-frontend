@@ -292,17 +292,18 @@ function Movies({ moviesAll, onMoviesAll, moviesSaved, onMovieLike, loggedIn, on
 
   function searchMovies(item, moviesListAll) {
     setLoader(true);
+    const itemNew = item.name.toLowerCase();
     const {checkLanguageRu, checkLanguageEn} = onInputLanguage(item.name);
     let movieListScreach;
     if (checkLanguageRu) {
       movieListScreach = moviesListAll.filter(movie => {
         const nameRu = movie.nameRU.toLowerCase();
-        return (nameRu.includes(item.name))
+        return (nameRu.includes(itemNew))
       });
     } else if (checkLanguageEn) {
       movieListScreach = moviesListAll.filter(movie => {
         const nameEn = movie.nameEN.toLowerCase();
-        return (nameEn.includes(item.name))
+        return (nameEn.includes(itemNew))
       });
     }
     saveData(item.name, movieListScreach);
