@@ -17,11 +17,41 @@ function SavedMovies({ onMovieDelete, isLoad, loggedIn, onAuthorization, onNavig
   }, [isLoad])
 
   React.useEffect(() => {
-    setMoviesListNew(moviesSaved);
+    if(moviesList.length === 0 && !isNotFoundMovies) {
+      setMoviesListNew(moviesSaved);
+    } else if(moviesList.length > 0) {
+      async function checkListMoviesDelete() {
+        let movieNew;
+        let promise = new Promise((resolve) => {
+          movieNew = moviesList.filter(item => {
+            const movie = сheckListMoviesSaved(item);
+            return movie;
+          });
+          resolve(movieNew);
+        })
+        let movie = await promise;
+        const resultNew = checkAvailabilityResult(movie);
+        if (resultNew) {
+          setMoviesListNew(handleMoviesFilter(movieNew, isActiveFilter));
+          setMoviesList(movieNew);
+        } else {
+          setNotFoundMovies(true);
+        }
+      }
+      checkListMoviesDelete();
+    }
   }, [moviesSaved])
 
   function saveData(item) {
     localStorage.setItem("textScreachSaved", item);
+  }
+
+  function сheckListMoviesSaved(movie) {
+    let card;
+    card = moviesSaved.find(i => i._id === movie._id);
+    if(card !== undefined) {
+      return movie;
+    }
   }
 
   function handleActiveFilter(isActive) {

@@ -5,9 +5,10 @@ import { useLocation } from 'react-router-dom';
 import './SearchForm.css';
 
 function SearchForm({ textInput, onUpdateMoviesList, onActiveFilter, isActiveFilterMovies }) {
-  const [name, setName] = React.useState(null);
+  const [name, setName] = React.useState('');
   const { pathname } = useLocation();
   const { errors, isValidCurrent, handleChange, resetForm } = useFormValidator();
+  const [isInitial, setInitial] = React.useState(true);
 
   React.useEffect(() => {
     if(textInput !== undefined) {
@@ -16,8 +17,16 @@ function SearchForm({ textInput, onUpdateMoviesList, onActiveFilter, isActiveFil
   }, [textInput]);
 
   React.useEffect(() => {
+    if(localStorage.getItem('textScreachSaved')) {
+      setInitial(false);
+    } else {
+      setInitial(true);
+    }
+  }, []);
+  
+  React.useEffect(() => {
     if (pathname === '/saved-movies') {
-      if(name === null) {
+      if(isInitial) {
         localStorage.removeItem('textScreachSaved');
       }
     }
@@ -43,6 +52,7 @@ function SearchForm({ textInput, onUpdateMoviesList, onActiveFilter, isActiveFil
     onUpdateMoviesList({
       name: name
     });
+    setInitial(false);
     resetForm();
   }
 
