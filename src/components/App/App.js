@@ -9,6 +9,7 @@ import Profile from '../Profile/Profile';
 import Register from '../Register/Register';
 import Login from '../Login/Login';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
+import InfoTooltip from '../InfoTooltip/InfoTooltip.js';
 import { urlBeginning } from '../../utils/constants';
 import mainApi from '../../utils/MainApi.js';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext.js';
@@ -25,6 +26,7 @@ function App() {
   const [moviesAll, setMoviesAll] = React.useState([]);
   const [notFoundPage, setNotFoundPage] = React.useState('');
   const [error, setError] = React.useState('');
+  const [isInfoTooltipOpen, setInfoTooltipOpen] = React.useState(false);
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const { messageError, handleErrorsStatus } = useErrorsServer();
@@ -118,8 +120,9 @@ function App() {
       .then(() => {
         mainApi.getUserInfo()
           .then((user) => {
-            setCurrentUser(user);
+            setInfoTooltipOpen(true);
             localStorage.setItem('userName', user.name);
+            setCurrentUser(user);
           })
           .catch((err) => {
             setError(err);
@@ -254,6 +257,10 @@ function App() {
     setError('');
   }
 
+  function closePopup() {
+    setInfoTooltipOpen(false);
+  }
+
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <Routes>
@@ -335,6 +342,7 @@ function App() {
         </Route>
       </Routes>
       { (pathname === '/' || pathname === '/movies' || pathname === '/saved-movies') && <Footer /> }
+      <InfoTooltip name="notification" onClose={closePopup} isOpenInfoTooltip={isInfoTooltipOpen} />
     </CurrentUserContext.Provider>
   )
 }

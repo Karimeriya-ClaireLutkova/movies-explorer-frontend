@@ -15,5 +15,7 @@ export const serverError = "На сервере произошла ошибка.
 export const serverErrorMovies = "Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз."
 export const notFoundMovies = "Ничего не найдено.";
 export const validationErrorRegister = "При регистрации пользователя произошла ошибка.";
+export const updateSuccessful = "Обновление профиля прошло успешно.";
+export const updateProfileInfo = "Вы успешно обновили профиль!";
 
 export const urlBeginning = 'https://api.nomoreparties.co';

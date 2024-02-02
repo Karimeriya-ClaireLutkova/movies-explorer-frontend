@@ -12,6 +12,7 @@ export default function Profile({onSignOut, onUpdateUser, loggedIn, onAuthorizat
   const userNameLocalStorage = localStorage.getItem("userName");
   const { pathname } = useLocation();
   const [isActive, setActive] = React.useState(false);
+  const [isDisabled, setDisabled] = React.useState(true);
   const [name, setName] = React.useState('');
   const [email, setEmail] = React.useState('');
   const [nameCurrent, setNameCurrent] = React.useState('');
@@ -30,16 +31,13 @@ export default function Profile({onSignOut, onUpdateUser, loggedIn, onAuthorizat
   }, [errors]);
 
   React.useEffect(() => {
-    if(isLoad === false) {
-      setNameCurrent(currentUser.name);
-      setEmailCurrent(currentUser.email);
-    }
-  }, [currentUser, isLoad]);
+    setNameCurrent(currentUser.name);
+    setEmailCurrent(currentUser.email);
+  }, [currentUser]);
 
   function handleEditProfile() {
     resetErrorServer();
-    const inputEditList = Array.from(document.querySelectorAll('.popup__input_profile-info'));
-    inputEditList.map(item => item.removeAttribute('disabled'));
+    setDisabled(false);
     setActive(true);
   }
 
@@ -81,6 +79,7 @@ export default function Profile({onSignOut, onUpdateUser, loggedIn, onAuthorizat
     setEmailCurrent('');
     resetForm();
     setActive(false);
+    setDisabled(true);
   }
 
   return (
@@ -99,14 +98,14 @@ export default function Profile({onSignOut, onUpdateUser, loggedIn, onAuthorizat
           <div className="popup__field popup__field_profile-info">
             <p className="popup__input-text popup__input-text_profile">Имя</p>
             <div className={`popup__data-input ${errors.name ? "popup__data-input_error" : ""}`}>
-              <input id="profile-name-input" type="text" className={`popup__input popup__input_profile-info ${errors.name ? "popup__input_error" :""}`} name="name" placeholder="Имя" value={nameCurrent ? nameCurrent : name} onChange={handleChangeInput} onKeyDown={handleKeyDown} autoComplete="off" disabled required />
+              <input id="profile-name-input" type="text" className={`popup__input popup__input_profile-info ${errors.name ? "popup__input_error" :""}`} name="name" placeholder="Имя" value={nameCurrent ? nameCurrent : name} onChange={handleChangeInput} onKeyDown={handleKeyDown} autoComplete="off" disabled={isDisabled ? true : ''} required />
               <span className={`profile-name-input-error popup__input-error ${errors.name ? "popup__input-error_active_profile" : ""}`}>{errors.name}</span>
             </div>
           </div>
           <div className="popup__field popup__field_profile-info popup__field_not-underlined">
             <p className="popup__input-text popup__input-text_profile">E-mail</p>
             <div className={`popup__data-input ${errors.email ? "popup__data-input_error" : ""}`}>
-              <input id="profile-email-input" type="email" className={`popup__input popup__input_profile-info ${errors.email ? "popup__input_error" :""}`} name="email" pattern="^([^ ]+@[^ ]+\.[a-z]{2,6}|)$" placeholder="Email" value={emailCurrent ? emailCurrent : email} onChange={handleChangeInput} onKeyDown={handleKeyDown} autoComplete="off" disabled required />
+              <input id="profile-email-input" type="email" className={`popup__input popup__input_profile-info ${errors.email ? "popup__input_error" :""}`} name="email" pattern="^([^ ]+@[^ ]+\.[a-z]{2,6}|)$" placeholder="Email" value={emailCurrent ? emailCurrent : email} onChange={handleChangeInput} onKeyDown={handleKeyDown} autoComplete="off" disabled={isDisabled ? true : ''} required />
               <span className={`profile-email-input-error popup__input-error ${errors.email ? "popup__input-error_active_profile" : ""}`}>{errors.email}</span>
             </div>
           </div>
