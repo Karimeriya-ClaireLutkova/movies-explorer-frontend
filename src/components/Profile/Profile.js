@@ -4,6 +4,7 @@ import PopupWithForm from '../PopupWithForm/PopupWithForm';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import useFormValidator from '../../hooks/useFormValidator';
 import useErrorsServer from '../../hooks/useErrorsServer';
+import { conflictError } from '../../utils/constants';
 import { useLocation } from 'react-router-dom';
 import './Profile.css';
 
@@ -17,8 +18,7 @@ export default function Profile({onSignOut, onUpdateUser, loggedIn, onAuthorizat
   const [email, setEmail] = React.useState('');
   const [nameCurrent, setNameCurrent] = React.useState('');
   const [emailCurrent, setEmailCurrent] = React.useState('');
-  const [errorsCurrent, setErrorsCurrent] = React.useState({});
-  const { errors, isValidCurrent, handleChange, resetForm } = useFormValidator(errorsCurrent);
+  const { errors, isValidCurrent, handleChange, resetForm } = useFormValidator();
   const { messageError, handleErrorsStatus, resetError } = useErrorsServer();
   const greeting = `Привет, ${ userNameLocalStorage ? userNameLocalStorage : currentUser.name }!`;
 
@@ -27,8 +27,13 @@ export default function Profile({onSignOut, onUpdateUser, loggedIn, onAuthorizat
   }, [handleErrorsStatus, error, pathname]);
 
   React.useEffect(() => {
-    setErrorsCurrent(errors);
-  }, [errors]);
+    if(messageError === conflictError) {
+      setName('');
+      setEmail('');
+      setNameCurrent(currentUser.name);
+      setEmailCurrent(currentUser.email);
+    }
+  }, [messageError, currentUser.name, currentUser.email]);
 
   React.useEffect(() => {
     setNameCurrent(currentUser.name);
@@ -54,10 +59,7 @@ export default function Profile({onSignOut, onUpdateUser, loggedIn, onAuthorizat
 
   function handleChangeInput(evt) {
     resetErrorServer();
-    const target = evt.target;
-    const name = target.name;
-    setErrorsCurrent({...errorsCurrent, [name]: ''});
-    handleChange(evt, currentUser);
+    handleChange({event: evt, pathname: pathname, currentUser: currentUser});
     if(evt.target.name === 'name') {
       setNameCurrent('');
       setName(evt.target.value);

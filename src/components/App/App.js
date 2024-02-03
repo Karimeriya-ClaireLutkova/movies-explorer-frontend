@@ -47,7 +47,7 @@ function App() {
           })
           .catch((err) => {
             handleErrorsStatus(err, pathname);
-            localStorage.removeItem('loggedIn');
+            signOut();
             console.log(messageError);
           })
           .finally(() => {
@@ -56,7 +56,7 @@ function App() {
       }
     }
     tokenCheck();
-  }, []);
+  }, [jwt, loggedIn]);
 
   React.useEffect(() => {
     if(loggedIn) {
@@ -126,6 +126,7 @@ function App() {
           })
           .catch((err) => {
             setError(err);
+            signOut();
           })
           .finally(() => {
             setLoad(false);

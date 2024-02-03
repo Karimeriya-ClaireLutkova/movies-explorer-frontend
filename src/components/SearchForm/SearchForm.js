@@ -35,7 +35,7 @@ function SearchForm({ textInput, onUpdateMoviesList, onActiveFilter, isActiveFil
   function handleSearchMovies(evt) {
     let currentUser;
     resetForm();
-    handleChange(evt, currentUser, pathname);
+    handleChange({event: evt, currentUser: currentUser, pathname: pathname});
     if(evt.target.name === 'film') {
       setName(evt.target.value);
     }

@@ -3,6 +3,7 @@ import Header from '../Header/Header';
 import PopupWithForm from '../PopupWithForm/PopupWithForm';
 import useFormValidator from '../../hooks/useFormValidator';
 import useErrorsServer from '../../hooks/useErrorsServer';
+import { unauthorizedError } from '../../utils/constants';
 import { useLocation } from 'react-router-dom';
 
 export default function Login ({ onSubmit, isLoad, error, onСlearError}) {
@@ -10,7 +11,7 @@ export default function Login ({ onSubmit, isLoad, error, onСlearError}) {
   const [userEmail, setUserEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [isActiveError, setActiveError] = React.useState(false);
-  const { errors, isValid, handleChange, resetForm } = useFormValidator();
+  const { errors, isValidCurrent, handleChange, resetForm } = useFormValidator();
   const { messageError, handleErrorsStatus, resetError } = useErrorsServer();
 
   React.useEffect(() => {
@@ -18,7 +19,7 @@ export default function Login ({ onSubmit, isLoad, error, onСlearError}) {
   }, [handleErrorsStatus, error, pathname]);
 
   React.useEffect(() => {
-    if(messageError === "Вы ввели неправильный логин или пароль.") {
+    if(messageError === unauthorizedError) {
       setActiveError(true);
     }
   }, [messageError]);
@@ -30,7 +31,7 @@ export default function Login ({ onSubmit, isLoad, error, onСlearError}) {
 
   function handleChangeInput(evt) {
     resetErrorServer();
-    handleChange(evt);
+    handleChange({event: evt, pathname: pathname});
     if(evt.target.name === 'email') {
       setUserEmail(evt.target.value);
     } else if(evt.target.name === 'password') {
@@ -41,10 +42,8 @@ export default function Login ({ onSubmit, isLoad, error, onСlearError}) {
   function handleSubmit(evt) {
     evt.preventDefault();
     onSubmit(userEmail, password);
-    if(errors === undefined) {
-      setUserEmail('');
-      setPassword('');
-    }
+    setUserEmail('');
+    setPassword('');
     resetForm();
   }
 
@@ -56,7 +55,7 @@ export default function Login ({ onSubmit, isLoad, error, onСlearError}) {
                        onSubmit={handleSubmit}
                        buttonText={"Войти"}
                        isLoad={isLoad}
-                       isValid={isValid}
+                       isValid={isValidCurrent}
                        errorServer={messageError}
                        onResetErrorServer={resetErrorServer}
                        textLoad={"Вход..."}>

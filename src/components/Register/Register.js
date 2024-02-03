@@ -3,6 +3,7 @@ import Header from '../Header/Header';
 import PopupWithForm from '../PopupWithForm/PopupWithForm';
 import useFormValidator from '../../hooks/useFormValidator';
 import useErrorsServer from '../../hooks/useErrorsServer';
+import { conflictError } from '../../utils/constants';
 import { useLocation } from 'react-router-dom';
 
 export default function Register({ onSubmit, isLoad, error, onСlearError }) {
@@ -12,21 +13,16 @@ export default function Register({ onSubmit, isLoad, error, onСlearError }) {
   const [password, setPassword] = React.useState('');
   const [errorServer, setErrorServer] = React.useState('');
   const [isActiveError, setActiveError] = React.useState(false);
-  const [errorsCurrent, setErrorsCurrent] = React.useState({});
-  const { errors, isValidCurrent, handleChange, resetForm } = useFormValidator(errorsCurrent);
+  const { errors, isValidCurrent, handleChange, resetForm } = useFormValidator();
   const { messageError, handleErrorsStatus, resetError } = useErrorsServer();
 
-  React.useEffect(() => {
-   setErrorsCurrent(errors);
-  }, [errors]);
-  
   React.useEffect(() => {
     setErrorServer(error);
     handleErrorsStatus(errorServer, pathname);
   }, [handleErrorsStatus, error, errorServer, pathname]);
 
   React.useEffect(() => {
-    if(messageError === "Пользователь с таким email уже существует.") {
+    if(messageError === conflictError) {
       setActiveError(true);
     }
   }, [messageError]);
@@ -38,10 +34,7 @@ export default function Register({ onSubmit, isLoad, error, onСlearError }) {
 
   function handleChangeInput(evt) {
     setActiveError(false);
-    const target = evt.target;
-    const name = target.name;
-    setErrorsCurrent({...errorsCurrent, [name]: ''});
-    handleChange(evt);
+    handleChange({event: evt, pathname: pathname});
     if(evt.target.name === 'email') {
       setUserEmail(evt.target.value);
     } else if(evt.target.name === 'password') {
@@ -59,7 +52,6 @@ export default function Register({ onSubmit, isLoad, error, onСlearError }) {
 
   function handleSubmit(evt) {
     evt.preventDefault();
-    console.log('ggg');
     onSubmit(name, userEmail, password);
     if(errors === undefined) {
       setUserEmail('');

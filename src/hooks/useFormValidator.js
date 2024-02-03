@@ -1,69 +1,86 @@
 import React from 'react';
 import validator from 'validator';
 
-export default function useFormValidator(errorsCurrent) {
+export default function useFormValidator() {
   const [values, setValues] = React.useState({});
   const [errors, setErrors] = React.useState({});
   const [isValid, setIsValid] = React.useState(false);
   const [isValidNew, setValidNew] = React.useState(false);
   const [isCurrentName, setCurrentName] = React.useState('');
   const [isCurrentEmail, setCurrentEmail] = React.useState('');
-  const [errorsListCurrent, setErrorsListCurrent] = React.useState(errorsCurrent);
   const [isValidCurrent, setIsValidCurrent] = React.useState(false);
+  const [pathnameCurrent, setPathCurrent] = React.useState('');
 
   React.useEffect(() => {
-    setErrorsListCurrent(errorsCurrent);
-  }, [errorsCurrent]);
-
-  React.useEffect(() => {
-    if(errorsCurrent) {
-      const checkFormErrors = (errorsListCurrent) => {
-        if(errorsListCurrent.name !== '' && errorsListCurrent.name !== undefined) {
-          setIsValid(false);
-        } else if(errorsListCurrent.email !== '' && errorsListCurrent.email !== undefined) {
-          setIsValid(false);
-        } else if(errorsListCurrent.password !== '' && errorsListCurrent.password !== undefined) {
-          setIsValid(false);
-        } else if((errorsListCurrent.name === '' || errorsListCurrent.name !== undefined) && (errorsListCurrent.email === '' || errorsListCurrent.password === undefined) && (errorsListCurrent.password === '' || errorsListCurrent.password === undefined)) {
-          setIsValid(true);
-        } else {
-          setIsValid(true);
+    if(pathnameCurrent === '/sign-in' || pathnameCurrent === '/sign-up' || pathnameCurrent === '/profile' ) {
+      const checkFormErrors = (errors) => {
+        if(pathnameCurrent === '/sign-up') {
+          if(errors.name !== '' && errors.name === undefined) {
+            setIsValid(false);
+          } else if(errors.email !== '' || errors.email === undefined) {
+          } else if(errors.password !== '' || errors.password === undefined) {
+            setIsValid(false);
+          } else if((errors.name === '') && (errors.email === '') && (errors.password === '')) {
+            setIsValid(true);
+          }
+        } else if(pathnameCurrent === '/sign-in') {
+          if(errors.email !== '' || errors.email === undefined) {
+            setIsValid(false);
+          } else if(errors.password !== '' || errors.password === undefined) {
+            setIsValid(false);
+          } else if((errors.email === '') && (errors.password === '')) {
+            setIsValid(true);
+          }
+        } else if(pathnameCurrent === '/profile') {
+          if(errors.name !== '' && errors.name !== undefined) {
+            setIsValid(false);
+            console.log('1', errors);
+          } else if(errors.email !== '' && errors.email !== undefined) {
+            setIsValid(false);
+            console.log('2', errors);
+          } else if(((errors.name === '') && (errors.email === '')) || ((errors.name === undefined) && (errors.email === '')) || ((errors.email === undefined) && (errors.name === ''))) {
+            setIsValid(true);
+            console.log('3', errors);
+          } else if((errors.name === undefined) && (errors.email === undefined)) {
+            setIsValid(false);
+            console.log('4', errors);
+          }
         }
       }
-      checkFormErrors(errorsListCurrent);
+      checkFormErrors(errors);
     }
-    
-  }, [errorsListCurrent, errors, errorsCurrent]);
+  }, [errors, pathnameCurrent]);
 
   React.useEffect(() => {
-    if(errorsCurrent) {
+    if(pathnameCurrent === '/sign-in' || pathnameCurrent === '/sign-up' || pathnameCurrent === '/profile') {
+      const checkFormValid = (isValid, isValidNew) => {
+        if(isValid === true && isValidNew === true) {
+          setIsValidCurrent(true);
+        } else {
+          setIsValidCurrent(false);
+        }
+      };
       checkFormValid(isValid, isValidNew);
     }
-  }, [isValid, isValidNew, errorsCurrent]);
+  }, [isValid, isValidNew, pathnameCurrent]);
 
-  function checkFormValid(isValid, isValidNew) {
-    if(isValid === true && isValidNew === true) {
-      setIsValidCurrent(true);
-    } else {
-      setIsValidCurrent(false);
-    }
-  }
-
-  const handleChange = (event, currentUser, pathname) => {
-    const target = event.target;
+  const handleChange = (data) => {
+    setIsValid(false);
+    const target = data.event.target;
     const name = target.name;
     const value = target.value;
-    if(currentUser !== undefined) {
-      setCurrentName(currentUser.name);
-      setCurrentEmail(currentUser.email);
+    if(data.currentUser !== undefined) {
+      setCurrentName(data.currentUser.name);
+      setCurrentEmail(data.currentUser.email);
     }
     setValues({...values, [name]: value});
     setErrors({...errors, [name]: target.validationMessage });
-    if(pathname === undefined) {
+    if(data.pathname === undefined) {
       checkFieldsForm(name, value);
-    } else {
       setIsValid(true);
-      checkFieldsForm(name, value, pathname);
+    } else {
+      setPathCurrent(data.pathname);
+      checkFieldsForm(name, value, data.pathname);
     }
   };
 
@@ -123,26 +140,30 @@ export default function useFormValidator(errorsCurrent) {
         const textScreachCurrent = localStorage.getItem("textScreach");
         const textScreachSavedCurrent = localStorage.getItem("textScreachSaved");
         const valueNew = value.toLowerCase();
-        if(textScreachCurrent) {
-          const textScreachNew = textScreachCurrent.toLowerCase();
-          if(pathname === "/movies" && valueNew === textScreachNew) {
-            setErrors({...errors, [name]: "Нужно ввести ключевое слово, отличающееся от изначального."});
-            setIsValidCurrent(false);
-          } else {
-            setIsValidCurrent(true);
-          }
-        }
-        if(textScreachSavedCurrent) {
-          const textScreachSavedNew = textScreachSavedCurrent.toLowerCase();
-          if(pathname === "/saved-movies") {
-            if(valueNew === textScreachSavedNew) {
+        if(textScreachCurrent || textScreachSavedCurrent) {
+          if(textScreachCurrent) {
+            const textScreachNew = textScreachCurrent.toLowerCase();
+            if(pathname === "/movies" && valueNew === textScreachNew) {
               setErrors({...errors, [name]: "Нужно ввести ключевое слово, отличающееся от изначального."});
               setIsValidCurrent(false);
             } else {
               setIsValidCurrent(true);
             }
           }
-        }
+          if(textScreachSavedCurrent) {
+            const textScreachSavedNew = textScreachSavedCurrent.toLowerCase();
+            if(pathname === "/saved-movies") {
+              if(valueNew === textScreachSavedNew) {
+                setErrors({...errors, [name]: "Нужно ввести ключевое слово, отличающееся от изначального."});
+                setIsValidCurrent(false);
+              } else {
+                setIsValidCurrent(true);
+              }
+            }
+          }
+        } else {
+          setIsValidCurrent(true);
+        } 
       }
     }
   }
@@ -154,9 +175,8 @@ export default function useFormValidator(errorsCurrent) {
       setIsValid(newIsValid);
       setValidNew(newValid);
       setIsValidCurrent(newIsValidCurrent);
-      setErrorsListCurrent(newErrorsListCurrent);
     },
-    [setValues, setErrors, setIsValid, setValidNew, setIsValidCurrent, setErrorsListCurrent]
+    [setValues, setErrors, setIsValid, setValidNew, setIsValidCurrent]
   );
 
   return { values, handleChange, errors, isValidCurrent, resetForm };
