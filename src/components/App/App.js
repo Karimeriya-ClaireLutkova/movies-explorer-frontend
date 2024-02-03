@@ -33,6 +33,7 @@ function App() {
 
   React.useEffect(() => {
     const tokenCheck = () => {
+      const jwt = localStorage.getItem('jwt');
       if (jwt) {
         setLoad(true);
         getContent(jwt)
@@ -53,10 +54,12 @@ function App() {
           .finally(() => {
             setLoad(false);
           })
+      } else {
+        signOut();       
       }
     }
     tokenCheck();
-  }, [jwt, loggedIn]);
+  }, [loggedIn]);
 
   React.useEffect(() => {
     if(loggedIn) {
