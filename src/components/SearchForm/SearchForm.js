@@ -11,18 +11,21 @@ function SearchForm({ textInput, onUpdateMoviesList, onActiveFilter, isActiveFil
   const [isInitial, setInitial] = React.useState(true);
 
   React.useEffect(() => {
-    if(textInput !== undefined) {
-      setName(textInput);
-    }
-  }, [textInput]);
+    if (pathname === '/movies')
+      if(textInput !== undefined) {
+        setName(textInput);
+      }
+  }, [textInput, pathname]);
 
   React.useEffect(() => {
-    if(localStorage.getItem('textScreachSaved')) {
-      setInitial(false);
-    } else {
-      setInitial(true);
-    }
-  }, []);
+    if (pathname === '/saved-movies') {
+      if(localStorage.getItem('textScreachSaved')) {
+        setInitial(false);
+      } else {
+        setInitial(true);
+      }
+    }  
+  }, [pathname]);
   
   React.useEffect(() => {
     if (pathname === '/saved-movies') {
@@ -30,7 +33,7 @@ function SearchForm({ textInput, onUpdateMoviesList, onActiveFilter, isActiveFil
         localStorage.removeItem('textScreachSaved');
       }
     }
-  })
+  }, [isInitial, pathname])
 
   function handleSearchMovies(evt) {
     let currentUser;

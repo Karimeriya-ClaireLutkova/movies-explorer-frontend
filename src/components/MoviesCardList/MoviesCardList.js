@@ -29,7 +29,7 @@ function MoviesCardList({ cardsMovies, onMovieLike, onMovieDelete, isErrorActive
       { pathname === "/movies" ? (
         <p className="elements__text">{textInfo}</p>
       ) : (
-        <p className="elements__text">Ничего не найдено.</p>
+        <p className="elements__text">{notFoundMovies}</p>
       )}
       </div>
       <div className={`elements__container ${ pathname === "/saved-movies" ? "elements__container_saved-movies" : ""}`}>

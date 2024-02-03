@@ -12,6 +12,7 @@ function Movies({ moviesAll, onMoviesAll, moviesSaved, onMovieLike, loggedIn, on
   const moviesStorage = localStorage.getItem("moviesScreach");
   const moviesScreachCurrent = JSON.parse(moviesStorage);
   const textScreachCurrent = localStorage.getItem("textScreach");
+  const checkboxCurrent = localStorage.getItem("filter");
   const [moviesList, setMoviesList] = React.useState([]);
   const [moviesListSaved, setMoviesListSaved] = React.useState(moviesSaved);
   const [isLoader, setLoader] = React.useState(false);
@@ -145,18 +146,25 @@ function Movies({ moviesAll, onMoviesAll, moviesSaved, onMovieLike, loggedIn, on
         handleMoviesAll();
         const restoreDataHistory = () => {
           setActiveFilter(restoreCheckboxState());
-          setTextInput(textScreachCurrent);
+          if(textScreachCurrent) {
+            setTextInput(textScreachCurrent);
+          }
           const cardsMoviesStorageLike = throughIterateArray(moviesScreachCurrent);
           setMoviesListNew(cardsMoviesStorageLike);
-          const movieListStorageNew = handleMoviesFilter(cardsMoviesStorageLike, restoreCheckboxState());
-          const resultNew = checkAvailabilityResult(movieListStorageNew);
-          if (resultNew) {
-            const initialCardsMovies = handleDisplayPart(movieListStorageNew);
-            setInitialMovies(initialCardsMovies);
-            setLoader(false);
+          if(checkboxCurrent) {
+            const movieListStorageNew = handleMoviesFilter(cardsMoviesStorageLike, restoreCheckboxState());
+            const resultNew = checkAvailabilityResult(movieListStorageNew);
+            if (resultNew) {
+              const initialCardsMovies = handleDisplayPart(movieListStorageNew);
+              setInitialMovies(initialCardsMovies);
+              setLoader(false);
+            } else {
+              setNotFoundMovies(true);
+              setButtonInactive(true);
+              setLoader(false);
+            }
           } else {
-            setNotFoundMovies(true);
-            setButtonInactive(true);
+            setInitialMovies(handleDisplayPart(moviesScreachCurrent));
             setLoader(false);
           }
         }
