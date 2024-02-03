@@ -48,8 +48,8 @@ function App() {
           })
           .catch((err) => {
             handleErrorsStatus(err, pathname);
-            signOut();
             console.log(messageError);
+            signOut();
           })
           .finally(() => {
             setLoad(false);
