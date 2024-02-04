@@ -3,7 +3,17 @@ import moviesApi from '../../utils/MoviesApi.js';
 import Header from '../Header/Header';
 import Preloader from '../Preloader/Preloader';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
-import { SCREEN_MIN, SCREEN_MEDIUM, SCREEN_BIG, filtersShortFilm, countMinWidth, countMedoumWidth, countBigWidth, countMaxWidth } from '../../utils/constants';
+import { SCREEN_MIN,
+         SCREEN_MEDIUM,
+         SCREEN_BIG,
+         filtersShortFilm,
+         countMinWidth,
+         countMedoumWidth,
+         countBigWidth,
+         countMaxWidth,
+         counterNewMinAndMediumWidth,
+         counterNewBigWidth,
+         counterNewMaxWidth } from '../../utils/constants';
 import SearchForm from '../SearchForm/SearchForm';
 import './Movies.css';
 
@@ -332,6 +342,7 @@ function Movies({ moviesAll, onMoviesAll, moviesSaved, onMovieLike, loggedIn, on
 
   async function handleUpdateMoviesList(item) {
     setLoader(true);
+    setCounterMoviesNew();
     handleСlearError();
     setInitialMovies([]);
     setMoviesListNew([]);
@@ -364,13 +375,13 @@ function Movies({ moviesAll, onMoviesAll, moviesSaved, onMovieLike, loggedIn, on
       const width = document.documentElement.clientWidth;
       let counterNew;
       if (width < SCREEN_MIN) {
-        counterNew = countPrimier + 2;
+        counterNew = countPrimier + counterNewMinAndMediumWidth;
       } else if (SCREEN_MIN <= width && width < SCREEN_MEDIUM) {
-        counterNew = countPrimier + 2;
+        counterNew = countPrimier + counterNewMinAndMediumWidth;
       } else if (SCREEN_MEDIUM <= width && width < SCREEN_BIG) {
-        counterNew = countPrimier + 3;
+        counterNew = countPrimier + counterNewBigWidth;
       } else if (SCREEN_BIG <= width) {
-        counterNew = countPrimier + 4;
+        counterNew = countPrimier + counterNewMaxWidth;
       }
       let moviesFilter = [];
       moviesFilter = handleMoviesFilter(moviesListNew, isActiveFilter);

@@ -9,6 +9,10 @@ export const countMedoumWidth = 8;
 export const countBigWidth = 12;
 export const countMaxWidth = 16;
 
+export const counterNewMinAndMediumWidth = 2;
+export const counterNewBigWidth = 3;
+export const counterNewMaxWidth = 4;
+
 export const conflictError = "Пользователь с таким email уже существует.";
 export const forbiddenError = "Нет прав на удаление фильма.";
 export const notFoundError = "Страница по указанному маршруту не найдена.";
