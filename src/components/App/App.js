@@ -48,12 +48,8 @@ function App() {
             localStorage.setItem('loggedIn', loggedIn);
           })
           .catch((err) => {
-            handleErrorsStatus(err, pathname);
-            console.log(messageError);
-            if(messageError === unauthorizedErrorToken) {
-              signOut();
-
-            }
+            console.log(err);
+            checkErrorAuthorization(err, pathname);
           })
       }
     }
@@ -77,15 +73,21 @@ function App() {
         .then(([user, moviesSaved]) => {
           setCurrentUser(user);
           localStorage.setItem('userName', user.name);
-          console.log('3');
           setMoviesSaved(moviesSaved);
         })
         .catch((err) => {
-          handleErrorsStatus(err, pathname);
-          console.log(err, pathname, messageError);
+          console.log(err);
+          checkErrorAuthorization(err, pathname);
         })
     }
   }, [loggedIn]);
+
+  function checkErrorAuthorization(err, pathname) {
+    handleErrorsStatus(err, pathname);
+    if(messageError === unauthorizedErrorToken || messageError === unauthorizedErrorTokenInvalid) {
+      signOut();
+    }
+  }
 
   function handleMoviesAll(item) {
     setMoviesAll(item);
@@ -148,11 +150,7 @@ function App() {
       })
       .catch((err) => {
         setError(err);
-        handleErrorsStatus(err, pathname);
-        console.log(messageError);
-        if(messageError === unauthorizedErrorTokenInvalid) {
-          signOut();
-        }
+        checkErrorAuthorization(err, pathname);
       })
       .finally(() => {
         setLoad(false);
@@ -189,11 +187,8 @@ function App() {
           setMoviesSaved([newMovie, ...moviesSaved]);
         })
         .catch((err) => {
-          handleErrorsStatus(err, pathname);
-          console.log(messageError);
-          if(messageError === unauthorizedErrorTokenInvalid) {
-            signOut();
-          }
+          console.log(err);
+          checkErrorAuthorization(err, pathname);
         })
     } else {
       mainApi.deleteMovie(movieInitial._id)
@@ -204,11 +199,8 @@ function App() {
           setMoviesSaved(movieNewList);
         })
         .catch((err) => {
-          handleErrorsStatus(err, pathname);
-          console.log(messageError);
-          if(messageError === unauthorizedErrorTokenInvalid) {
-            signOut();
-          }
+          console.log(err);
+          checkErrorAuthorization(err, pathname);
         })
     }
   }
@@ -223,11 +215,8 @@ function App() {
         setMoviesSaved(movieNewList);
       })
       .catch((err) => {
-        handleErrorsStatus(err, pathname);
-        console.log(messageError);
-        if(messageError === unauthorizedErrorTokenInvalid) {
-          signOut();
-        }
+        console.log(err);
+        checkErrorAuthorization(err, pathname);
       })
       .finally(() => {
         setLoad(false);
