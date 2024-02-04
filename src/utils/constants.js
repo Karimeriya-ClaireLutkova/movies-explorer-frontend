@@ -4,6 +4,11 @@ export const SCREEN_BIG = 1280;
 
 export const filtersShortFilm = 40;
 
+export const countMinWidth = 5;
+export const countMedoumWidth = 8;
+export const countBigWidth = 12;
+export const countMaxWidth = 16;
+
 export const conflictError = "Пользователь с таким email уже существует.";
 export const forbiddenError = "Нет прав на удаление фильма.";
 export const notFoundError = "Страница по указанному маршруту не найдена.";

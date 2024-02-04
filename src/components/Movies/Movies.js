@@ -3,7 +3,7 @@ import moviesApi from '../../utils/MoviesApi.js';
 import Header from '../Header/Header';
 import Preloader from '../Preloader/Preloader';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
-import { SCREEN_MIN, SCREEN_MEDIUM, SCREEN_BIG, filtersShortFilm } from '../../utils/constants';
+import { SCREEN_MIN, SCREEN_MEDIUM, SCREEN_BIG, filtersShortFilm, countMinWidth, countMedoumWidth, countBigWidth, countMaxWidth } from '../../utils/constants';
 import SearchForm from '../SearchForm/SearchForm';
 import './Movies.css';
 
@@ -25,13 +25,13 @@ function Movies({ moviesAll, onMoviesAll, moviesSaved, onMovieLike, loggedIn, on
   function handleCounterWidth(item) {
     let count;
     if (item.width < SCREEN_MIN) {
-      count = (5);
+      count = countMinWidth;
     } else if (SCREEN_MIN <= item.width && item.width < SCREEN_MEDIUM) {
-      count = (8);
+      count = countMedoumWidth;
     } else if (SCREEN_MEDIUM <= item.width && item.width < SCREEN_BIG) {
-      count = (12);
+      count = countBigWidth;
     } else if (SCREEN_BIG <= item.width) {
-      count = (16);
+      count = countMaxWidth;
     }
 
     return count;
@@ -169,16 +169,6 @@ function Movies({ moviesAll, onMoviesAll, moviesSaved, onMovieLike, loggedIn, on
       }
     }
   }, [loggedIn]);
-
-  /*React.useEffect(() => {
-    if(loggedIn) {
-      const filmsAllStorage = localStorage.getItem("filmsAll");
-      const filmsAll = JSON.parse(filmsAllStorage);
-      if (filmsAllStorage) {
-        setMoviesList(filmsAll);
-      }
-    }
-  }, [loggedIn]);*/
 
   function saveData(item, movies) {
     localStorage.setItem("moviesScreach", JSON.stringify(movies));
