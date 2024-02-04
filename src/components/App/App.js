@@ -58,7 +58,18 @@ function App() {
       }
     }
     tokenCheck();
-  }, [loggedIn]);
+  }, []);
+
+  React.useEffect(() => {
+    const jwt = localStorage.getItem('jwt');
+    if(jwt) {
+      setLoggedIn(true);
+      localStorage.setItem('loggedIn', true);
+    } else {
+      setLoggedIn(false);
+      localStorage.removeItem('loggedIn');
+    }
+  }, [jwt]);
 
   React.useEffect(() => {
     if(loggedIn) {
@@ -71,10 +82,7 @@ function App() {
         })
         .catch((err) => {
           handleErrorsStatus(err, pathname);
-          console.log(messageError);
-          if(messageError === unauthorizedErrorToken) {
-            signOut();
-          }
+          console.log(err, pathname, messageError);
         })
     }
   }, [loggedIn]);
