@@ -94,8 +94,7 @@ function Movies({ moviesAll, onMoviesAll, moviesSaved, onMovieLike, loggedIn, on
       const cardsInitialStorageLike = throughIterateArray(initialMovies);
       setInitialMovies(cardsInitialStorageLike);
     }
-  }, [moviesSaved]);
-  
+  }, [moviesSaved]); 
 
   React.useEffect(() => {
     restoreCheckboxState();
@@ -257,7 +256,7 @@ function Movies({ moviesAll, onMoviesAll, moviesSaved, onMovieLike, loggedIn, on
       } else {
         initialCardsMovies = item;
         setButtonInactive(true);
-      }   
+      }
     } else {
       if (item.length > counterMovies) {
         initialCardsMovies = item.slice(initialCounter, counterMovies);
@@ -362,7 +361,7 @@ function Movies({ moviesAll, onMoviesAll, moviesSaved, onMovieLike, loggedIn, on
         })
         let movie = await promise;
         searchMovies(item, movie);
-      } 
+      }
     } else {
       moviesListAll = moviesList;
       searchMovies(item, moviesListAll);

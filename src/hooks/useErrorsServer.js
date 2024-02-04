@@ -9,7 +9,7 @@ import { conflictError,
        validationErrorRegister,
        unauthorizedErrorToken,
        unauthorizedErrorTokenInvalid
-      } from '../utils/constants';
+} from '../utils/constants';
 
 export default function useFormValidator() {
   const [messageError, setMessageError] = React.useState('');
@@ -25,7 +25,7 @@ export default function useFormValidator() {
       } else if (numberError === 401) {
         pathname === '/sign-in' && setMessageError(unauthorizedError);
         pathname === '/' && setMessageError(unauthorizedErrorToken);
-        (pathname === '/movies' || pathname === '/saved-movies' || pathname === 'profile') && setMessageError(unauthorizedErrorTokenInvalid); 
+        (pathname === '/movies' || pathname === '/saved-movies' || pathname === 'profile') && setMessageError(unauthorizedErrorTokenInvalid);
       } else if (numberError === 403) {
         setMessageError(forbiddenError);
       } else if (numberError === 404) {

@@ -24,9 +24,9 @@ function SearchForm({ textInput, onUpdateMoviesList, onActiveFilter, isActiveFil
       } else {
         setInitial(true);
       }
-    }  
+    }
   }, [pathname]);
-  
+
   React.useEffect(() => {
     if (pathname === '/saved-movies') {
       if(isInitial) {

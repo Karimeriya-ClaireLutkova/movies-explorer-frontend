@@ -82,7 +82,7 @@ function SavedMovies({ onMovieDelete, isLoad, loggedIn, onAuthorization, onNavig
     } else {
       movieListScreachNew = item;
     }
-  
+
     return movieListScreachNew;
   }
 

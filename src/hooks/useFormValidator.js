@@ -159,7 +159,7 @@ export default function useFormValidator() {
           }
         } else {
           setIsValidCurrent(true);
-        } 
+        }
       }
     }
   }
