@@ -10,7 +10,7 @@ import Register from '../Register/Register';
 import Login from '../Login/Login';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import InfoTooltip from '../InfoTooltip/InfoTooltip.js';
-import { urlBeginning, unauthorizedErrorToken } from '../../utils/constants';
+import { urlBeginning, unauthorizedErrorToken, unauthorizedErrorTokenInvalid } from '../../utils/constants';
 import mainApi from '../../utils/MainApi.js';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext.js';
 import { register, authorization, getContent } from '../../utils/Auth.js';
@@ -49,9 +49,10 @@ function App() {
           })
           .catch((err) => {
             handleErrorsStatus(err, pathname);
-            console.log(messageError, err);
+            console.log(messageError);
             if(messageError === unauthorizedErrorToken) {
               signOut();
+
             }
           })
       }
@@ -70,7 +71,7 @@ function App() {
         })
         .catch((err) => {
           handleErrorsStatus(err, pathname);
-          console.log(messageError, err);
+          console.log(messageError);
           if(messageError === unauthorizedErrorToken) {
             signOut();
           }
@@ -132,10 +133,6 @@ function App() {
           })
           .catch((err) => {
             setError(err);
-            handleErrorsStatus(err, pathname);
-            if(messageError === unauthorizedErrorToken) {
-              signOut();
-            }
           })
           .finally(() => {
             setLoad(false);
@@ -143,6 +140,11 @@ function App() {
       })
       .catch((err) => {
         setError(err);
+        handleErrorsStatus(err, pathname);
+        console.log(messageError);
+        if(messageError === unauthorizedErrorTokenInvalid) {
+          signOut();
+        }
       })
       .finally(() => {
         setLoad(false);
@@ -179,7 +181,11 @@ function App() {
           setMoviesSaved([newMovie, ...moviesSaved]);
         })
         .catch((err) => {
-          console.log(err);
+          handleErrorsStatus(err, pathname);
+          console.log(messageError);
+          if(messageError === unauthorizedErrorTokenInvalid) {
+            signOut();
+          }
         })
     } else {
       mainApi.deleteMovie(movieInitial._id)
@@ -190,7 +196,11 @@ function App() {
           setMoviesSaved(movieNewList);
         })
         .catch((err) => {
-          console.log(err);
+          handleErrorsStatus(err, pathname);
+          console.log(messageError);
+          if(messageError === unauthorizedErrorTokenInvalid) {
+            signOut();
+          }
         })
     }
   }
@@ -205,7 +215,11 @@ function App() {
         setMoviesSaved(movieNewList);
       })
       .catch((err) => {
-        console.log(err);
+        handleErrorsStatus(err, pathname);
+        console.log(messageError);
+        if(messageError === unauthorizedErrorTokenInvalid) {
+          signOut();
+        }
       })
       .finally(() => {
         setLoad(false);
@@ -261,6 +275,7 @@ function App() {
     localStorage.removeItem('userName');
     setLoggedIn(false);
     setCurrentUser({});
+    handleСlearError();
     navigate('/', { replace: true });
   }
 

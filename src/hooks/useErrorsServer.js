@@ -8,6 +8,7 @@ import { conflictError,
        serverError,
        validationErrorRegister,
        unauthorizedErrorToken,
+       unauthorizedErrorTokenInvalid
       } from '../utils/constants';
 
 export default function useFormValidator() {
@@ -24,6 +25,7 @@ export default function useFormValidator() {
       } else if (numberError === 401) {
         pathname === '/sign-in' && setMessageError(unauthorizedError);
         pathname === '/' && setMessageError(unauthorizedErrorToken);
+        (pathname === '/movies' || pathname === '/saved-movies' || pathname === 'profile') && setMessageError(unauthorizedErrorTokenInvalid); 
       } else if (numberError === 403) {
         setMessageError(forbiddenError);
       } else if (numberError === 404) {
