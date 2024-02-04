@@ -23,7 +23,6 @@
 @media (max-width: 800px) {
   .popup-editing {
     width: calc(100% - 30px*2);
-    margin: 0 30px 269px;
   }
 }
 
