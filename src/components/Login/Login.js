@@ -49,7 +49,7 @@ export default function Login ({ onSubmit, isLoad, error, onСlearError}) {
 
   return (
     <>
-      <Header id="6" />
+      <Header id="6" onResetErrorServer={resetErrorServer} />
       <main>
         <PopupWithForm id="3" name="login-user" title="Рады видеть!"
                        onSubmit={handleSubmit}

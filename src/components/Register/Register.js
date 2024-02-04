@@ -63,7 +63,7 @@ export default function Register({ onSubmit, isLoad, error, onСlearError }) {
 
   return (
     <>
-      <Header id="5" />
+      <Header id="5" onResetErrorServer={resetErrorServer} />
       <main>
         <PopupWithForm id="2" name="registration-user" title="Добро пожаловать!"
                        onSubmit={handleSubmit}

@@ -10,7 +10,7 @@ import Register from '../Register/Register';
 import Login from '../Login/Login';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import InfoTooltip from '../InfoTooltip/InfoTooltip.js';
-import { urlBeginning } from '../../utils/constants';
+import { urlBeginning, unauthorizedErrorToken } from '../../utils/constants';
 import mainApi from '../../utils/MainApi.js';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext.js';
 import { register, authorization, getContent } from '../../utils/Auth.js';
@@ -49,11 +49,11 @@ function App() {
           })
           .catch((err) => {
             handleErrorsStatus(err, pathname);
-            console.log(messageError);
-            signOut();
+            console.log(messageError, err);
+            if(messageError === unauthorizedErrorToken) {
+              signOut();
+            }
           })
-      } else {
-        signOut();       
       }
     }
     tokenCheck();
@@ -69,7 +69,11 @@ function App() {
           setMoviesSaved(moviesSaved);
         })
         .catch((err) => {
-          console.log(err);
+          handleErrorsStatus(err, pathname);
+          console.log(messageError, err);
+          if(messageError === unauthorizedErrorToken) {
+            signOut();
+          }
         })
     }
   }, [loggedIn]);
@@ -128,7 +132,10 @@ function App() {
           })
           .catch((err) => {
             setError(err);
-            signOut();
+            handleErrorsStatus(err, pathname);
+            if(messageError === unauthorizedErrorToken) {
+              signOut();
+            }
           })
           .finally(() => {
             setLoad(false);
