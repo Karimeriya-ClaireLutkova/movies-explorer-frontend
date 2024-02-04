@@ -34,16 +34,12 @@ export default function useFormValidator() {
         } else if(pathnameCurrent === '/profile') {
           if(errors.name !== '' && errors.name !== undefined) {
             setIsValid(false);
-            console.log('1', errors);
           } else if(errors.email !== '' && errors.email !== undefined) {
             setIsValid(false);
-            console.log('2', errors);
           } else if(((errors.name === '') && (errors.email === '')) || ((errors.name === undefined) && (errors.email === '')) || ((errors.email === undefined) && (errors.name === ''))) {
             setIsValid(true);
-            console.log('3', errors);
           } else if((errors.name === undefined) && (errors.email === undefined)) {
             setIsValid(false);
-            console.log('4', errors);
           }
         }
       }

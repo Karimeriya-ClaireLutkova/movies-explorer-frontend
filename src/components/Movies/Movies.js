@@ -79,7 +79,6 @@ function Movies({ moviesAll, onMoviesAll, moviesSaved, onMovieLike, loggedIn, on
 
   React.useEffect(() => {
     if(moviesListNew.length > 0 && initialMovies.length > 0) {
-      console.log('2');
       const cardsMoviesStorageLike = throughIterateArray(moviesListNew);
       setMoviesListNew(cardsMoviesStorageLike);
       const cardsInitialStorageLike = throughIterateArray(initialMovies);
@@ -294,7 +293,6 @@ function Movies({ moviesAll, onMoviesAll, moviesSaved, onMovieLike, loggedIn, on
 
   async function handleMoviesAll() {
     setLoader(true);
-    console.log('1');
     try {
       let movies = await moviesApi.getMovies();
       setMoviesList(movies);
