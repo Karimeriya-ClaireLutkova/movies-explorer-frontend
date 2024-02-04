@@ -209,12 +209,9 @@ function Movies({ moviesAll, onMoviesAll, moviesSaved, onMovieLike, loggedIn, on
     let listMoviesLike;
     if (moviesSaved.length > 0) {
       listMoviesLike = items.map(item => checkMoviesLike(item));
-      console.log(items);
     } else {
-      console.log(items);
       listMoviesLike = items.map(item => item.owner ? {...item, owner: ''} : item);
     }
-    console.log(listMoviesLike);
     return listMoviesLike;
   }
 
@@ -356,7 +353,6 @@ function Movies({ moviesAll, onMoviesAll, moviesSaved, onMovieLike, loggedIn, on
     const filmsAll = JSON.parse(filmsAllStorage);
     if(moviesList === undefined || moviesList.length === 0) {
       if(filmsAllStorage) {
-        console.log('4');
         moviesListAll = filmsAll;
         searchMovies(item, moviesListAll);
       } else {
