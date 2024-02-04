@@ -274,6 +274,7 @@ function Movies({ moviesAll, onMoviesAll, moviesSaved, onMovieLike, loggedIn, on
     setNotFoundMovies(false);
     setActiveFilter(isActive);
     saveCheckboxState(isActive);
+    setCounterMoviesNew();
     let movies;
     const moviesLike = throughIterateArray(moviesListNew);
     setMoviesListNew(moviesLike);
