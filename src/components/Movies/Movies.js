@@ -9,12 +9,7 @@ import './Movies.css';
 
 function Movies({ moviesAll, onMoviesAll, moviesSaved, onMovieLike, loggedIn, onAuthorization, onNavigation, onActiveMenu, isLoad, onInputLanguage }) {
   const [windowDimensions, setWindowDimensions] = React.useState(getWindowDimensions());
-  const moviesStorage = localStorage.getItem("moviesScreach");
-  const moviesScreachCurrent = JSON.parse(moviesStorage);
-  const textScreachCurrent = localStorage.getItem("textScreach");
-  const checkboxCurrent = localStorage.getItem("filter");
   const [moviesList, setMoviesList] = React.useState([]);
-  const [moviesListSaved, setMoviesListSaved] = React.useState(moviesSaved);
   const [isLoader, setLoader] = React.useState(false);
   const [counterMovies, setCounterMovies] = React.useState();
   const initialCounter = 0;
@@ -83,15 +78,15 @@ function Movies({ moviesAll, onMoviesAll, moviesSaved, onMovieLike, loggedIn, on
   }, [moviesAll]);
 
   React.useEffect(() => {
-    setMoviesListSaved(moviesSaved);
-  }, [moviesSaved]);
-
-  React.useEffect(() => {
-    if(moviesSaved !== undefined) {
+    if(moviesListNew.length > 0 && initialMovies.length > 0) {
+      console.log('2');
       const cardsMoviesStorageLike = throughIterateArray(moviesListNew);
       setMoviesListNew(cardsMoviesStorageLike);
+      const cardsInitialStorageLike = throughIterateArray(initialMovies);
+      setInitialMovies(cardsInitialStorageLike);
     }
   }, [moviesSaved]);
+  
 
   React.useEffect(() => {
     restoreCheckboxState();
@@ -141,10 +136,13 @@ function Movies({ moviesAll, onMoviesAll, moviesSaved, onMovieLike, loggedIn, on
 
   React.useEffect(() => {
     if(loggedIn) {
+      const moviesStorage = localStorage.getItem("moviesScreach");
+      const moviesScreachCurrent = JSON.parse(moviesStorage);
+      const textScreachCurrent = localStorage.getItem("textScreach");
+      const checkboxCurrent = localStorage.getItem("filter");
       if (moviesStorage) {
-        setLoader(true);
-        handleMoviesAll();
         const restoreDataHistory = () => {
+          setLoader(true);
           setActiveFilter(restoreCheckboxState());
           if(textScreachCurrent) {
             setTextInput(textScreachCurrent);
@@ -173,6 +171,16 @@ function Movies({ moviesAll, onMoviesAll, moviesSaved, onMovieLike, loggedIn, on
     }
   }, [loggedIn]);
 
+  /*React.useEffect(() => {
+    if(loggedIn) {
+      const filmsAllStorage = localStorage.getItem("filmsAll");
+      const filmsAll = JSON.parse(filmsAllStorage);
+      if (filmsAllStorage) {
+        setMoviesList(filmsAll);
+      }
+    }
+  }, [loggedIn]);*/
+
   function saveData(item, movies) {
     localStorage.setItem("moviesScreach", JSON.stringify(movies));
     localStorage.setItem("textScreach", item);
@@ -199,12 +207,26 @@ function Movies({ moviesAll, onMoviesAll, moviesSaved, onMovieLike, loggedIn, on
 
   function throughIterateArray(items) {
     let listMoviesLike;
-    if (moviesListSaved.length > 0) {
+    if (moviesSaved.length > 0) {
       listMoviesLike = items.map(item => checkMoviesLike(item));
+      console.log(items);
     } else {
-      listMoviesLike = items;
+      console.log(items);
+      listMoviesLike = items.map(item => item.owner ? {...item, owner: ''} : item);
     }
+    console.log(listMoviesLike);
     return listMoviesLike;
+  }
+
+  function checkMoviesLike(movie) {
+    let card;
+    const movieAvailability = moviesSaved.find(i => i.movieId === movie.id);
+    if(movieAvailability) {
+      moviesSaved.map(item => item.movieId === movie.id ? card = {...movie, owner: item.owner} : '');
+    } else {
+      card = {...movie, owner: ''};
+    }
+    return card;
   }
 
   function checkAvailabilityResult(item) {
@@ -257,7 +279,9 @@ function Movies({ moviesAll, onMoviesAll, moviesSaved, onMovieLike, loggedIn, on
     setActiveFilter(isActive);
     saveCheckboxState(isActive);
     let movies;
-    movies = handleMoviesFilter(moviesListNew, isActive);
+    const moviesLike = throughIterateArray(moviesListNew);
+    setMoviesListNew(moviesLike);
+    movies = handleMoviesFilter(moviesLike, isActive);
     const resultNew = checkAvailabilityResult(movies);
     if (resultNew) {
       setInitialMovies(handleDisplayPart(movies));
@@ -267,26 +291,17 @@ function Movies({ moviesAll, onMoviesAll, moviesSaved, onMovieLike, loggedIn, on
     }
   }
 
-  function checkMoviesLike(movie) {
-    let card;
-    const movieAvailability = moviesSaved.find(i => i.movieId === movie.id);
-    if(movieAvailability) {
-      moviesSaved.map(item => item.movieId === movie.id ? card = {...movie, owner: item.owner} : '');
-    } else {
-      card = movie;
-    }
-    return card;
-  }
-
   function getMoviesAll(movies) {
     onMoviesAll(movies);
   }
 
   async function handleMoviesAll() {
     setLoader(true);
+    console.log('1');
     try {
       let movies = await moviesApi.getMovies();
       setMoviesList(movies);
+      localStorage.setItem("filmsAll", JSON.stringify(movies));
       getMoviesAll(movies);
       return movies;
     } catch {
@@ -337,13 +352,21 @@ function Movies({ moviesAll, onMoviesAll, moviesSaved, onMovieLike, loggedIn, on
     setMoviesListNew([]);
     setNotFoundMovies(false);
     let moviesListAll;
+    const filmsAllStorage = localStorage.getItem("filmsAll");
+    const filmsAll = JSON.parse(filmsAllStorage);
     if(moviesList === undefined || moviesList.length === 0) {
-      let promise = new Promise((resolve) => {
-        moviesListAll = handleMoviesAll();
-        resolve(moviesListAll);
-      })
-      let movie = await promise;
-      searchMovies(item, movie);
+      if(filmsAllStorage) {
+        console.log('4');
+        moviesListAll = filmsAll;
+        searchMovies(item, moviesListAll);
+      } else {
+        let promise = new Promise((resolve) => {
+          moviesListAll = handleMoviesAll();
+          resolve(moviesListAll);
+        })
+        let movie = await promise;
+        searchMovies(item, movie);
+      } 
     } else {
       moviesListAll = moviesList;
       searchMovies(item, moviesListAll);

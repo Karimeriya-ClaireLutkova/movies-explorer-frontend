@@ -19,11 +19,13 @@ import useErrorsServer from '../../hooks/useErrorsServer';
 function App() {
   const loggedInLocalStorage = localStorage.getItem("loggedIn");
   const jwt = localStorage.getItem('jwt');
+  const filmsAllStorage = localStorage.getItem("filmsAll");
+  const filmsAll = JSON.parse(filmsAllStorage);
   const [currentUser, setCurrentUser] = React.useState({});
   const [isLoad, setLoad] = React.useState(false);
   const [loggedIn, setLoggedIn] = React.useState(loggedInLocalStorage ? loggedInLocalStorage : (jwt ? true : false));
   const [moviesSaved, setMoviesSaved] = React.useState([]);
-  const [moviesAll, setMoviesAll] = React.useState([]);
+  const [moviesAll, setMoviesAll] = React.useState(filmsAll ? filmsAll : []);
   const [notFoundPage, setNotFoundPage] = React.useState('');
   const [error, setError] = React.useState('');
   const [isInfoTooltipOpen, setInfoTooltipOpen] = React.useState(false);
@@ -35,7 +37,6 @@ function App() {
     const tokenCheck = () => {
       const jwt = localStorage.getItem('jwt');
       if (jwt) {
-        setLoad(true);
         getContent(jwt)
           .then((res) => {
             setCurrentUser(res);
@@ -51,9 +52,6 @@ function App() {
             console.log(messageError);
             signOut();
           })
-          .finally(() => {
-            setLoad(false);
-          })
       } else {
         signOut();       
       }
@@ -67,6 +65,7 @@ function App() {
         .then(([user, moviesSaved]) => {
           setCurrentUser(user);
           localStorage.setItem('userName', user.name);
+          console.log('3');
           setMoviesSaved(moviesSaved);
         })
         .catch((err) => {
@@ -246,6 +245,7 @@ function App() {
   function signOut() {
     localStorage.removeItem('jwt');
     localStorage.removeItem('moviesScreach');
+    localStorage.removeItem('filmsAll');
     localStorage.removeItem('textScreach');
     localStorage.removeItem('textScreachSaved');
     localStorage.removeItem('filter');
