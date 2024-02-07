@@ -1,5 +1,5 @@
 import React from 'react';
-import { useLocation, Routes, Route, useNavigate } from 'react-router-dom';
+import { useLocation, Routes, Route, useNavigate, Navigate } from 'react-router-dom';
 import Main from '../Main/Main';
 import Footer from '../Footer/Footer';
 import NotFoundPage from '../NotFoundPage/NotFoundPage';
@@ -8,81 +8,229 @@ import SavedMovies from '../SavedMovies/SavedMovies';
 import Profile from '../Profile/Profile';
 import Register from '../Register/Register';
 import Login from '../Login/Login';
-import { initialMoviesCards, JWT } from '../../utils/constants';
+import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
+import InfoTooltip from '../InfoTooltip/InfoTooltip.js';
+import { urlBeginning, unauthorizedErrorToken, unauthorizedErrorTokenInvalid } from '../../utils/constants';
+import mainApi from '../../utils/MainApi.js';
+import { CurrentUserContext } from '../../contexts/CurrentUserContext.js';
+import { register, authorization, getContent } from '../../utils/Auth.js';
+import useErrorsServer from '../../hooks/useErrorsServer';
 
 function App() {
-  const [initialMovies, setInitialMovies] = React.useState(initialMoviesCards);
-  const [userData, setUserData] = React.useState({ name: '', email: '', jwt:''});
-  const [loggedIn, setLoggedIn] = React.useState(false);
-  const [account, setAccount] = React.useState('Аккаунт');
+  const loggedInLocalStorage = localStorage.getItem("loggedIn");
+  const jwt = localStorage.getItem('jwt');
+  const filmsAllStorage = localStorage.getItem("filmsAll");
+  const filmsAll = JSON.parse(filmsAllStorage);
+  const [currentUser, setCurrentUser] = React.useState({});
+  const [isLoad, setLoad] = React.useState(false);
+  const [loggedIn, setLoggedIn] = React.useState(loggedInLocalStorage ? loggedInLocalStorage : (jwt ? true : false));
   const [moviesSaved, setMoviesSaved] = React.useState([]);
+  const [moviesAll, setMoviesAll] = React.useState(filmsAll ? filmsAll : []);
+  const [notFoundPage, setNotFoundPage] = React.useState('');
+  const [error, setError] = React.useState('');
+  const [isInfoTooltipOpen, setInfoTooltipOpen] = React.useState(false);
   const navigate = useNavigate();
   const { pathname } = useLocation();
+  const { messageError, handleErrorsStatus } = useErrorsServer();
 
   React.useEffect(() => {
     const tokenCheck = () => {
-      if (localStorage.getItem('jwt')) {
-        const jwt = localStorage.getItem('jwt');
-        if (jwt) {
-          setLoggedIn(true);
-          setUserData({name: 'Виталий', email: 'pochta@yandex.ru', jwt: jwt})
-        }
+      const jwt = localStorage.getItem('jwt');
+      if (jwt) {
+        getContent(jwt)
+          .then((res) => {
+            setCurrentUser(res);
+            localStorage.setItem('userName', res.name);
+            setLoggedIn(true);
+            if(notFoundPage === undefined) {
+              navigate(pathname);
+            }
+            localStorage.setItem('loggedIn', loggedIn);
+          })
+          .catch((err) => {
+            console.log(err);
+            checkErrorAuthorization(err, pathname);
+          })
       }
-    };
+    }
     tokenCheck();
+  }, []);
+
+  React.useEffect(() => {
+    const jwt = localStorage.getItem('jwt');
+    if(jwt) {
+      setLoggedIn(true);
+      localStorage.setItem('loggedIn', true);
+    } else {
+      setLoggedIn(false);
+      localStorage.removeItem('loggedIn');
+    }
+  }, [jwt]);
+
+  React.useEffect(() => {
+    if(loggedIn) {
+      Promise.all([mainApi.getUserInfo(), mainApi.getMovies()])
+        .then(([user, moviesSaved]) => {
+          setCurrentUser(user);
+          localStorage.setItem('userName', user.name);
+          setMoviesSaved(moviesSaved);
+        })
+        .catch((err) => {
+          console.log(err);
+          checkErrorAuthorization(err, pathname);
+        })
+    }
   }, [loggedIn]);
 
-  function handleCloseRegistration() {
-    navigate("/sign-in", {replace: true});
+  function checkErrorAuthorization(err, pathname) {
+    handleErrorsStatus(err, pathname);
+    if(messageError === unauthorizedErrorToken || messageError === unauthorizedErrorTokenInvalid) {
+      signOut();
+    }
   }
 
-  function handleRegisterSubmit(item) {
-    setUserData({ name: item.name, email: item.email });
-    handleCloseRegistration();
+  function handleMoviesAll(item) {
+    setMoviesAll(item);
   }
 
-  function handleСheckAuthorization(item) {
-    localStorage.setItem('jwt', JWT);
-    const jwt = localStorage.getItem('jwt');
-    setUserData({ name: "Виталий", email: item.email, jwt: jwt});
-    navigate('/movies', { replace: true });
-    setAccount('Аккаунт');
-    setLoggedIn(true);  
+  function handleCloseForm() {
+    navigate("/movies", {replace: true});
   }
 
-  function handleMovieLike(movie, userData) {
-    const movieInitial = initialMovies.find(i => i.movieId === movie.movieId);
+  function handleRegisterSubmit(name, userEmail, password) {
+    const passwordUser = password;
+    setLoad(true);
+    register(name, userEmail, password)
+      .then((data) => {
+        if (data) {
+          handleLoginSubmit(userEmail, passwordUser);
+        }
+      })
+      .catch((err) => {
+        setError(err);
+      })
+      .finally(() => {
+        setLoad(false);
+      })
+  }
+
+  function handleLoginSubmit(userEmail, password) {
+    setLoad(true);
+    authorization(userEmail, password)
+      .then((data) => {
+        localStorage.setItem('jwt', data.token);
+        setLoggedIn(true);
+        localStorage.setItem('loggedIn', true);
+        handleCloseForm();
+      })
+      .catch((err) => {
+        setError(err);
+      })
+      .finally(() => {
+        setLoad(false);
+      });
+  }
+
+  function handleUpdateUser(item) {
+    setLoad(true);
+    mainApi.editProfileInfo(item.name, item.email)
+      .then(() => {
+        mainApi.getUserInfo()
+          .then((user) => {
+            setInfoTooltipOpen(true);
+            localStorage.setItem('userName', user.name);
+            setCurrentUser(user);
+          })
+          .catch((err) => {
+            setError(err);
+          })
+          .finally(() => {
+            setLoad(false);
+          });
+      })
+      .catch((err) => {
+        setError(err);
+        checkErrorAuthorization(err, pathname);
+      })
+      .finally(() => {
+        setLoad(false);
+      });
+  }
+
+  function handleInputLanguage(item) {
+    const checkLanguageRu = new RegExp(/^[а-яёА-ЯЁ]+$/).test(item);
+    const checkLanguageEn = new RegExp(/^[a-zA-Z]+$/).test(item);
+    return {checkLanguageRu, checkLanguageEn}
+  }
+
+  function handleMovieLike(movie) {
+    const movieInitial = moviesSaved.find(i => i.movieId === movie.id);
     let cards;
-    if (movieInitial.owner.jwt === undefined || movieInitial.owner.jwt === '') {
-      cards = initialMovies.map(item => item.movieId === movieInitial.movieId ? {...item, owner: {jwt: userData.jwt}} : item);
-      setInitialMovies(cards);
-      setMoviesSaved([movie, ...moviesSaved]); 
+    if (movieInitial === undefined) {
+      const movieNew = {
+        country: movie.country,
+        director: movie.director,
+        duration: movie.duration,
+        year: movie.year,
+        description: movie.description,
+        nameRU: movie.nameRU,
+        nameEN: movie.nameEN,
+        image: `${urlBeginning}${movie.image.url}`,
+        trailerLink: movie.trailerLink,
+        thumbnail: `${urlBeginning}${movie.image.formats.thumbnail.url}`,
+        movieId: movie.id,
+      };
+      mainApi.addMovie(movieNew)
+        .then((newMovie) => {
+          cards = moviesAll.map(item => item.id === newMovie.movieId ? {...item, owner: newMovie.owner} : item);
+          setMoviesAll(cards);
+          setMoviesSaved([newMovie, ...moviesSaved]);
+        })
+        .catch((err) => {
+          console.log(err);
+          checkErrorAuthorization(err, pathname);
+        })
     } else {
-      cards = initialMovies.map(item => item.movieId === movieInitial.movieId ? {...item, owner: {jwt: ''}} : item);
-      const movieNewList = moviesSaved.filter((item) => item.movieId !== movie.movieId);
-      setInitialMovies(cards);
-      setMoviesSaved(movieNewList);
+      mainApi.deleteMovie(movieInitial._id)
+        .then((newMovie) => {
+          cards = moviesAll.map(item => item.id === newMovie.movieId ? {...item, owner: ''} : item);
+          setMoviesAll(cards);
+          const movieNewList = moviesSaved.filter((item) => item._id !== newMovie._id);
+          setMoviesSaved(movieNewList);
+        })
+        .catch((err) => {
+          console.log(err);
+          checkErrorAuthorization(err, pathname);
+        })
     }
   }
 
   function handleMovieDelete(movie) {
-    const movieInitial = initialMovies.find(i => i.movieId === movie.movieId);
-    let cards;
-    cards = initialMovies.map(item => item.movieId === movieInitial.movieId ? {...item, owner: {jwt: ''}} : item);
-    const movieNewList = moviesSaved.filter((item) => item.movieId !== movie.movieId);
-    setInitialMovies(cards);
-    setMoviesSaved(movieNewList);
+    setLoad(true);
+    mainApi.deleteMovie(movie._id)
+      .then((newMovie) => {
+        const cards = moviesAll.map(item => item.id === newMovie.movieId ? {...item, owner: ''} : item);
+        setMoviesAll(cards);
+        const movieNewList = moviesSaved.filter((item) => item._id !== newMovie._id);
+        setMoviesSaved(movieNewList);
+      })
+      .catch((err) => {
+        console.log(err);
+        checkErrorAuthorization(err, pathname);
+      })
+      .finally(() => {
+        setLoad(false);
+      });
   }
 
   function handleProfileNav() {
     navigate('/profile', {replace: true});
-    setAccount('Аккаунт');
     setLoggedIn(true);
     handleCloseNavigationBar();
   }
 
-  function handleGoBackPageNav() {
-    navigate(-1, {replace: true});
+  function handleBackPage(item) {
+    setNotFoundPage(item);
   }
 
   function handleActiveMenu() {
@@ -101,6 +249,7 @@ function App() {
   }
 
   function handleCloseNavigationBar() {
+    handleСlearError();
     const navigationSection = document.querySelector(".navigate-autorized");
     const navigationContainer = document.querySelector(".navigate-container");
     const page = document.querySelector(".page");
@@ -111,83 +260,114 @@ function App() {
     }
   }
 
-  function handleUpdateUser(item) {
-    setUserData({name: item.name, email: item.email});
-  }
-
   function signOut() {
     localStorage.removeItem('jwt');
+    localStorage.removeItem('moviesScreach');
+    localStorage.removeItem('filmsAll');
+    localStorage.removeItem('textScreach');
+    localStorage.removeItem('textScreachSaved');
+    localStorage.removeItem('filter');
+    localStorage.removeItem('counterView');
+    localStorage.removeItem('loggedIn');
+    localStorage.removeItem('userName');
     setLoggedIn(false);
-    setAccount('');
-    setUserData({ name: '', email: ''});
-    navigate('/'); 
+    setCurrentUser({});
+    handleСlearError();
+    navigate('/', { replace: true });
+  }
+
+  function handleСlearError() {
+    setError('');
+  }
+
+  function closePopup() {
+    setInfoTooltipOpen(false);
   }
 
   return (
-   <>
+    <CurrentUserContext.Provider value={currentUser}>
       <Routes>
         <Route path="/" element={
           <Main loggedIn={loggedIn}
-                account={account}
                 onAuthorization={handleProfileNav}
                 onNavigation={handleCloseNavigationBar}
                 onActiveMenu={handleActiveMenu}
+                isLoad={isLoad}
           />
-        }>  
+        }>
         </Route>
-        <Route path="movies" element={
-          <Movies movies={initialMovies}
-                 userData={userData}
+        <Route path="/movies" element={
+          <ProtectedRoute
+                 component={Movies}
                  onMovieLike={handleMovieLike}
+                 onMoviesAll={handleMoviesAll}
+                 moviesAll={moviesAll}
+                 moviesSaved={moviesSaved}
                  loggedIn={loggedIn}
-                 account={account}
                  onAuthorization={handleProfileNav}
                  onNavigation={handleCloseNavigationBar}
                  onActiveMenu={handleActiveMenu}
+                 isLoad={isLoad}
+                 onInputLanguage={handleInputLanguage}
           />
         }>
         </Route>
-        <Route path="saved-movies" element={
-          <SavedMovies movies={moviesSaved}
-                       userData={userData}
-                       onMovieDelete={handleMovieDelete}
-                       loggedIn={loggedIn}
-                       account={account}
-                       onAuthorization={handleProfileNav}
-                       onNavigation={handleCloseNavigationBar}
-                       onActiveMenu={handleActiveMenu}                 
+        <Route path="/saved-movies" element={
+          <ProtectedRoute
+                  component={SavedMovies}
+                  moviesSaved={moviesSaved}
+                  onMovieDelete={handleMovieDelete}
+                  loggedIn={loggedIn}
+                  onAuthorization={handleProfileNav}
+                  onNavigation={handleCloseNavigationBar}
+                  onActiveMenu={handleActiveMenu}
+                  isLoad={isLoad}
+                  onInputLanguage={handleInputLanguage}
           />
         }>
         </Route>
-        <Route path="profile" element={
-          <Profile loggedIn={loggedIn}
-                   userData={userData}
-                   onSubmit={handleСheckAuthorization}
+        <Route path="/profile" element={
+          <ProtectedRoute
+                   component={Profile}
+                   loggedIn={loggedIn}
                    onSignOut={signOut}
-                   account={account}
                    onAuthorization={handleProfileNav}
                    onUpdateUser={handleUpdateUser}
                    onNavigation={handleCloseNavigationBar}
                    onActiveMenu={handleActiveMenu}
+                   error={error}
+                   isLoad={isLoad}
+                   onСlearError={handleСlearError}
           />
         }>
         </Route>
-        <Route path="sign-up" element={
-          <Register onSubmit={handleRegisterSubmit} />
-        }>
+        <Route path="/sign-up" element={
+          loggedIn ? (<Navigate to="/movies" replace />
+          ) : (
+          <Register onSubmit={handleRegisterSubmit}
+                    error={error}
+                    onСlearError={handleСlearError}
+                     />
+        )}>
         </Route>
-        <Route path="sign-in" element={
-          <Login onSubmit={handleСheckAuthorization} />
-        }>
+        <Route path="/sign-in" element={
+          loggedIn ? (<Navigate to="/movies" replace />
+          ) : (
+          <Login onSubmit={handleLoginSubmit}
+                 error={error}
+                 onСlearError={handleСlearError}
+                  />
+          )}>
         </Route>
         <Route path="*" element={
-          <NotFoundPage onBack={handleGoBackPageNav} />
+          <NotFoundPage onBackPage={handleBackPage}/>
         }>
         </Route>
       </Routes>
       { (pathname === '/' || pathname === '/movies' || pathname === '/saved-movies') && <Footer /> }
-    </>
-  );
+      <InfoTooltip name="notification" onClose={closePopup} isOpenInfoTooltip={isInfoTooltipOpen} />
+    </CurrentUserContext.Provider>
+  )
 }
 
 export default App;

@@ -4,7 +4,7 @@ import imgAccount from '../../images/img_account.svg';
 import dropdownNavBar from '../../images/nav_bar.svg';
 import './Navigation.css';
 
-function Navigation({account, loggedIn, onAuthorization, onNavigation, onActiveMenu}) {
+function Navigation({ loggedIn, onAuthorization, onNavigation, onActiveMenu }) {
   const { pathname } = useLocation();
   const classNameNavActive = "navigate-autorized__link navigate-autorized__link_active";
 
@@ -24,12 +24,12 @@ function Navigation({account, loggedIn, onAuthorization, onNavigation, onActiveM
             </div>
             { pathname === '/' ? (
               <button type="button" className="navigate-autorized__button navigate-autorized__button_account navigate-autorized__button_account_header" onClick={onAuthorization}>
-                <span className="navigate-autorized__text">{account}</span>
+                <span className="navigate-autorized__text">Аккаунт</span>
                 <img className="navigate-autorized__logo navigate-autorized__logo_header" alt="Иконка аккаунта" src={imgAccount}/>
               </button>
             ) : (
               <button type="button" className="navigate-autorized__button navigate-autorized__button_account" onClick={onAuthorization}>
-                <span className="navigate-autorized__text">{account}</span>
+                <span className="navigate-autorized__text">Аккаунт</span>
                 <img className="navigate-autorized__logo" alt="Иконка аккаунта" src={imgAccount}/>
               </button>
             )}

@@ -1,51 +1,73 @@
 import React from 'react';
-import {listValidation} from '../../utils/constants';
 import Header from '../Header/Header';
 import PopupWithForm from '../PopupWithForm/PopupWithForm';
-import FormValidator from '../FormValidator/FormValidator';
+import useFormValidator from '../../hooks/useFormValidator';
+import useErrorsServer from '../../hooks/useErrorsServer';
+import { unauthorizedError } from '../../utils/constants';
+import { useLocation } from 'react-router-dom';
 
-export default function Login ({onSubmit}) {
+export default function Login ({ onSubmit, isLoad, error, onСlearError}) {
+  const { pathname } = useLocation();
   const [userEmail, setUserEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
+  const [isActiveError, setActiveError] = React.useState(false);
+  const { errors, isValidCurrent, handleChange, resetForm } = useFormValidator();
+  const { messageError, handleErrorsStatus, resetError } = useErrorsServer();
 
-  function handleValidateForm(form) {
-    const validationPopupLogin = new FormValidator(listValidation, form);
-    validationPopupLogin.enableValidation();
-    validationPopupLogin.checkButtonSubmit();
+  React.useEffect(() => {
+    handleErrorsStatus(error, pathname);
+  }, [handleErrorsStatus, error, pathname]);
+
+  React.useEffect(() => {
+    if(messageError === unauthorizedError) {
+      setActiveError(true);
+    }
+  }, [messageError]);
+
+  function resetErrorServer() {
+    onСlearError();
+    resetError();
   }
 
-  function handleChangeEmail(evt) {
-    setUserEmail(evt.target.value);
-  }
-
-  function handleChangePassword(evt) {
-    setPassword(evt.target.value);
+  function handleChangeInput(evt) {
+    resetErrorServer();
+    handleChange({event: evt, pathname: pathname});
+    if(evt.target.name === 'email') {
+      setUserEmail(evt.target.value);
+    } else if(evt.target.name === 'password') {
+      setPassword(evt.target.value);
+    }
   }
 
   function handleSubmit(evt) {
     evt.preventDefault();
-    onSubmit({userEmail: userEmail, password: password});
+    onSubmit(userEmail, password);
     setUserEmail('');
     setPassword('');
+    resetForm();
   }
 
   return (
     <>
-      <Header id="6" />
+      <Header id="6" onResetErrorServer={resetErrorServer} />
       <main>
         <PopupWithForm id="3" name="login-user" title="Рады видеть!"
                        onSubmit={handleSubmit}
                        buttonText={"Войти"}
-                       onValidateForm={handleValidateForm}>
-          <div className="popup__field">
+                       isLoad={isLoad}
+                       isValid={isValidCurrent}
+                       errorServer={messageError}
+                       onResetErrorServer={resetErrorServer}
+                       textLoad={"Вход..."}>
+          <div className={`popup__field ${errors.email ? "popup__field_error" : ""}`}>
             <p className="popup__input-text">E-mail</p>
-            <input id="user-email-input" type="email" className="popup__input popup__input_entry" pattern="^([^ ]+@[^ ]+\.[a-z]{2,6}|)$" name="email" value={userEmail} placeholder="Email" onChange={handleChangeEmail} required  />
-            <span className="user-email-input-error popup__input-error"></span>
+            <input id="user-email-input" type="email" className={`popup__input popup__input_entry ${(errors.email || isActiveError) ? "popup__input_error" :""}`} pattern="^([^ ]+@[^ ]+\.[a-z]{2,6}|)$" name="email" value={userEmail} placeholder="Email" onChange={handleChangeInput} autoComplete="off" required />
+            <span className={`user-email-input-error popup__input-error ${errors.email ? "popup__input-error_active" : ""}`}>{errors.email}</span>
           </div>
-          <div className="popup__field">
+          <div className={`popup__field ${errors.password ? "popup__field_error" : ""}`}>
             <p className="popup__input-text">Пароль</p>
-            <input id="user-password-input" type="password" className="popup__input popup__input_entry" name="password" value={password} placeholder="Пароль" onChange={handleChangePassword} required />
-            <span className="user-password-input-error popup__input-error"></span>
+            <input id="user-password-input" type="password" className={`popup__input popup__input_entry ${(errors.password || isActiveError) ? "popup__input_error" :""}`} name="password" value={password} placeholder="Пароль" onChange={handleChangeInput} autoComplete="off" required />
+            <span className={`user-password-input-error popup__input-error ${errors.password ? "popup__input-error_active" : ""}`}>{errors.password}</span>
           </div>
         </PopupWithForm>
       </main>

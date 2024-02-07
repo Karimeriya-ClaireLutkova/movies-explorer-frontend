@@ -33,6 +33,7 @@
 }
 
 .search-form__field {
+  position: relative;
   display: flex;
   width: calc(100% - 26px);
   padding: 19px 20px 19px 19px;
@@ -46,7 +47,32 @@
   line-height: 1.11;
   margin: 0;
   padding: 0;
+  outline: none;
   background-color: #2F2F2F;
+}
+
+.search-form__input_error {
+  border-bottom: 1px solid #424242;
+}
+
+.search-form__input-error {
+  width: 200px;
+  font-size: 12px;
+  line-height: 1.2;
+  font-weight: 400;
+  margin: 0;
+  padding: 0;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  color: #EE3465;
+  display: none;
+}
+
+.search-form__input-error_active {
+  display: inline-block;
+  min-height: 24px;
+  opacity: 1;
+  transform: translate(-240px, 65px);
 }
 
 .search-form__icon {
@@ -83,6 +109,13 @@
   opacity: 0.8;
 }
 
+.search-form__button_inactive {
+  color: #C2C2C2;
+  background-color: #313131;
+  cursor: default;
+  pointer-events: none; 
+}
+
 .search-form__filter {
   padding: 28px 30px 27px 29px;
   display: flex;
@@ -92,17 +125,15 @@
 }
 
 @media (max-width: 1000px) {
-  .search {
-    width: calc(100% - 30px*2);
-    margin: 80px 30px 10px;
-  }
-
   .search-form {
     margin: 0 0 108px;
   }
 
   .search-form__field {
     padding: 19px 19px;
+  }
+  .search-form__input-error_active {
+    width: 160px;
   }
 
   .search-form__button {
@@ -112,6 +143,22 @@
 
   .search-form__filter {
     padding: 27px 20px 27px 19px;
+  }
+}
+@media (max-width: 800px) {
+  .search {
+    width: calc(100% - 30px*2);
+    margin: 80px 30px 10px;
+  }
+
+  .search-form__input-error_active {
+    width: 130px;
+    transform: translate(-240px, 65px);
+  }
+
+  .search-form__field {
+    padding: 19px 19px;
+    width: calc(100% - 26px);
   }
 }
 
@@ -157,6 +204,10 @@
     line-height: 1.42;
   }
 
+  .search-form__input-error_active {
+    transform: translate(-195px, 65px);
+  }
+  
   .search-form__button {
     padding: 10px 8px;
     margin: 19px 19px 19px 0;
@@ -185,5 +236,10 @@
     padding: 45px 76px 44px;
     border-bottom: 1px solid #424242;
     box-sizing: border-box;
+  }
+
+  .search-form__input-error_active {
+    position: absolute;
+    transform: translate(0, 65px);
   }
 }
